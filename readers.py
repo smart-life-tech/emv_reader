@@ -1,21 +1,29 @@
-from smartcard.System import readers
-from smartcard.util import toHexString
+from time import sleep
 
-# Get the list of available readers
-r = readers()
-print("Available readers:", r)
+from smartcard.ReaderMonitoring import ReaderMonitor, ReaderObserver
 
-if len(r) == 0:
-    print("No readers available")
-    exit()
 
-# Use the first reader
-reader = r[0]
-connection = reader.createConnection()
-connection.connect()
+class printobserver(ReaderObserver):
+    """A simple reader observer that is notified
+    when readers are added/removed from the system and
+    prints the list of readers
+    """
 
-# Send a command to the card
-SELECT = [0x00, 0xA4, 0x04, 0x00, 0x0A]  # Example command (change as needed)
-data, sw1, sw2 = connection.transmit(SELECT)
-print("Response:", toHexString(data))
-print("Status words:", "%02X %02X" % (sw1, sw2))
+    def update(self, observable, actions):
+        (addedreaders, removedreaders) = actions
+        print("Added readers", addedreaders)
+        print("Removed readers", removedreaders)
+
+if __name__ == '__main__':
+    print("Add or remove a smartcard reader to the system.")
+    print("This program will exit in 10 seconds")
+    print("")
+    readermonitor = ReaderMonitor()
+    readerobserver = printobserver()
+    readermonitor.addObserver(readerobserver)
+
+    sleep(10)
+
+    # don't forget to remove observer, or the
+    # monitor will poll forever...
+    readermonitor.deleteObserver(readerobserver)
