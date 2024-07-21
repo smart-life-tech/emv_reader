@@ -1,7 +1,7 @@
 from time import sleep
 from smartcard.util import toHexString
 from smartcard.ReaderMonitoring import ReaderMonitor, ReaderObserver
-
+from smartcard.System import readers
 
 class printobserver(ReaderObserver):
     """A simple reader observer that is notified
@@ -15,6 +15,13 @@ class printobserver(ReaderObserver):
         print("Removed readers", removedreaders)
         # Use the first available reader
         reader = addedreaders[0]
+        # List available readers
+        available_readers = readers()
+        print("Available readers:", available_readers)
+
+        if not available_readers:
+            print("No readers found.")
+            exit()
         connection = reader.createConnection()
         connection.connect()
         print("Reader:", reader)
