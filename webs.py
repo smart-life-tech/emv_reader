@@ -4,7 +4,7 @@ from selenium.webdriver.common.keys import Keys
 import time
 
 # Set up the WebDriver (the 'chromedriver' executable should be in your PATH)
-driver = webdriver.Chrome()
+driver = webdriver.Chrome('chromedriver')
 
 # Open the webpage
 driver.get('https://chingup.com/rpi-pos')
