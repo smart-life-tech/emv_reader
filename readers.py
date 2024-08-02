@@ -1,17 +1,18 @@
 import usb.core
 import usb.util
 import time
-# Vendor and Product ID
+
+# Vendor and Product ID for the AugustaS device
 VENDOR_ID = 0x0acd
 PRODUCT_ID = 0x3810
 
-# Find the device
+# Find the USB device
 dev = usb.core.find(idVendor=VENDOR_ID, idProduct=PRODUCT_ID)
 
 if dev is None:
     raise ValueError('Device not found')
 
-# Detach kernel driver if necessary
+# Detach the kernel driver if it's attached
 if dev.is_kernel_driver_active(0):
     dev.detach_kernel_driver(0)
 
@@ -20,56 +21,38 @@ dev.set_configuration()
 
 # Get the active configuration
 cfg = dev.get_active_configuration()
-# Print configuration details for debugging
-print(f"Configuration: {cfg}")
 
-# Access the first interface in the configuration
-try:
-    intf = cfg.interfaces()[0]  # Access the first interface
-except IndexError:
-    raise ValueError("Interface not found")
+# Access the first interface
+intf = cfg.interfaces()[0]
 
-# Print interface details for debugging
-print(f"Interface gottrn: {intf}")
-
-# Find the IN and OUT endpoints
-#intf = cfg[0]  # Assuming interface 0 is the relevant one
-
-ep_out = usb.util.find_descriptor(
-    intf,
-    custom_match=lambda e: usb.util.endpoint_direction(e.bEndpointAddress) == usb.util.ENDPOINT_OUT
-)
-
+# Find the IN endpoint (interrupt IN endpoint)
 ep_in = usb.util.find_descriptor(
     intf,
     custom_match=lambda e: usb.util.endpoint_direction(e.bEndpointAddress) == usb.util.ENDPOINT_IN
 )
 
-# Check if endpoints were found
-
 if ep_in is None:
     raise ValueError("IN Endpoint not found")
 
-# Perform operations
+print("Starting data read...")
+
 try:
     while True:
-        # Write data to the OUT endpoint
-        #data_to_send = b'Test data'  # Example data
-        #ep_out.write(data_to_send)
-        print("Data sent successfully")
-
-        # Read data from the IN endpoint
-        data_received = ep_in.read(64,timeout=1000)  # Adjust the size as needed
-        print(f"Data received: {data_received}")
-        time.sleep(3)
-
-except usb.core.USBError as e:
-        print(f"USB error: {e}")
-        pass 
-    
+        try:
+            # Read data from the IN endpoint
+            data = ep_in.read(ep_in.wMaxPacketSize, timeout=5000)  # Adjust timeout and size if needed
+            if data:
+                # Print the raw data (may need further processing depending on device)
+                print("Data received:", data)
+        except usb.core.USBError as e:
+            if e.errno == 110:  # Timeout error
+                print("Timeout occurred, retrying...")
+            else:
+                print("USB error:", e)
+        time.sleep(1)  # Delay between reads
 
 finally:
-    # Release resources and reattach the kernel driver if it was detached
+    # Clean up
     usb.util.dispose_resources(dev)
     if dev.is_kernel_driver_active(0):
         dev.attach_kernel_driver(0)
