@@ -25,7 +25,7 @@ print(f"Configuration: {cfg}")
 
 # Access the first interface in the configuration
 try:
-    intf = cfg[(0, 0)]  # Access the first interface with index 0, 0
+    intf = cfg.interfaces()[0]  # Access the first interface
 except IndexError:
     raise ValueError("Interface not found")
 
