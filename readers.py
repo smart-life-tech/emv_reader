@@ -1,7 +1,7 @@
 import usb.core
 import usb.util
 
-# Replace with your device's vendor and product ID
+# Vendor and Product ID
 VENDOR_ID = 0x0acd
 PRODUCT_ID = 0x3810
 
@@ -21,17 +21,9 @@ dev.set_configuration()
 # Get the active configuration
 cfg = dev.get_active_configuration()
 
-# Get the first interface
-intf = cfg[(0, 0)]
-# Get all interfaces
-for intf in cfg:
-    print(f"Interface {intf.bInterfaceNumber} with alternate setting {intf.bAlternateSetting}:")
-    
-    for ep in intf:
-        print(f"  Endpoint {ep.bEndpointAddress:02x} - Direction: {'IN' if usb.util.endpoint_direction(ep.bEndpointAddress) == usb.util.ENDPOINT_IN else 'OUT'}")
+# Find the IN and OUT endpoints
+intf = cfg[0]  # Assuming interface 0 is the relevant one
 
-# Clean up
-# Example updated to use found endpoints
 ep_out = usb.util.find_descriptor(
     intf,
     custom_match=lambda e: usb.util.endpoint_direction(e.bEndpointAddress) == usb.util.ENDPOINT_OUT
@@ -41,20 +33,30 @@ ep_in = usb.util.find_descriptor(
     intf,
     custom_match=lambda e: usb.util.endpoint_direction(e.bEndpointAddress) == usb.util.ENDPOINT_IN
 )
+
 # Check if endpoints were found
-assert ep_out is not None, "Endpoint OUT not found"
-assert ep_in is not None, "Endpoint IN not found"
+if ep_out is None:
+    raise ValueError("OUT Endpoint not found")
+
+if ep_in is None:
+    raise ValueError("IN Endpoint not found")
 
 # Perform operations
 try:
     # Write data to the OUT endpoint
     data_to_send = b'Test data'  # Example data
     ep_out.write(data_to_send)
+    print("Data sent successfully")
 
     # Read data from the IN endpoint
     data_received = ep_in.read(64)  # Adjust the size as needed
     print(f"Data received: {data_received}")
 
+except usb.core.USBError as e:
+    print(f"USB error: {e}")
+
 finally:
     # Release resources and reattach the kernel driver if it was detached
     usb.util.dispose_resources(dev)
+    if dev.is_kernel_driver_active(0):
+        dev.attach_kernel_driver(0)
