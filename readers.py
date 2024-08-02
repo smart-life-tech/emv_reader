@@ -65,6 +65,8 @@ try:
 
 except usb.core.USBError as e:
         print(f"USB error: {e}")
+        pass 
+    
 
 finally:
     # Release resources and reattach the kernel driver if it was detached
