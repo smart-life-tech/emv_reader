@@ -20,6 +20,17 @@ dev.set_configuration()
 
 # Get the active configuration
 cfg = dev.get_active_configuration()
+# Print configuration details for debugging
+print(f"Configuration: {cfg}")
+
+# Access the first interface in the configuration
+try:
+    intf = cfg[(0, 0)]  # Access the first interface with index 0, 0
+except IndexError:
+    raise ValueError("Interface not found")
+
+# Print interface details for debugging
+print(f"Interface: {intf}")
 
 # Find the IN and OUT endpoints
 intf = cfg[0]  # Assuming interface 0 is the relevant one
