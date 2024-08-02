@@ -56,10 +56,10 @@ try:
         # Write data to the OUT endpoint
         #data_to_send = b'Test data'  # Example data
         #ep_out.write(data_to_send)
-        #print("Data sent successfully")
+        print("Data sent successfully")
 
         # Read data from the IN endpoint
-        data_received = ep_in.read(64)  # Adjust the size as needed
+        data_received = ep_in.read(64,timeout=1000)  # Adjust the size as needed
         print(f"Data received: {data_received}")
         time.sleep(3)
 
