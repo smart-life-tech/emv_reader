@@ -23,7 +23,14 @@ cfg = dev.get_active_configuration()
 
 # Get the first interface
 intf = cfg[(0, 0)]
+# Get all interfaces
+for intf in cfg:
+    print(f"Interface {intf.bInterfaceNumber} with alternate setting {intf.bAlternateSetting}:")
+    
+    for ep in intf:
+        print(f"  Endpoint {ep.bEndpointAddress:02x} - Direction: {'IN' if usb.util.endpoint_direction(ep.bEndpointAddress) == usb.util.ENDPOINT_IN else 'OUT'}")
 
+# Clean up
 # Example updated to use found endpoints
 ep_out = usb.util.find_descriptor(
     intf,
@@ -35,8 +42,8 @@ ep_in = usb.util.find_descriptor(
     custom_match=lambda e: usb.util.endpoint_direction(e.bEndpointAddress) == usb.util.ENDPOINT_IN
 )
 # Check if endpoints were found
-#assert ep_out is not None, "Endpoint OUT not found"
-#assert ep_in is not None, "Endpoint IN not found"
+assert ep_out is not None, "Endpoint OUT not found"
+assert ep_in is not None, "Endpoint IN not found"
 
 # Perform operations
 try:
