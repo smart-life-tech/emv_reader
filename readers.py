@@ -1,6 +1,6 @@
 import usb.core
 import usb.util
-
+import time
 # Vendor and Product ID
 VENDOR_ID = 0x0acd
 PRODUCT_ID = 0x3810
@@ -52,17 +52,19 @@ if ep_in is None:
 
 # Perform operations
 try:
-    # Write data to the OUT endpoint
-    #data_to_send = b'Test data'  # Example data
-    #ep_out.write(data_to_send)
-    #print("Data sent successfully")
+    while True:
+        # Write data to the OUT endpoint
+        #data_to_send = b'Test data'  # Example data
+        #ep_out.write(data_to_send)
+        #print("Data sent successfully")
 
-    # Read data from the IN endpoint
-    data_received = ep_in.read(64)  # Adjust the size as needed
-    print(f"Data received: {data_received}")
+        # Read data from the IN endpoint
+        data_received = ep_in.read(64)  # Adjust the size as needed
+        print(f"Data received: {data_received}")
+        time.sleep(3)
 
 except usb.core.USBError as e:
-    print(f"USB error: {e}")
+        print(f"USB error: {e}")
 
 finally:
     # Release resources and reattach the kernel driver if it was detached
