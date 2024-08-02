@@ -1,45 +1,55 @@
 import usb.core
 import usb.util
 
+# Replace with your device's vendor and product ID
+VENDOR_ID = 0x0acd
+PRODUCT_ID = 0x3810
+
 # Find the device
-dev = usb.core.find(idVendor=0x0acd, idProduct=0x3810)  # Replace with your Vendor ID and Product ID
+dev = usb.core.find(idVendor=VENDOR_ID, idProduct=PRODUCT_ID)
 
 if dev is None:
-    raise ValueError("Device not found")
+    raise ValueError('Device not found')
+
 # Detach kernel driver if necessary
 if dev.is_kernel_driver_active(0):
     dev.detach_kernel_driver(0)
-# Set the active configuration. With no arguments, the first configuration will be the active one
+
+# Set the configuration
 dev.set_configuration()
 
-# Get an endpoint instance
+# Get the active configuration
 cfg = dev.get_active_configuration()
+
+# Get the first interface
 intf = cfg[(0, 0)]
 
+# Find the OUT and IN endpoints
 ep_out = usb.util.find_descriptor(
     intf,
-    custom_match=lambda e: usb.util.endpoint_direction(e.bEndpointAddress) == usb.util.ENDPOINT_OUT)
+    # Match the first OUT endpoint
+    custom_match=lambda e: usb.util.endpoint_direction(e.bEndpointAddress) == usb.util.ENDPOINT_OUT
+)
 
 ep_in = usb.util.find_descriptor(
     intf,
-    custom_match=lambda e: usb.util.endpoint_direction(e.bEndpointAddress) == usb.util.ENDPOINT_IN)
+    # Match the first IN endpoint
+    custom_match=lambda e: usb.util.endpoint_direction(e.bEndpointAddress) == usb.util.ENDPOINT_IN
+)
 
-assert ep_out is not None
-assert ep_in is not None
+assert ep_out is not None, "Endpoint OUT not found"
+assert ep_in is not None, "Endpoint IN not found"
 
-# Define the command to get firmware version
-command = b'\x02\x52\x22\x03\x71'  # 0x71 is the LRC value for the command 0x52 0x22
+# Perform operations
+try:
+    # Write data to the OUT endpoint
+    data_to_send = b'Test data'  # Example data
+    ep_out.write(data_to_send)
 
-# Send the command
-ep_out.write(command)
+    # Read data from the IN endpoint
+    data_received = ep_in.read(64)  # Adjust the size as needed
+    print(f"Data received: {data_received}")
 
-# Read the response
-response = ep_in.read(size=64)  # Adjust the size according to your expected response length
-print("Response:", response)
-
-# Interpret the response
-# The response format is <0x02> <Len_Low><Len_High> <Response Body> <LRC> <CheckSUM> <0x03>
-response_data = response[3:-3]  # Stripping off the STX, length, LRC, CheckSUM, and ETX
-print("Firmware Version:", response_data)
-# Reattach the kernel driver if needed (usually only if you need to let the kernel handle it again)
-usb.util.dispose_resources(dev)
+finally:
+    # Release resources and reattach the kernel driver if it was detached
+    usb.util.dispose_resources(dev)
