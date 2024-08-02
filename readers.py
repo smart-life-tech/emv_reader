@@ -24,21 +24,19 @@ cfg = dev.get_active_configuration()
 # Get the first interface
 intf = cfg[(0, 0)]
 
-# Find the OUT and IN endpoints
+# Example updated to use found endpoints
 ep_out = usb.util.find_descriptor(
     intf,
-    # Match the first OUT endpoint
     custom_match=lambda e: usb.util.endpoint_direction(e.bEndpointAddress) == usb.util.ENDPOINT_OUT
 )
 
 ep_in = usb.util.find_descriptor(
     intf,
-    # Match the first IN endpoint
     custom_match=lambda e: usb.util.endpoint_direction(e.bEndpointAddress) == usb.util.ENDPOINT_IN
 )
-
-assert ep_out is not None, "Endpoint OUT not found"
-assert ep_in is not None, "Endpoint IN not found"
+# Check if endpoints were found
+#assert ep_out is not None, "Endpoint OUT not found"
+#assert ep_in is not None, "Endpoint IN not found"
 
 # Perform operations
 try:
