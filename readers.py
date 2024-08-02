@@ -1,42 +1,41 @@
-from time import sleep
-from smartcard.util import toHexString
-from smartcard.ReaderMonitoring import ReaderMonitor, ReaderObserver
-from smartcard.System import readers
+import usb.core
+import usb.util
 
-class printobserver(ReaderObserver):
-    """A simple reader observer that is notified
-    when readers are added/removed from the system and
-    prints the list of readers
-    """
+# Find the device
+dev = usb.core.find(idVendor=0x0ACD, idProduct=0x3810)  # Replace with your Vendor ID and Product ID
 
-    def update(self, observable, actions):
-        (addedreaders, removedreaders) = actions
-        print("Added readers", addedreaders)
-        print("Removed readers", removedreaders)
-        # Use the first available reader
-        reader = addedreaders[0]
-        # List available readers
-        available_readers = readers()
-        print("Available readers:", available_readers)
+if dev is None:
+    raise ValueError("Device not found")
 
-        if not available_readers:
-            print("No readers found.")
-            exit()
-        connection = reader.createConnection()
-        connection.connect()
-        print("Reader:", reader)
-        print("Card ATR:", toHexString(connection.getATR()))
+# Set the active configuration. With no arguments, the first configuration will be the active one
+dev.set_configuration()
 
-if __name__ == '__main__':
-    print("Add or remove a smartcard reader to the system.")
-    print("This program will exit in 10 seconds")
-    print("")
-    readermonitor = ReaderMonitor()
-    readerobserver = printobserver()
-    readermonitor.addObserver(readerobserver)
+# Get an endpoint instance
+cfg = dev.get_active_configuration()
+intf = cfg[(0, 0)]
 
-    sleep(10)
+ep_out = usb.util.find_descriptor(
+    intf,
+    custom_match=lambda e: usb.util.endpoint_direction(e.bEndpointAddress) == usb.util.ENDPOINT_OUT)
 
-    # don't forget to remove observer, or the
-    # monitor will poll forever...
-    readermonitor.deleteObserver(readerobserver)
+ep_in = usb.util.find_descriptor(
+    intf,
+    custom_match=lambda e: usb.util.endpoint_direction(e.bEndpointAddress) == usb.util.ENDPOINT_IN)
+
+assert ep_out is not None
+assert ep_in is not None
+
+# Define the command to get firmware version
+command = b'\x02\x52\x22\x03\x71'  # 0x71 is the LRC value for the command 0x52 0x22
+
+# Send the command
+ep_out.write(command)
+
+# Read the response
+response = ep_in.read(size=64)  # Adjust the size according to your expected response length
+print("Response:", response)
+
+# Interpret the response
+# The response format is <0x02> <Len_Low><Len_High> <Response Body> <LRC> <CheckSUM> <0x03>
+response_data = response[3:-3]  # Stripping off the STX, length, LRC, CheckSUM, and ETX
+print("Firmware Version:", response_data)
