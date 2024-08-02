@@ -46,8 +46,6 @@ ep_in = usb.util.find_descriptor(
 )
 
 # Check if endpoints were found
-if ep_out is None:
-    raise ValueError("OUT Endpoint not found")
 
 if ep_in is None:
     raise ValueError("IN Endpoint not found")
