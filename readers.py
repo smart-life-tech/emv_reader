@@ -30,10 +30,10 @@ except IndexError:
     raise ValueError("Interface not found")
 
 # Print interface details for debugging
-print(f"Interface: {intf}")
+print(f"Interface gottrn: {intf}")
 
 # Find the IN and OUT endpoints
-intf = cfg[0]  # Assuming interface 0 is the relevant one
+#intf = cfg[0]  # Assuming interface 0 is the relevant one
 
 ep_out = usb.util.find_descriptor(
     intf,
