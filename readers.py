@@ -2,11 +2,13 @@ import usb.core
 import usb.util
 
 # Find the device
-dev = usb.core.find(idVendor=0x0ACD, idProduct=0x3810)  # Replace with your Vendor ID and Product ID
+dev = usb.core.find(idVendor=0x0acd, idProduct=0x3810)  # Replace with your Vendor ID and Product ID
 
 if dev is None:
     raise ValueError("Device not found")
-
+# Detach kernel driver if necessary
+if dev.is_kernel_driver_active(0):
+    dev.detach_kernel_driver(0)
 # Set the active configuration. With no arguments, the first configuration will be the active one
 dev.set_configuration()
 
@@ -39,3 +41,5 @@ print("Response:", response)
 # The response format is <0x02> <Len_Low><Len_High> <Response Body> <LRC> <CheckSUM> <0x03>
 response_data = response[3:-3]  # Stripping off the STX, length, LRC, CheckSUM, and ETX
 print("Firmware Version:", response_data)
+# Reattach the kernel driver if needed (usually only if you need to let the kernel handle it again)
+usb.util.dispose_resources(dev)
