@@ -3,7 +3,6 @@ import serial
 import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 
 # Configure your serial port and baud rate
 SERIAL_PORT = '/dev/ttyUSB0'
@@ -11,7 +10,8 @@ BAUD_RATE = 9600
 
 # Webpage and form details
 WEBPAGE_URL = 'https://www.chingup.com/rpi_pos/'
-TOTAL_AMOUNT_ID = 'amount'
+TOTAL_AMOUNT_CLASS = 'amount-total'
+CARD_DATA_ID = 'card_data'
 FORM_ID = 'payment_form'
 SERVER_URL = 'https://your-server-endpoint.com/submit'
 
@@ -22,14 +22,18 @@ ser = serial.Serial(SERIAL_PORT, BAUD_RATE, timeout=1)
 driver = webdriver.Chrome()
 driver.get(WEBPAGE_URL)
 
-def focus_on_amount_field():
-    amount_field = driver.find_element(By.ID, TOTAL_AMOUNT_ID)
-    amount_field.click()
-    amount_field.send_keys(Keys.TAB)
-
 def get_amount_from_form():
-    amount_field = driver.find_element(By.ID, TOTAL_AMOUNT_ID)
-    return amount_field.get_attribute('value')
+    amount_element = driver.find_element(By.CLASS_NAME, TOTAL_AMOUNT_CLASS)
+    amount_text = amount_element.text
+    return amount_text.strip('$')
+
+def set_card_data_in_form(card_data):
+    card_data_field = driver.find_element(By.ID, CARD_DATA_ID)
+    card_data_field.send_keys(card_data)
+
+def submit_form():
+    form = driver.find_element(By.TAG_NAME, 'form')
+    form.submit()
 
 def submit_form_to_server(data):
     response = requests.post(SERVER_URL, data=data)
@@ -45,35 +49,25 @@ def read_card_data():
 
 try:
     while True:
-        focus_on_amount_field()
         amount = get_amount_from_form()
-
-        print(f"Waiting for card swipe...")
-
+        print(f"Transaction amount: {amount}")
+        
+        print("Waiting for card swipe...")
         card_data = read_card_data()
         
         if card_data:
-            print("Processing payment...")
-            
-            # Simulate interaction with Paytrace (Replace with actual Paytrace integration)
-            # For example:
-            # response = requests.post('https://paytrace.com/api/v1/transaction', data={
-            #     'amount': amount,
-            #     'card_data': card_data
-            # })
-            # print("Payment response:", response.status_code, response.text)
-            
+            card_data_hex = card_data.hex()
+            set_card_data_in_form(card_data_hex)
+            submit_form()
+
             print("Submitting form data to server...")
             form_data = {
                 'amount': amount,
-                'card_data': card_data.hex()
+                'card_data': card_data_hex
             }
             status_code, response_text = submit_form_to_server(form_data)
             print("Server response:", status_code, response_text)
-
-            # Clear the form for the next transaction
-            driver.find_element(By.ID, FORM_ID).reset()
-
+        
         time.sleep(1)
 
 except KeyboardInterrupt:
