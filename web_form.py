@@ -3,7 +3,7 @@ import serial
 import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-
+#from this particular reader, we can only read from it but not write
 # Configure your serial port and baud rate
 SERIAL_PORT = '/dev/ttyUSB0'
 BAUD_RATE = 9600
