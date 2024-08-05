@@ -3,8 +3,8 @@ import usb.util
 import requests
 import time
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-
+from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.chrome.options import Options
 # USB Device details
 VENDOR_ID = 0x0acd
 PRODUCT_ID = 0x3810
@@ -46,8 +46,14 @@ if ep_in is None:
 
 print("Starting data read...")
 
+chrome_service = ChromeService(executable_path='/usr/bin/chromedriver')
 # Initialize web driver
-driver = webdriver.Chrome()
+chrome_options = Options()
+chrome_options.add_argument("--headless")
+chrome_options.add_argument("--no-sandbox")
+chrome_options.add_argument("--disable-dev-shm-usage")
+
+driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
 driver.get(WEBPAGE_URL)
 
 def get_amount_from_form():
