@@ -26,7 +26,7 @@ chrome_options = Options()
 chrome_options.add_argument("--headless")  # Run headless if no GUI is available
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("--disable-dev-shm-usage")
-chrome_options.add_argument("--remote-debugging-port=9222")  # Open port for debugging
+#chrome_options.add_argument("--remote-debugging-port=9222")  # Open port for debugging
 # Create a new instance of ChromeDriver
 # Set up Chrome options
 chrome_options2 = Options()
@@ -154,7 +154,7 @@ try:
     # Fetch the page source
     response = requests.get(page_source_url)
     print(response)
-    page_source = response.content
+    page_source = response.text
 
     print("Page source of the current tab:")
     print(page_source)
