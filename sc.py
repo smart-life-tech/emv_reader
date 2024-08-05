@@ -55,7 +55,7 @@ sharpness_enhancer = ImageEnhance.Sharpness(image)
 sharp_image = sharpness_enhancer.enhance(2)  # Adjust as needed
 
 # Use OCR to extract text
-text = pytesseract.image_to_string(sharp_image)
+text = pytesseract.image_to_string(image)
 
 # Optional: Save the extracted text to a file
 with open('extracted_text1.txt', 'w', encoding='utf-8') as file:
