@@ -154,7 +154,12 @@ try:
 
     # Fetch the page source
     print(page_source_url) 
-    time.sleep(160)
+    time.sleep(1)
+    # Execute JavaScript to get the current page source
+    page_source = driver.execute_script("return document.documentElement.outerHTML;")
+
+    print("Page source of the current tab opened:")
+    print(page_source)
     response = requests.get(page_source_url)
     print(response)
     page_source = response.text
