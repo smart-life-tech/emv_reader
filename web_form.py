@@ -153,6 +153,7 @@ try:
     page_source_url = f"http://localhost:9222/devtools/page/{tab_id}"
 
     # Fetch the page source
+    print(page_source_url)
     response = requests.get(page_source_url)
     print(response)
     page_source = response.text
