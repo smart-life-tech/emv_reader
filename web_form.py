@@ -115,8 +115,9 @@ def read_card_data():
     return "1234567890"
 
 try:
-    total_amount_element = driver.find_element(By.CSS_SELECTOR, '.centered.amount-total.amount-total-bg')
-    print("Total amount on the page:", total_amount_element)
+    # Get the page source
+    page_source = driver.page_source
+    print(page_source)
     while True:
         amount = get_amount_from_page()
         if amount:
