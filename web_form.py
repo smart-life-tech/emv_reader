@@ -8,6 +8,8 @@ import requests
 import time
 import usb.core
 import usb.util
+ 
+import json
 
 # Configuration details
 WEBPAGE_URL = 'https://chingup.com/rpi_pos/'
@@ -139,16 +141,22 @@ try:
 
         print("Page source of the only open tab:")
         print(page_source)
-    # Connect to the remote debugging port
-    driver2.get("http://localhost:9222/json")  # Fetch the list of tabs
+    # Fetch the list of open tabs
+    response = requests.get("http://localhost:9222/json")
+    tabs = response.json()
 
-    # Get the page source of the current active tab
-    # The list of tabs is returned in JSON format; fetch the first one or the desired tab
-    tabs = driver2.execute_script("return window.navigator.webdriver")
-    if tabs:
-        page_source = driver2.page_source
-        print("Page source of the current tab:")
-        print(page_source)
+    # Assuming you want the first tab. Modify this if needed to select the right tab.
+    tab_id = tabs[0]['id']
+
+    # Construct the URL to fetch the page source
+    page_source_url = f"http://localhost:9222/devtools/page/{tab_id}"
+
+    # Fetch the page source
+    response = requests.get(page_source_url)
+    page_source = response.text
+
+    print("Page source of the current tab:")
+    print(page_source)
 
         
     while True:
