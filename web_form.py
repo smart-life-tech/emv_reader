@@ -115,14 +115,18 @@ def read_card_data():
     return "1234567890"
 
 try:
-    # Get the page source
-    # Use JavaScript to get the latest page content
     # Get all open tabs
     handles = driver.window_handles
 
-    # Switch to the latest tab (assuming you want the most recent one)
-    driver.switch_to.window(handles[-1])  # Switch to the last tab
+    # Print all tab handles
+    print("All open tabs:", handles)
+
+    # Switch to the most recently opened tab
+    driver.switch_to.window(handles[-1])
+
+    # Get the page source of the current tab
     page_source = driver.page_source
+    print("Page source of the latest tab:")
     print(page_source)
     while True:
         amount = get_amount_from_page()
