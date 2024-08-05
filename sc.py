@@ -50,14 +50,29 @@ screenshot.save(screenshot_path)
 time.sleep(3)
 # Open the screenshot image and use pytesseract to extract text
 image = Image.open(screenshot_path)
+
+text = pytesseract.image_to_string(image)
+# Path to the screenshot image
+screenshot_path = 'screenshot.png'
+
+# Open the image
+image = Image.open(screenshot_path)
+
+# Convert to grayscale
 gray_image = ImageOps.grayscale(image)
 
 # Enhance contrast
 contrast_enhancer = ImageEnhance.Contrast(gray_image)
 contrast_image = contrast_enhancer.enhance(2)  # Adjust as needed
 
+# Apply binary threshold
+threshold = 150  # Adjust the threshold value as needed
+binary_image = contrast_image.point(lambda p: p > threshold and 255)
+
 # Use OCR to extract text
-text = pytesseract.image_to_string(contrast_image)
+text = pytesseract.image_to_string(binary_image)
+
+print(text)
 # Extract PIN and amount from the extracted text
 pin, amount = extract_pin_and_amount(text)
 
