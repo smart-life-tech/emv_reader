@@ -29,7 +29,7 @@ driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
 driver.get(WEBPAGE_URL)
 
 def get_amount_from_page():
-    print("getting amount from web page")
+    print("getting amount from web page rpi")
     try:
         total_amount_element = driver.find_element(By.CLASS_NAME, 'centered amount-total amount-total-bg')
     
