@@ -29,7 +29,13 @@ driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
 driver.get(WEBPAGE_URL)
 
 def get_amount_from_page():
+    print("getting amount from web page")
     try:
+        total_amount_element = driver.find_element(By.CSS_SELECTOR, '.centered.amount-total')
+    
+        # Extract and print the total amount
+        total_amount = total_amount_element.text
+        print("Total amount on the page:", total_amount)
         amount_element = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.CLASS_NAME, TOTAL_AMOUNT_CLASS))
         )
