@@ -8,7 +8,7 @@ import re
 def extract_pin_and_amount(text):
     # Define regex patterns for PIN and amount
     pin_pattern = re.compile(r'PIN:\s*(\d{4})')
-    amount_pattern = re.compile(r'€\s*([\d,\.]+)')
+    amount_pattern = re.compile(r'$\s*([\d,\.]+)')
     
     # Search for PIN and amount in the text
     pin_match = pin_pattern.search(text)
@@ -56,10 +56,10 @@ pin, amount = extract_pin_and_amount(text)
 
 # Print the results
 print(f"Extracted PIN: {pin}")
-print(f"Extracted Amount: €{amount}")
+print(f"Extracted Amount: ${amount}")
 # Print the extracted text
-print("Extracted Text:")
-print(text)
+#print("Extracted Text:")
+#print(text)
 
 # Optional: Save the extracted text to a file
 with open('extracted_text.txt', 'w', encoding='utf-8') as file:
