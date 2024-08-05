@@ -47,7 +47,7 @@ time.sleep(3)
 screenshot_path = 'screenshot.png'
 screenshot = pyautogui.screenshot()
 screenshot.save(screenshot_path)
-
+time.sleep(3)
 # Open the screenshot image and use pytesseract to extract text
 image = Image.open(screenshot_path)
 text = pytesseract.image_to_string(image)
