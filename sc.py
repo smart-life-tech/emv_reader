@@ -72,10 +72,10 @@ gray_image = ImageOps.grayscale(image)
 
 # Enhance contrast
 contrast_enhancer = ImageEnhance.Contrast(gray_image)
-contrast_image = contrast_enhancer.enhance(20)  # Adjust as needed
+contrast_image = contrast_enhancer.enhance(200)  # Adjust as needed
 
 # Apply binary threshold
-threshold = 10  # Adjust the threshold value as needed
+threshold = 5  # Adjust the threshold value as needed
 binary_image = contrast_image.point(lambda p: p > threshold and 255)
 
 # Use OCR to extract text
