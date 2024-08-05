@@ -52,6 +52,12 @@ time.sleep(3)
 image = Image.open(screenshot_path)
 
 text = pytesseract.image_to_string(image)
+# Extract PIN and amount from the extracted text
+pin, amount = extract_pin_and_amount(text)
+
+# Print the results
+print(f"Extracted PIN: {pin}")
+print(f"Extracted Amount: ${amount}")
 # Path to the screenshot image
 screenshot_path = 'screenshot.png'
 
@@ -72,7 +78,7 @@ binary_image = contrast_image.point(lambda p: p > threshold and 255)
 # Use OCR to extract text
 text = pytesseract.image_to_string(binary_image)
 
-print(text)
+#print(text)
 # Extract PIN and amount from the extracted text
 pin, amount = extract_pin_and_amount(text)
 
