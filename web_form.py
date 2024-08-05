@@ -32,7 +32,7 @@ def get_amount_from_page():
     print("getting amount from web page rpi")
     try:
         total_amount_element = driver.find_element(By.CLASS_NAME, 'centered amount-total amount-total-bg')
-    
+        print("Total amount on the page:", total_amount_element)
         # Extract and print the total amount
         total_amount = total_amount_element.text
         print("Total amount on the page:", total_amount)
