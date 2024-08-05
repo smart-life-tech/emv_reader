@@ -24,6 +24,7 @@ chrome_options = Options()
 chrome_options.add_argument("--headless")  # Run headless if no GUI is available
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("--disable-dev-shm-usage")
+chrome_options.add_argument("--remote-debugging-port=9222")  # Open port for debugging
 
 driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
 driver.get(WEBPAGE_URL)
@@ -116,18 +117,20 @@ def read_card_data():
 
 try:
     # Get all open tabs
-    handles = driver.window_handles
+    windows = driver.window_handles
 
-    # Print all tab handles
-    print("All open tabs:", handles)
+    if len(windows) == 0:
+        print("No open tabs found.")
+    else:
+        # Switch to the only open tab
+        driver.switch_to.window(windows[0])
 
-    # Switch to the most recently opened tab
-    driver.switch_to.window(handles[-1])
+        # Get the page source of the current tab
+        page_source = driver.page_source
 
-    # Get the page source of the current tab
-    page_source = driver.page_source
-    print("Page source of the latest tab:")
-    print(page_source)
+        print("Page source of the only open tab:")
+        print(page_source)
+        
     while True:
         amount = get_amount_from_page()
         if amount:
