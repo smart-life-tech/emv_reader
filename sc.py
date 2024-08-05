@@ -52,7 +52,7 @@ time.sleep(3)
 image = Image.open(screenshot_path)
 # Enhance sharpness
 sharpness_enhancer = ImageEnhance.Sharpness(image)
-sharp_image = sharpness_enhancer.enhance(10)  # Adjust as needed
+sharp_image = sharpness_enhancer.enhance(2)  # Adjust as needed
 
 # Use OCR to extract text
 text = pytesseract.image_to_string(sharp_image)
@@ -77,7 +77,7 @@ gray_image = ImageOps.grayscale(image)
 
 # Enhance contrast
 contrast_enhancer = ImageEnhance.Contrast(gray_image)
-contrast_image = contrast_enhancer.enhance(600)  # Adjust as needed
+contrast_image = contrast_enhancer.enhance(2)  # Adjust as needed
 
 # Apply binary threshold
 threshold = 50  # Adjust the threshold value as needed
