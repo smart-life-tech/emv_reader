@@ -3,6 +3,21 @@ import time
 import pyautogui
 from PIL import Image
 import pytesseract
+import re
+# Function to extract PIN and amount from text
+def extract_pin_and_amount(text):
+    # Define regex patterns for PIN and amount
+    pin_pattern = re.compile(r'PIN:\s*(\d{4})')
+    amount_pattern = re.compile(r'€\s*([\d,\.]+)')
+    
+    # Search for PIN and amount in the text
+    pin_match = pin_pattern.search(text)
+    amount_match = amount_pattern.search(text)
+    
+    pin = pin_match.group(1) if pin_match else 'PIN not found'
+    amount = amount_match.group(1) if amount_match else 'Amount not found'
+    
+    return pin, amount
 
 # Function to minimize all windows except Chrome
 def minimize_except_chrome():
@@ -36,7 +51,12 @@ screenshot.save(screenshot_path)
 # Open the screenshot image and use pytesseract to extract text
 image = Image.open(screenshot_path)
 text = pytesseract.image_to_string(image)
+# Extract PIN and amount from the extracted text
+pin, amount = extract_pin_and_amount(text)
 
+# Print the results
+print(f"Extracted PIN: {pin}")
+print(f"Extracted Amount: €{amount}")
 # Print the extracted text
 print("Extracted Text:")
 print(text)
