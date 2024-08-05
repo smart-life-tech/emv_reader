@@ -25,6 +25,15 @@ chrome_options.add_argument("--headless")  # Run headless if no GUI is available
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--remote-debugging-port=9222")  # Open port for debugging
+# Create a new instance of ChromeDriver
+# Set up Chrome options
+chrome_options2 = Options()
+chrome_options2.add_argument("--remote-debugging-port=9222")  # Open port for debugging
+
+# Path to your ChromeDriver executable
+service = ChromeService('/usr/bin/chromedriver')
+
+driver2 = webdriver.Chrome(service=service, options=chrome_options)
 
 driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
 driver.get(WEBPAGE_URL)
@@ -117,16 +126,16 @@ def read_card_data():
 
 try:
     # Get all open tabs
-    windows = driver.window_handles
+    windows = driver2.window_handles
 
     if len(windows) == 0:
         print("No open tabs found.")
     else:
         # Switch to the only open tab
-        driver.switch_to.window(windows[0])
+        driver2.switch_to.window(windows[0])
 
         # Get the page source of the current tab
-        page_source = driver.page_source
+        page_source = driver2.page_source
 
         print("Page source of the only open tab:")
         print(page_source)
