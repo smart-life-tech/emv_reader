@@ -1,31 +1,48 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-import time
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
 
-# Set up the WebDriver (the 'chromedriver' executable should be in your PATH)
-driver = webdriver.Chrome()
+# Set up Chrome options
+chrome_options = Options()
+chrome_options.add_argument("--headless")  # Run Chrome in headless mode
+chrome_options.add_argument("--remote-debugging-port=9222")
 
-# Open the webpage
-driver.get('https://chingup.com/rpi-pos')
+# Set up the WebDriver
+service = Service('/usr/bin/chromedriver')  # Update this path to your chromedriver
+driver = webdriver.Chrome(service=service, options=chrome_options)
 
-# Wait for the page to load
-time.sleep(5)  # Adjust the sleep time as necessary
+# Open the target URL
+driver.get('https://chingup.com/rpi_pos/')
+
 try:
-    # Locate the form input field by its name, id, or class (adjust as needed)
-    input_field = driver.find_element(By.NAME, 'name_of_input_field')  # Change 'name_of_input_field' accordingly
+    # Wait for the element with the class 'amount-total-bg' to be present
+    WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.CLASS_NAME, "centered amount-total amount-total-bg"))
+    )
 
-    # Submit text to the input field
-    input_text = 'Your Text Here'
-    input_field.send_keys(input_text)
+    # Fetch the page source
+    page_source = driver.page_source
 
-    # Optionally, submit the form if needed
-    input_field.send_keys(Keys.RETURN)
+    print("Page source of the current tab:")
+    print(page_source)
 
-    # Wait for a while to observe the result (optional)
-    time.sleep(5)
+    # Now parse the page source to find the amount
+    from bs4 import BeautifulSoup
 
-    # Close the browser
-    driver.quit()
+    soup = BeautifulSoup(page_source, 'html.parser')
+    amount_element = soup.find('div', class_='centered amount-total amount-total-bg')
+
+    if amount_element:
+        amount = amount_element.text.strip()
+        print(f"Amount found: {amount}")
+    else:
+        print("Error getting amount: Element not found.")
+
 except Exception as e:
-    print(e)
+    print(f"Error: {e}")
+
+finally:
+    driver.quit()
