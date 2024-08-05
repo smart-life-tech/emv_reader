@@ -4,6 +4,8 @@ import pyautogui
 from PIL import Image, ImageOps,ImageEnhance
 import pytesseract
 import re
+import cv2
+import numpy as np
 # Function to extract PIN and amount from text
 def extract_pin_and_amount(text):
     # Define regex patterns for PIN and amount
@@ -96,7 +98,30 @@ print(f"Extracted Amount: ${amount}")
 # Print the extracted text
 #print("Extracted Text:")
 #print(text)
+# Read the image
+image = cv2.imread(screenshot_path)
 
+# Convert to HSV color space
+hsv_image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+
+# Define range for grey color in HSV
+lower_grey = np.array([0, 0, 50])
+upper_grey = np.array([180, 50, 200])
+
+# Create a mask for grey color
+mask = cv2.inRange(hsv_image, lower_grey, upper_grey)
+
+# Apply mask to the image
+result_image = cv2.bitwise_and(image, image, mask=mask)
+
+# Convert to grayscale and threshold
+gray_image = cv2.cvtColor(result_image, cv2.COLOR_BGR2GRAY)
+_, binary_image = cv2.threshold(gray_image, 128, 255, cv2.THRESH_BINARY)
+
+# Use OCR to extract text
+text = pytesseract.image_to_string(binary_image)
+
+print(text)
 # Optional: Save the extracted text to a file
 with open('extracted_text.txt', 'w', encoding='utf-8') as file:
     file.write(text)
