@@ -8,7 +8,8 @@ import requests
 import time
 import usb.core
 import usb.util
- 
+from PIL import Image
+import pytesseract
 import json
 
 # Configuration details
@@ -166,7 +167,17 @@ try:
 
     print("Page source of the current tab:")
     print(page_source)
-
+     # Take screenshot
+    screenshot_path = 'screenshot.png'
+    driver.save_screenshot(screenshot_path)
+    print(f"Screenshot saved to {screenshot_path}")
+     # Open the image and use pytesseract to extract text
+    image = Image.open(screenshot_path)
+    text = pytesseract.image_to_string(image)
+    
+    # Print the extracted text
+    print("Extracted Text:")
+    print(text)
         
     while True:
         amount = get_amount_from_page()
