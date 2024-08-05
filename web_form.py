@@ -115,7 +115,7 @@ def read_card_data():
     return "1234567890"
 
 try:
-    total_amount_element = driver.find_element(By.CLASS_NAME, 'centered amount-total amount-total-bg')
+    total_amount_element = driver.find_element(By.NAME, 'centered amount-total amount-total-bg')
     print("Total amount on the page:", total_amount_element)
     while True:
         amount = get_amount_from_page()
