@@ -52,6 +52,9 @@ time.sleep(3)
 image = Image.open(screenshot_path)
 
 text = pytesseract.image_to_string(image)
+# Optional: Save the extracted text to a file
+with open('extracted_text1.txt', 'w', encoding='utf-8') as file:
+    file.write(text)
 # Extract PIN and amount from the extracted text
 pin, amount = extract_pin_and_amount(text)
 
