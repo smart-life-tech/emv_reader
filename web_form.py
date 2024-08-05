@@ -31,7 +31,7 @@ driver.get(WEBPAGE_URL)
 def get_amount_from_page():
     print("getting amount from web page")
     try:
-        total_amount_element = driver.find_element(By.CSS_SELECTOR, '.centered.amount-total')
+        total_amount_element = driver.find_element(By.CLASS_NAME, 'centered amount-total amount-total-bg')
     
         # Extract and print the total amount
         total_amount = total_amount_element.text
@@ -134,6 +134,8 @@ try:
                 }
                 status_code, response_text = submit_form_to_server(form_data)
                 print("Server response:", status_code, response_text)
+        else:
+            break
         
         time.sleep(1)
 
