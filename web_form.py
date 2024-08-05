@@ -154,7 +154,7 @@ try:
     # Fetch the page source
     response = requests.get(page_source_url)
     print(response)
-    page_source = response.text
+    page_source = response.content
 
     print("Page source of the current tab:")
     print(page_source)
