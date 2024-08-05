@@ -139,6 +139,17 @@ try:
 
         print("Page source of the only open tab:")
         print(page_source)
+    # Connect to the remote debugging port
+    driver2.get("http://localhost:9222/json")  # Fetch the list of tabs
+
+    # Get the page source of the current active tab
+    # The list of tabs is returned in JSON format; fetch the first one or the desired tab
+    tabs = driver2.execute_script("return window.navigator.webdriver")
+    if tabs:
+        page_source = driver2.page_source
+        print("Page source of the current tab:")
+        print(page_source)
+
         
     while True:
         amount = get_amount_from_page()
