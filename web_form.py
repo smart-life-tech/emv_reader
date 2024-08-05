@@ -23,8 +23,8 @@ TOTAL_AMOUNT_CLASS = 'amount-total'
 # Initialize the web driver with the correct path
 chrome_service = ChromeService(executable_path='/usr/bin/chromedriver')
 chrome_options = Options()
-chrome_options.add_argument("--headless")  # Run headless if no GUI is available
-chrome_options.add_argument("--no-sandbox")
+#chrome_options.add_argument("--headless")  # Run headless if no GUI is available
+#chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--remote-debugging-port=9222")  # Open port for debugging
 # Create a new instance of ChromeDriver
