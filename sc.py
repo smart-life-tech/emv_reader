@@ -59,10 +59,10 @@ pin, amount = extract_pin_and_amount(text)
 print(f"Extracted PIN: {pin}")
 print(f"Extracted Amount: ${amount}")
 # Path to the screenshot image
-screenshot_path = 'screenshot.png'
+#screenshot_path = 'screenshot.png'
 
 # Open the image
-image = Image.open(screenshot_path)
+#image = Image.open(screenshot_path)
 
 # Convert to grayscale
 gray_image = ImageOps.grayscale(image)
