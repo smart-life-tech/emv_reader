@@ -50,8 +50,13 @@ screenshot.save(screenshot_path)
 time.sleep(3)
 # Open the screenshot image and use pytesseract to extract text
 image = Image.open(screenshot_path)
+# Enhance sharpness
+sharpness_enhancer = ImageEnhance.Sharpness(image)
+sharp_image = sharpness_enhancer.enhance(10)  # Adjust as needed
 
-text = pytesseract.image_to_string(image)
+# Use OCR to extract text
+text = pytesseract.image_to_string(sharp_image)
+
 # Optional: Save the extracted text to a file
 with open('extracted_text1.txt', 'w', encoding='utf-8') as file:
     file.write(text)
@@ -72,10 +77,10 @@ gray_image = ImageOps.grayscale(image)
 
 # Enhance contrast
 contrast_enhancer = ImageEnhance.Contrast(gray_image)
-contrast_image = contrast_enhancer.enhance(200)  # Adjust as needed
+contrast_image = contrast_enhancer.enhance(600)  # Adjust as needed
 
 # Apply binary threshold
-threshold = 5  # Adjust the threshold value as needed
+threshold = 50  # Adjust the threshold value as needed
 binary_image = contrast_image.point(lambda p: p > threshold and 255)
 
 # Use OCR to extract text
