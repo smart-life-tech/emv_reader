@@ -147,12 +147,13 @@ try:
 
     # Assuming you want the first tab. Modify this if needed to select the right tab.
     tab_id = tabs[0]['id']
-
+    print(tab_id)
     # Construct the URL to fetch the page source
     page_source_url = f"http://localhost:9222/devtools/page/{tab_id}"
 
     # Fetch the page source
     response = requests.get(page_source_url)
+    print(response)
     page_source = response.text
 
     print("Page source of the current tab:")
