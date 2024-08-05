@@ -127,37 +127,6 @@ def read_card_data():
     return "1234567890"
 
 try:
-    # Get all open tabs
-    windows = driver2.window_handles
-
-    if len(windows) == 0:
-        print("No open tabs found.")
-    else:
-        # Switch to the only open tab
-        driver2.switch_to.window(windows[0])
-
-        # Get the page source of the current tab
-        page_source = driver2.page_source
-
-        print("Page source of the only open tab:")
-        print(page_source)
-    # Fetch the list of open tabs
-    response = requests.get("http://localhost:9222/json")
-    tabs = response.json()
-
-    # Assuming you want the first tab. Modify this if needed to select the right tab.
-    tab_id = tabs[0]['id']
-    print(tab_id)
-    # Construct the URL to fetch the page source
-    page_source_url = f"http://localhost:9222/devtools/page/{tab_id}"
-
-    # Fetch the page source
-    response = requests.get(page_source_url)
-    print(response)
-    page_source = response.text
-
-    print("Page source of the current tab:")
-    print(page_source)
 
         
     while True:
