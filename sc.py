@@ -1,7 +1,7 @@
 import subprocess
 import time
 import pyautogui
-from PIL import Image
+from PIL import Image, ImageOps
 import pytesseract
 import re
 # Function to extract PIN and amount from text
@@ -50,7 +50,8 @@ screenshot.save(screenshot_path)
 time.sleep(3)
 # Open the screenshot image and use pytesseract to extract text
 image = Image.open(screenshot_path)
-text = pytesseract.image_to_string(image)
+gray_image = ImageOps.grayscale(image)
+text = pytesseract.image_to_string(gray_image)
 # Extract PIN and amount from the extracted text
 pin, amount = extract_pin_and_amount(text)
 
