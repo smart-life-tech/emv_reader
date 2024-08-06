@@ -28,6 +28,8 @@ chrome_options.add_argument("--headless")  # Run headless if no GUI is available
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--remote-debugging-port=9222")  # Open port for debugging
+chrome_options.add_argument("--start-maximized")  # Ensure the browser starts maximized
+
 # Create a new instance of ChromeDriver
 # Set up Chrome options
 chrome_options2 = Options()
@@ -135,10 +137,16 @@ try:
         print("No open tabs found.")
     else:
         # Switch to the only open tab
-        driver2.switch_to.window(windows[0])
+        driver.switch_to.window(windows[0])
+        # Wait until the element is located
+        driver.implicitly_wait(10)  # Waits up to 10 seconds before throwing an exception
+        # Find the image element by its id
+        img_element = driver.find_element(By.ID, "insert_card")
 
+        # Simulate a click on the element
+        img_element.click()
         # Get the page source of the current tab
-        page_source = driver2.page_source
+        page_source = driver.page_source
 
         print("Page source of the only open tab:")
         print(page_source)
