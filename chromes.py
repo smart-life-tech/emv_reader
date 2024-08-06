@@ -1,17 +1,27 @@
 import pychrome
 
-# Connect to the Chromium browser
-browser = pychrome.Browser(url="http://127.0.0.1:9222")
-tab = browser.list_tab()[0]
-tab.start()
+try:
+    # Connect to the Chromium browser
+    browser = pychrome.Browser(url="http://127.0.0.1:9222")
+    tabs = browser.list_tab()
 
-# Define the JavaScript code to trigger the click
-js_code = """
-document.getElementById('insert_card').click();
-"""
+    if not tabs:
+        print("No tabs found")
+        exit(1)
 
-# Execute the JavaScript code
-tab.Runtime.evaluate(expression=js_code)
+    tab = tabs[0]
+    tab.start()
 
-# Close the tab connection
-tab.stop()
+    # Define the JavaScript code to trigger the click
+    js_code = """
+    document.getElementById('insert_card').click();
+    """
+
+    # Execute the JavaScript code
+    result = tab.Runtime.evaluate(expression=js_code)
+    print(result)
+
+    # Close the tab connection
+    tab.stop()
+except Exception as e:
+    print(f"An error occurred: {e}")
