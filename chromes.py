@@ -1,5 +1,5 @@
 import pychrome
-
+print("starting")
 try:
     # Connect to the Chromium browser
     browser = pychrome.Browser(url="http://127.0.0.1:9222")
