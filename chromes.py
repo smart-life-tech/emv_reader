@@ -1,5 +1,6 @@
 import pychrome
 print("starting")
+#i need to run this at every start  chromium-browser --remote-debugging-port=9222
 try:
     # Connect to the Chromium browser
     browser = pychrome.Browser(url="http://127.0.0.1:9222")
