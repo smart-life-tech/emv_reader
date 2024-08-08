@@ -13,6 +13,7 @@ print(f"Using reader: {reader}")
 
 # Connect to the reader
 connection = reader.createConnection()
+print("Connected to reader.",connection)
 connection.connect()
 
 # Send a command to the card (example: get card UID)
