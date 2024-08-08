@@ -1,7 +1,6 @@
 from smartcard.System import readers
 from smartcard.util import toHexString, toBytes
 from smartcard.Exceptions import CardConnectionException
-from smartcard.CardConnection import CardConnection
 import time
 
 # Define the unique identifier
@@ -17,14 +16,14 @@ def connect_to_reader():
     
     # Use the first reader
     reader = available_readers[0]
-    print("Using reader:", reader)
     connection = reader.createConnection()
 
     # Attempt to connect with retries
     retries = 3
     for attempt in range(retries):
         try:
-            connection.connect(CardConnection.T0_protocol)
+            connection.connect()
+            print("Connected to reader:", reader)
             return connection
         except CardConnectionException as e:
             print(f"Connection attempt {attempt + 1} failed: {e}")
