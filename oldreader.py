@@ -23,7 +23,7 @@ def connect_to_reader():
     retries = 3
     for attempt in range(retries):
         try:
-            connection.connect(CardConnection.T1_protocol)
+            connection.connect(CardConnection.T0_protocol)
             return connection
         except CardConnectionException as e:
             print(f"Connection attempt {attempt + 1} failed: {e}")
