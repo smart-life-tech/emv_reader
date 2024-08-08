@@ -1,51 +1,23 @@
-import sys
 from smartcard.System import readers
-from smartcard.util import toHexString, toBytes
-from smartcard.Exceptions import CardConnectionException
+from smartcard.util import toHexString
 
-def connect_to_card():
-    r = readers()
-    if len(r) == 0:
-        raise Exception("No smart card readers found")
+# List available readers
+reader_list = readers()
+if not reader_list:
+    print("No readers available.")
+    exit()
 
-    reader = r[0]
-    connection = reader.createConnection()
-    connection.connect()
-    return connection
+# Use the first available reader
+reader = reader_list[0]
+print(f"Using reader: {reader}")
 
-def write_data(connection, data, start_address=0):
-    for i, byte in enumerate(data):
-        write_command = [0xA0, 0x00, start_address + i, byte]
-        connection.transmit(write_command)
+# Connect to the reader
+connection = reader.createConnection()
+connection.connect()
 
-def read_data(connection, length, start_address=0):
-    read_command = [0xB0, 0x00, start_address, length]
-    data, sw1, sw2 = connection.transmit(read_command)
-    return data
+# Send a command to the card (example: get card UID)
+apdu = [0xFF, 0xCA, 0x00, 0x00, 0x00]
+response, sw1, sw2 = connection.transmit(apdu)
 
-def main():
-    unique_string = "YOUR_UNIQUE_STRING"
-    start_address = 0  # Address to start writing the string
-
-    connection = connect_to_card()
-
-    try:
-        # Convert string to bytes
-        data = toBytes(unique_string)
-
-        # Write data to card
-        write_data(connection, data, start_address)
-        print(f"Data written to card: {unique_string}")
-
-        # Read data from card
-        read_length = len(data)
-        read_data_bytes = read_data(connection, read_length, start_address)
-        read_string = ''.join(chr(b) for b in read_data_bytes)
-        print(f"Data read from card: {read_string}")
-
-    except CardConnectionException as e:
-        print(f"Connection error: {e}")
-        sys.exit()
-
-if __name__ == "__main__":
-    main()
+print(f"Response: {toHexString(response)}")
+print(f"Status Word: {sw1:02X} {sw2:02X}")
