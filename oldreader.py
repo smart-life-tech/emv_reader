@@ -17,6 +17,7 @@ def connect_to_reader():
     
     # Use the first reader
     reader = available_readers[0]
+    print("Using reader:", reader)
     connection = reader.createConnection()
 
     # Attempt to connect with retries
