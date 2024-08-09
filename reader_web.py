@@ -3,7 +3,7 @@ import usb.util
 import time
 import pychrome
 
-# Define patterns for differentiation
+# Define patterns for differentiation might be diffrent for some cards
 custom_card_patterns = [
     [2, 0, 0, 0, 0, 0, 0, 0],
     [2, 0, 0, 0, 0, 0, 0, 0]
