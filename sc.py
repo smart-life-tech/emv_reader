@@ -6,6 +6,7 @@ import pytesseract
 import re
 import cv2
 import numpy as np
+#using screenshot works but only to some extent
 # Function to extract PIN and amount from text
 def extract_pin_and_amount(text):
     # Define regex patterns for PIN and amount

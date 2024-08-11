@@ -26,7 +26,7 @@ def is_custom_card(data_chunk):
 def is_other_card(data_chunk):
     return data_chunk in other_card_patterns
 
-def chrome():
+def chrome(card_data):
     print("starting")
     try:
         # Connect to the Chromium browser
@@ -48,7 +48,15 @@ def chrome():
         # Execute the JavaScript code
         result = tab.Runtime.evaluate(expression=js_code)
         print(result)
+        # JavaScript code to trigger the card check with simulated card data
+        js_code = f"""
+        window.checkCardType("{card_data}");
+        """
 
+        # Execute the JavaScript code
+        result = tab.Runtime.evaluate(expression=js_code)
+        print("JavaScript executed:", result)
+        
         # Close the tab connection
         #tab.stop()
     except Exception as e:
@@ -116,6 +124,8 @@ try:
                             
                             if is_custom_card(chunk):
                                 print(f"Data received (Custom Card): {chunk}")
+                                card_data = "simulated_EMV_data"  # Replace with actual data if needed
+                                chrome(card_data)  # Trigger the Chrome interaction with card data
                             elif is_other_card(chunk):
                                 print(f"Data received (Other Card): {chunk}")
                             else:
