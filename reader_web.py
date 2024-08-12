@@ -44,15 +44,26 @@ def chrome(card_data):
         js_code = """
         document.getElementById('insert_card').click();
         """
-
         # Execute the JavaScript code
         result = tab.Runtime.evaluate(expression=js_code)
         print(result)
+        
+        
+        
         # JavaScript code to trigger the card check with simulated card data
         js_code = f"""
-        window.checkCardType("{card_data}");
+        window.chingupCard();
         """
-
+        # Execute the JavaScript code
+        result = tab.Runtime.evaluate(expression=js_code)
+        print("JavaScript executed:", result)
+        
+        
+        
+        # JavaScript code to trigger the card check with simulated card data
+        js_code = f"""
+        window.emvResponse("{card_data}");
+        """
         # Execute the JavaScript code
         result = tab.Runtime.evaluate(expression=js_code)
         print("JavaScript executed:", result)
