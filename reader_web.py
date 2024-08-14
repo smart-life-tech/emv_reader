@@ -2,6 +2,23 @@ import usb.core
 import usb.util
 import time
 import pychrome
+import subprocess
+# Define the command to start Chromium with the required options
+chromium_command = [
+    "chromium-browser",
+    "--remote-debugging-port=9222",
+    "--noerrdialogs",
+    "--disable-infobars",
+    "--kiosk",
+    "https://www.chingup.com/rpi_pos/"
+]
+
+# Start Chromium using subprocess
+try:
+    subprocess.Popen(chromium_command)
+    print("Chromium browser started successfully.")
+except Exception as e:
+    print(f"Failed to start Chromium: {e}")
 
 # Define patterns for differentiation might be diffrent for some cards
 custom_card_patterns = [
