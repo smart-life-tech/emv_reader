@@ -116,6 +116,9 @@ try:
                 print("Data received:", data)
                 # Convert array to list
                 data_list = list(data)
+                # Save the card data to a .txt file
+                with open("card_data.txt", "a") as file:
+                    file.write(f"Custom Card Data: {chunk}\n")
                 
                 # Store the data in the buffer
                 data_buffer.extend(data_list)
