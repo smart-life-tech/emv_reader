@@ -9,6 +9,7 @@ chromium_command = [
     "--remote-debugging-port=9222",
     "--noerrdialogs",
     "--disable-infobars",
+    "--no-sandbox",
     "--kiosk",
     "https://www.chingup.com/rpi_pos/"
 ]
