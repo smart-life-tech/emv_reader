@@ -16,7 +16,7 @@ chromium_command = [
 
 # Start Chromium using subprocess
 try:
-    subprocess.Popen(chromium_command)
+    #subprocess.Popen(chromium_command)
     print("Chromium browser started successfully.")
 except Exception as e:
     print(f"Failed to start Chromium: {e}")
