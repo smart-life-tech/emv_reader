@@ -4,7 +4,7 @@ from smartcard.util import toHexString
 # Select the first reader
 r = readers()
 print("Using reader:", r)
-reader = r[0]
+reader = r[1]
 
 # Connect to the card
 connection = reader.createConnection()
