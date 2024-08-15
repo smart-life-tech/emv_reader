@@ -35,7 +35,8 @@ ep_in = usb.util.find_descriptor(
     # Match the first IN endpoint
     custom_match=lambda e: usb.util.endpoint_direction(e.bEndpointAddress) == usb.util.ENDPOINT_IN
 )
-
+print(f"Endpoint OUT: {ep_out}")
+print(f"Endpoint IN: {ep_in}")
 assert ep_out is not None, "Endpoint OUT not found"
 assert ep_in is not None, "Endpoint IN not found"
 
