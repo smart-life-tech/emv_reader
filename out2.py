@@ -8,7 +8,7 @@ reader = r[1]
 connection = r[1].createConnection()
 connection.connect()
 
-apdu = [0x00, 0xD6, 0x00, 0x00, 0x02, 0x12, 0x34]  # Example APDU
+apdu = [0xFF, 0xD0, 0x00, 0x00, 0x04, 0x31, 0x32, 0x33, 0x34]  # Example APDU
 response, sw1, sw2 = connection.transmit(apdu)
 print("Response: ", toHexString(response))
 print("Status Words: %02X %02X" % (sw1, sw2))
