@@ -3,6 +3,7 @@ from smartcard.util import toHexString
 
 # Select the first reader
 r = readers()
+print("Using reader:", r)
 reader = r[0]
 
 # Connect to the card
