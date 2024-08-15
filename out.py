@@ -42,7 +42,7 @@ assert ep_in is not None, "Endpoint IN not found"
 # Perform operations
 try:
     # Write data to the OUT endpoint
-    data_to_send = b'Test data'  # Example data
+    data_to_send = b'\x00\xA4\x04\x00\x0A\xA0\x00\x00\x00\x03\x00\x00\x00\x00\x01'
     ep_out.write(data_to_send)
 
     # Read data from the IN endpoint
