@@ -46,7 +46,7 @@ try:
     ep_out.write(data_to_send)
     print(f"Data sent: {data_to_send}")
     # Read data from the IN endpoint
-    data_received = ep_in.read(ep_in.wMaxPacketSize, timeout=5000)  # Adjust the size as needed
+    data_received = dev.read(ep_in.bEndpointAddress, ep_in.wMaxPacketSize, timeout=10000)  # 10 seconds
     print(f"Data received: {data_received}")
 
 finally:
