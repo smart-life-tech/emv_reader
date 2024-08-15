@@ -5,7 +5,13 @@ from smartcard.util import toHexString
 r = readers()
 print("Using reader:", r)
 reader = r[1]
+connection = r[0].createConnection()
+connection.connect()
 
+apdu = [0x00, 0xD6, 0x00, 0x00, 0x02, 0x12, 0x34]  # Example APDU
+response, sw1, sw2 = connection.transmit(apdu)
+print("Response: ", toHexString(response))
+print("Status Words: %02X %02X" % (sw1, sw2))
 # Connect to the card
 connection = reader.createConnection()
 connection.connect()
