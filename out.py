@@ -42,11 +42,11 @@ assert ep_in is not None, "Endpoint IN not found"
 # Perform operations
 try:
     # Write data to the OUT endpoint
-    data_to_send = b'\x00\xA4\x04\x00\x0A\xA0\x00\x00\x00\x03\x00\x00\x00\x00\x01'
+    data_to_send = bytes([0x01, 0xA4, 0x00, 0x04, 0x11, 0x22, 0x33, 0x44])  # Example command
     ep_out.write(data_to_send)
-
+    print(f"Data sent: {data_to_send}")
     # Read data from the IN endpoint
-    data_received = ep_in.read(0x82,timeout=5000)  # Adjust the size as needed
+    data_received = ep_in.read(64, timeout=5000)  # Adjust the size as needed
     print(f"Data received: {data_received}")
 
 finally:
