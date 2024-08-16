@@ -2,9 +2,9 @@ import usb.core
 import usb.util
 
 # Replace with your device's vendor and product ID
-VENDOR_ID =  0x058f
-PRODUCT_ID = 0x9540
-# Find the device
+VENDOR_ID =  0x072f
+PRODUCT_ID = 0x90cc
+# Find the devi
 dev = usb.core.find(idVendor=VENDOR_ID, idProduct=PRODUCT_ID)
 
 if dev is None:
