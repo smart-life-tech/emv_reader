@@ -92,8 +92,8 @@ def chrome(card_data):
         print(f"An error occurred: {e}")
 
 # Vendor and Product ID for the AugustaS device
-VENDOR_ID = 0x0acd
-PRODUCT_ID = 0x3810
+VENDOR_ID = 0x058f
+PRODUCT_ID = 0x9540
 
 # Find the USB device
 dev = usb.core.find(idVendor=VENDOR_ID, idProduct=PRODUCT_ID)
@@ -136,13 +136,18 @@ try:
                 data_list = list(data)
                 # Save the card data to a .txt file
                 with open("card_data.txt", "a") as file:
-                    file.write(f"Custom Card Data: {chunk}\n")
+                    file.write(f"Custom Card Data: {data}\n")
+                if len(data)<20:
+                    print(f"Data received (Custom Card): {data}")
+                    card_data = data  # Replace with actual data if needed
+                    chrome(card_data)  # Trigger the Chrome interaction with card data
                 
                 # Store the data in the buffer
-                data_buffer.extend(data_list)
+                #data_buffer.extend(data_list)
                 
                 # Update the last data time
                 last_data_time = time.time()
+            '''
             else:
                 # No data received, check if buffer should be processed
                 if time.time() - last_data_time > BUFFER_TIMEOUT:
@@ -162,12 +167,12 @@ try:
                                 print(f"Data received (Other Card): {chunk}")
                             else:
                                 print(f"Data received (Unknown Card): {chunk}")
-                    
+                    '''
                     # Clear the buffer for the next data
-                    data_buffer = []
+                    #data_buffer = []
                     
                     # Update the last data time to avoid continuous processing
-                    last_data_time = time.time()
+                    #last_data_time = time.time()
 
 
         except usb.core.USBError as e:
