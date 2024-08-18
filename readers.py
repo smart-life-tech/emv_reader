@@ -3,8 +3,8 @@ import usb.util
 import time
 
 # Vendor and Product ID for the AugustaS device
-VENDOR_ID = 0x072f
-PRODUCT_ID = 0x90cc
+VENDOR_ID = 0x058f
+PRODUCT_ID = 0x9540
 
 # Find the USB device
 dev = usb.core.find(idVendor=VENDOR_ID, idProduct=PRODUCT_ID)
