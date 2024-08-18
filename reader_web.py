@@ -62,10 +62,8 @@ def chrome(card_data):
         """
         # Execute the JavaScript code
         result = tab.Runtime.evaluate(expression=js_code)
-        print(result)
-        
-        
-        
+        print("click result",result)
+        time.sleep(5)
         # JavaScript code to trigger the card check with simulated card data
         js_code = f"""
         window.chingupCard();
@@ -123,9 +121,9 @@ if ep_in is None:
     raise ValueError("IN Endpoint not found")
 
 print("Starting data read...")
-
+chrome('card_data')
 try:
-    chrome('card_data')
+    
     while True:
         try:
             # Read data from the IN endpoint
