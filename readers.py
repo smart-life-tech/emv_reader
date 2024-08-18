@@ -1,7 +1,7 @@
 import usb.core
 import usb.util
 import time
-
+#i need to run this at every start  chromium-browser --remote-debugging-port=9222
 # Vendor and Product ID for the AugustaS device
 VENDOR_ID = 0x058f
 PRODUCT_ID = 0x9540
