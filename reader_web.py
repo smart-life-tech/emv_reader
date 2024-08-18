@@ -8,7 +8,7 @@ import subprocess
 chromium_command = [
     "chromium-browser",
     "--remote-debugging-port=9222",
- 
+    
     "https://www.chingup.com/rpi_pos/"
 ]
 
@@ -124,6 +124,7 @@ if ep_in is None:
 print("Starting data read...")
 
 try:
+    chrome('card_data')
     while True:
         try:
             # Read data from the IN endpoint
