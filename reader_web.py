@@ -7,10 +7,7 @@ import subprocess
 chromium_command = [
     "chromium-browser",
     "--remote-debugging-port=9222",
-    "--noerrdialogs",
-    "--disable-infobars",
-    "--no-sandbox",
-    "--kiosk",
+ 
     "https://www.chingup.com/rpi_pos/"
 ]
 
