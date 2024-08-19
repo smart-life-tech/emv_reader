@@ -21,6 +21,30 @@ try:
     # Connect to the reader
     connection = reader.createConnection()
     connection.connect()
+        # Example APDU command to select an application on the card
+    select_apdu = [0x00, 0xA4, 0x04, 0x00, 0x07, 0xA0, 0x00, 0x00, 0x00, 0x03, 0x10, 0x10]
+
+    def send_apdu(connection, apdu):
+        response, sw1, sw2 = connection.transmit(apdu)
+        return response, sw1, sw2
+
+    # Send the select application APDU command
+    response, sw1, sw2 = send_apdu(connection, select_apdu)
+    print(f"APDU Response: {toHexString(response)}")
+    print(f"Status Word: {sw1:02X} {sw2:02X}")
+
+    # Example APDU command to read binary data
+    read_binary_apdu = [0x00, 0xB0, 0x00, 0x00, 0x10]  # Read 16 bytes from offset 0x00
+    response, sw1, sw2 = send_apdu(connection, read_binary_apdu)
+    print(f"Read Binary Response: {toHexString(response)}")
+    print(f"Status Word: {sw1:02X} {sw2:02X}")
+
+    # Example APDU command to write binary data
+    write_binary_apdu = [0x00, 0xD0, 0x00, 0x00, 0x04, 0x11, 0x22, 0x33, 0x44]  # Write 4 bytes (0x11, 0x22, 0x33, 0x44)
+    response, sw1, sw2 = send_apdu(connection, write_binary_apdu)
+    print(f"Write Binary Response: {toHexString(response)}")
+    print(f"Status Word: {sw1:02X} {sw2:02X}")
+
 
     # Step 1: Select the VISA application
     select_apdu = [0x00, 0xA4, 0x04, 0x00, 0x07, 0xA0, 0x00, 0x00, 0x00, 0x03, 0x10, 0x10, 0x00]
