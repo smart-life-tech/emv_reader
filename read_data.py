@@ -15,7 +15,9 @@ try:
         raise Exception("No readers available.")
 
     # Use the first available reader
+    
     reader = reader_list[0]
+    print("readers available:",reader)
     print(f"Using reader: {reader}")
 
     # Connect to the reader
@@ -25,7 +27,8 @@ try:
     # Select VISA AID
     select_aid_apdu = [0x00, 0xA4, 0x04, 0x00, 0x07] + [0xA0, 0x00, 0x00, 0x00, 0x03, 0x10, 0x10] + [0x00]
     response, sw1, sw2 = transmit_apdu(connection, select_aid_apdu)
-    
+    print(sw1)
+    print(sw2)
     if sw1 == 0x90 and sw2 == 0x00:
         # Example: Read Record 1, SFI 1
         read_record_apdu = [0x00, 0xB2, 0x01, 0x0C, 0x00]
