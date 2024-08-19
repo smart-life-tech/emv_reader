@@ -43,20 +43,37 @@ def send_command(device, command):
     response = device.read(64)  # Adjust the read size as necessary
     return response
 
+# Parse the firmware version response
+def parse_firmware_version(response):
+    if len(response) >= 6:  # Ensure there are enough bytes for STX, LRC, CheckSUM, and ETX
+        stx, len_low, len_high, *response_body, lrc, checksum, etx = response
+
+        # Verify STX and ETX
+        if stx != 0x02 or etx != 0x03:
+            print("Invalid response: Missing STX or ETX")
+            return
+
+        # Verify LRC and checksum
+        if lrc == calculate_lrc(response_body) and checksum == calculate_checksum(response_body):
+            # Extract and print response body
+            response_data = bytearray(response_body).decode('ascii')
+            print("Valid response:")
+            print("Firmware Version:", response_data)
+        else:
+            print("Invalid response: LRC or Checksum mismatch")
+    else:
+        print("Invalid response: Insufficient data length")
+
 # Main function
 def main():
     # Open the device
     device = open_device()
 
-    # Define the command body (example command: Get DUKPT Key KSN)
+    # Define the command body for getting firmware version
     command_body = [
         0x78,  # Command Prefix (Configuration commands)
         0x46,  # Function ID
-        0x3E,  # Specific Function ID
-        0x04, 0x00,  # Length of Data (2 bytes)
-        0x02,  # KeyNameIndex
-        0x01, 0x00,  # Length of Key Slot (2 bytes)
-        0x00   # Key Slot
+        0x01   # Specific Function ID for Get Firmware Version
     ]
 
     # Prepare and send the command
@@ -67,30 +84,8 @@ def main():
     # Print the raw response
     print("Raw response:", response)
 
-    # Process response
-    if response:
-        if len(response) >= 6:  # Ensure there are enough bytes for STX, LRC, CheckSUM, and ETX
-            stx, len_low, len_high, *response_body, lrc, checksum, etx = response
-
-            # Verify STX and ETX
-            if stx != 0x02 or etx != 0x03:
-                print("Invalid response: Missing STX or ETX")
-                return
-
-            # Verify LRC and checksum
-            if lrc == calculate_lrc(response_body) and checksum == calculate_checksum(response_body):
-                # Extract and print response status and data
-                response_status = response_body[0]
-                response_data = response_body[1:]
-                print("Valid response:")
-                print("Response Status:", response_status)
-                print("Response Data:", response_data)
-            else:
-                print("Invalid response: LRC or Checksum mismatch")
-        else:
-            print("Invalid response: Insufficient data length")
-    else:
-        print("No response received or response is empty")
+    # Parse and display the firmware version
+    parse_firmware_version(response)
 
     # Close the device
     device.close()
