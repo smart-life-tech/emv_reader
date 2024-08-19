@@ -13,6 +13,8 @@ def open_device():
             print("%s : %s" % (key, d[key]))
         print()
     h = hid.device()
+    device_list = hid.enumerate(VID,PID)
+    print(device_list)
     h.open(VID, PID)
     h.set_nonblocking(1)
     return h
