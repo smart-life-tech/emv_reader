@@ -131,15 +131,15 @@ try:
             print("reads")
             if data:
                 print("Data received:", data)
-                # Convert array to list
-                data_list = list(data)
-                # Save the card data to a .txt file
-                with open("card_data.txt", "a") as file:
-                    file.write(f"Custom Card Data: {data}\n")
-                if len(data)<20:
-                    print(f"Data received (Custom Card): {data}")
-                    card_data = data  # Replace with actual data if needed
-                    chrome(card_data)  # Trigger the Chrome interaction with card data
+                # # Convert array to list
+                # data_list = list(data)
+                # # Save the card data to a .txt file
+                # with open("card_data.txt", "a") as file:
+                #     file.write(f"Custom Card Data: {data}\n")
+                # if len(data)<20:
+                #     print(f"Data received (Custom Card): {data}")
+                #     card_data = data  # Replace with actual data if needed
+                #     chrome(card_data)  # Trigger the Chrome interaction with card data
                 
                 # Store the data in the buffer
                 #data_buffer.extend(data_list)
