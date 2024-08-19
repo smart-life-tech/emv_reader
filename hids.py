@@ -6,13 +6,6 @@ PID = 0x3810  # Replace with your device's PID
 
 # Open the HID device
 def open_device():
-    for d in hid.enumerate():
-        print(d)
-        keys = list(d.keys())
-        keys.sort()
-        # for key in keys:
-        #     print("%s : %s" % (key, d[key]))
-        # print()
     h = hid.device()
     h.open(VID, PID)
     h.set_nonblocking(1)
@@ -53,8 +46,16 @@ def main():
     # Open the device
     device = open_device()
 
-    # Define the command body (example command)
-    command_body = [0x72, 0xF1]  # Example command: ICC read
+    # Define the command body (example command: Get DUKPT Key KSN)
+    command_body = [
+        0x78,  # Command Prefix (Configuration commands)
+        0x46,  # Function ID
+        0x3E,  # Specific Function ID
+        0x04, 0x00,  # Length of Data (2 bytes)
+        0x02,  # KeyNameIndex
+        0x01, 0x00,  # Length of Key Slot (2 bytes)
+        0x00   # Key Slot
+    ]
 
     # Prepare and send the command
     command = prepare_command(command_body)
@@ -66,12 +67,26 @@ def main():
 
     # Process response
     if response:
-        stx, len_low, len_high, *response_body, lrc, checksum, etx = response
-        # Verify LRC and checksum
-        if lrc == calculate_lrc(response_body) and checksum == calculate_checksum(response_body):
-            print("Valid response:", response_body)
+        if len(response) >= 6:  # Ensure there are enough bytes for STX, LRC, CheckSUM, and ETX
+            stx, len_low, len_high, *response_body, lrc, checksum, etx = response
+
+            # Verify STX and ETX
+            if stx != 0x02 or etx != 0x03:
+                print("Invalid response: Missing STX or ETX")
+                return
+
+            # Verify LRC and checksum
+            if lrc == calculate_lrc(response_body) and checksum == calculate_checksum(response_body):
+                # Extract and print response status and data
+                response_status = response_body[0]
+                response_data = response_body[1:]
+                print("Valid response:")
+                print("Response Status:", response_status)
+                print("Response Data:", response_data)
+            else:
+                print("Invalid response: LRC or Checksum mismatch")
         else:
-            print("Invalid response")
+            print("Invalid response: Insufficient data length")
     else:
         print("No response received")
 
