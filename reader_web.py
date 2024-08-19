@@ -97,7 +97,7 @@ dev = usb.core.find(idVendor=VENDOR_ID, idProduct=PRODUCT_ID)
 
 if dev is None:
     raise ValueError('Device not found')
-
+print("devices found : ",dev)
 # Detach the kernel driver if it's attached
 if dev.is_kernel_driver_active(0):
     dev.detach_kernel_driver(0)
@@ -110,7 +110,7 @@ cfg = dev.get_active_configuration()
 
 # Access the first interface
 intf = cfg.interfaces()[0]
-
+print("intf: ",intf)
 # Find the IN endpoint (interrupt IN endpoint)
 ep_in = usb.util.find_descriptor(
     intf,
@@ -127,8 +127,7 @@ try:
     while True:
         try:
             # Read data from the IN endpoint
-            data = ep_in.read(0x81, timeout=5000)  # Adjust timeout and size if needed
-            print("reads")
+            data = ep_in.read(ep_in.wMaxPacketSize, timeout=5000)  # Adjust timeout and size if needed
             if data:
                 print("Data received:", data)
                 # # Convert array to list
