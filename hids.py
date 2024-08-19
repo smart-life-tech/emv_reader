@@ -2,8 +2,8 @@ import hid
 import time
 
 # Define the Vendor ID and Product ID for your device
-VID = 0x0acd  # Replace with your device's VID
-PID = 0x3810  # Replace with your device's PID
+VID = 0x058f  # Replace with your device's VID
+PID = 0x9540  # Replace with your device's PID
 
 # Open the HID device
 def open_device():
