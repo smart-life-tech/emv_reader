@@ -1,7 +1,7 @@
 import hid
 
 # Define the Vendor ID and Product ID for your device
-VID = 0x0ACD  # Replace with your device's VID
+VID = 0x0acd  # Replace with your device's VID
 PID = 0x3410  # Replace with your device's PID
 
 # Open the HID device
