@@ -1,8 +1,8 @@
 import hid
 
 # Define the Vendor ID and Product ID for your device
-VID = 2765  # Replace with your device's VID
-PID = 14362  # Replace with your device's PID
+VID = 0x0acd  # Replace with your device's VID
+PID = 0x3810  # Replace with your device's PID
 
 # Open the HID device
 def open_device():
@@ -13,8 +13,6 @@ def open_device():
             print("%s : %s" % (key, d[key]))
         print()
     h = hid.device()
-    device_list = hid.enumerate(VID,PID)
-    print("device lists: ",device_list)
     h.open(VID, PID)
     h.set_nonblocking(1)
     return h
