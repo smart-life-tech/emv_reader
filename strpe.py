@@ -15,7 +15,7 @@ try:
         raise Exception("No readers available.")
 
     # Use the first available reader
-    reader = reader_list[0]
+    reader = reader_list[1]
     print(f"Using reader: {reader}")
 
     # Connect to the reader
