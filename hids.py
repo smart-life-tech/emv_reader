@@ -24,18 +24,7 @@ def calculate_checksum(data):
     checksum = sum(data) % 256
     return checksum
 
-# Prepare command with ITP protocol
-def prepare_itp_command(func_id, data=[]):
-    stx = 0x02
-    etx = 0x03
-    command_body = [func_id] + data
-    length = len(command_body) + 3  # including STX, ETX, and LRC
-    lrc = calculate_lrc([stx] + command_body + [etx])
-
-    command = bytearray([stx] + command_body + [etx, lrc])
-    return command
-
-# Prepare command with NGA protocol
+# Prepare NGA command
 def prepare_nga_command(command_body):
     stx = 0x02
     etx = 0x03
@@ -54,21 +43,6 @@ def send_command(device, command):
     response = device.read(64)  # Adjust the read size as necessary
     return response
 
-# Parse ITP response
-def parse_itp_response(response):
-    if response:
-        ack_nak = response[0]
-        if ack_nak == 0x06:  # ACK
-            # Process response
-            print("ACK received")
-            # Further parsing needed based on command and response format
-        elif ack_nak == 0x15:  # NAK
-            print("NAK received")
-        else:
-            print("Invalid response")
-    else:
-        print("No response received")
-
 # Parse NGA response
 def parse_nga_response(response):
     if len(response) >= 6:  # Ensure there are enough bytes for STX, LRC, CheckSUM, and ETX
@@ -81,10 +55,19 @@ def parse_nga_response(response):
 
         # Verify LRC and checksum
         if lrc == calculate_lrc(response_body) and checksum == calculate_checksum(response_body):
-            # Extract and print response body
-            response_data = bytearray(response_body).decode('ascii')
-            print("Valid response:")
-            print("Response Data:", response_data)
+            response_status = response_body[0]
+            response_data = bytearray(response_body[1:]).decode('ascii', errors='ignore')
+
+            if response_status == 0x06:  # ACK
+                print("Valid response (ACK):", response_data)
+            elif response_status == 0x15:  # NAK
+                error_code = response_data[:4]  # First 2 bytes for error code
+                print("Error response (NAK): Error Code:", error_code)
+                if len(response_data) > 4:
+                    tag = response_data[4:]  # Remaining bytes for tag
+                    print("Tag:", tag)
+            else:
+                print("Unknown response status")
         else:
             print("Invalid response: LRC or Checksum mismatch")
     else:
@@ -95,15 +78,9 @@ def main():
     # Open the device
     device = open_device()
 
-    # Define and prepare ITP command for getting firmware version
-    itp_command = prepare_itp_command(0x01)  # Example function ID for firmware version
-    print("Sending ITP command:", itp_command)
-    itp_response = send_command(device, itp_command)
-    print("ITP Raw response:", itp_response)
-    parse_itp_response(itp_response)
-
-    # Define and prepare NGA command for getting firmware version
-    nga_command_body = [0x78, 0x46, 0x01]  # Example NGA command
+    # Define and prepare NGA command (example command for firmware version)
+    # Command for firmware version (example: [0x78, 0x46, 0x01])
+    nga_command_body = [0x78, 0x46, 0x01]  # Configuration command for example
     nga_command = prepare_nga_command(nga_command_body)
     print("Sending NGA command:", nga_command)
     nga_response = send_command(device, nga_command)
