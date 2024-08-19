@@ -26,6 +26,15 @@ try:
     select_apdu = [0x00, 0xA4, 0x04, 0x00, 0x07, 0xA0, 0x00, 0x00, 0x00, 0x03, 0x10, 0x10, 0x00]
     response, sw1, sw2 = send_apdu(connection, select_apdu)
 
+        # Try reading Record 2 with SFI 2
+    read_record_apdu = [0x00, 0xB2, 0x02, 0x14, 0x00]  # SFI = 2 << 3 | 4 = 0x14
+    response, sw1, sw2 = send_apdu(connection, read_record_apdu)
+
+    # Try reading Record 3 with SFI 1
+    read_record_apdu = [0x00, 0xB2, 0x03, 0x0C, 0x00]  # SFI = 1 << 3 | 4 = 0x0C
+    response, sw1, sw2 = send_apdu(connection, read_record_apdu)
+
+
     if sw1 == 0x61:
         # Step 2: Use GET RESPONSE to retrieve additional data
         get_response_apdu = [0x00, 0xC0, 0x00, 0x00, sw2]  # sw2 indicates the number of bytes to retrieve
