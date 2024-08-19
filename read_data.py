@@ -31,8 +31,8 @@ try:
     response, sw1, sw2 = send_apdu(connection, read_record_apdu)
 
     # Try reading Record 3 with SFI 1
-    read_record_apdu = [0x00, 0xB2, 0x03, 0x0C, 0x00]  # SFI = 1 << 3 | 4 = 0x0C
-    response, sw1, sw2 = send_apdu(connection, read_record_apdu)
+    #read_record_apdu = [0x00, 0xB2, 0x03, 0x0C, 0x00]  # SFI = 1 << 3 | 4 = 0x0C
+    #response, sw1, sw2 = send_apdu(connection, read_record_apdu)
 
 
     if sw1 == 0x61:
