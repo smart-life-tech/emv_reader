@@ -24,8 +24,19 @@ def calculate_checksum(data):
     checksum = sum(data) % 256
     return checksum
 
+# Prepare command with ITP protocol
+def prepare_itp_command(func_id, data=[]):
+    stx = 0x02
+    etx = 0x03
+    command_body = [func_id] + data
+    length = len(command_body) + 3  # including STX, ETX, and LRC
+    lrc = calculate_lrc([stx] + command_body + [etx])
+
+    command = bytearray([stx] + command_body + [etx, lrc])
+    return command
+
 # Prepare command with NGA protocol
-def prepare_command(command_body):
+def prepare_nga_command(command_body):
     stx = 0x02
     etx = 0x03
     len_low = len(command_body) & 0xFF
@@ -43,8 +54,23 @@ def send_command(device, command):
     response = device.read(64)  # Adjust the read size as necessary
     return response
 
-# Parse the firmware version response
-def parse_firmware_version(response):
+# Parse ITP response
+def parse_itp_response(response):
+    if response:
+        ack_nak = response[0]
+        if ack_nak == 0x06:  # ACK
+            # Process response
+            print("ACK received")
+            # Further parsing needed based on command and response format
+        elif ack_nak == 0x15:  # NAK
+            print("NAK received")
+        else:
+            print("Invalid response")
+    else:
+        print("No response received")
+
+# Parse NGA response
+def parse_nga_response(response):
     if len(response) >= 6:  # Ensure there are enough bytes for STX, LRC, CheckSUM, and ETX
         stx, len_low, len_high, *response_body, lrc, checksum, etx = response
 
@@ -58,7 +84,7 @@ def parse_firmware_version(response):
             # Extract and print response body
             response_data = bytearray(response_body).decode('ascii')
             print("Valid response:")
-            print("Firmware Version:", response_data)
+            print("Response Data:", response_data)
         else:
             print("Invalid response: LRC or Checksum mismatch")
     else:
@@ -68,24 +94,21 @@ def parse_firmware_version(response):
 def main():
     # Open the device
     device = open_device()
-    print(device)
-    # Define the command body for getting firmware version
-    command_body = [
-        0x78,  # Command Prefix (Configuration commands)
-        0x46,  # Function ID
-        0x01   # Specific Function ID for Get Firmware Version
-    ]
 
-    # Prepare and send the command
-    command = prepare_command(command_body)
-    print("Sending command:", command)
-    response = send_command(device, command)
+    # Define and prepare ITP command for getting firmware version
+    itp_command = prepare_itp_command(0x01)  # Example function ID for firmware version
+    print("Sending ITP command:", itp_command)
+    itp_response = send_command(device, itp_command)
+    print("ITP Raw response:", itp_response)
+    parse_itp_response(itp_response)
 
-    # Print the raw response
-    print("Raw response:", response)
-
-    # Parse and display the firmware version
-    parse_firmware_version(response)
+    # Define and prepare NGA command for getting firmware version
+    nga_command_body = [0x78, 0x46, 0x01]  # Example NGA command
+    nga_command = prepare_nga_command(nga_command_body)
+    print("Sending NGA command:", nga_command)
+    nga_response = send_command(device, nga_command)
+    print("NGA Raw response:", nga_response)
+    parse_nga_response(nga_response)
 
     # Close the device
     device.close()
