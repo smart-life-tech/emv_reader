@@ -1,4 +1,4 @@
-import hid
+import hids
 
 # Define the Vendor ID and Product ID for your device
 VID = 0x0ACD  # Replace with your device's VID
@@ -6,7 +6,7 @@ PID = 0x3410  # Replace with your device's PID
 
 # Open the HID device
 def open_device():
-    h = hid.device()
+    h = hids.device()
     h.open(VID, PID)
     h.set_nonblocking(1)
     return h
