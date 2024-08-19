@@ -56,21 +56,21 @@ def chrome(card_data):
         tab = tabs[0]
         tab.start()
 
-        # Define the JavaScript code to trigger the click
-        js_code = """
-        document.getElementById('insert_card').click();
-        """
-        # Execute the JavaScript code
-        result = tab.Runtime.evaluate(expression=js_code)
-        print("click result",result)
-        time.sleep(5)
-        # JavaScript code to trigger the card check with simulated card data
-        js_code = f"""
-        window.chingupCard();
-        """
-        # Execute the JavaScript code
-        result = tab.Runtime.evaluate(expression=js_code)
-        print("JavaScript executed:", result)
+        # # Define the JavaScript code to trigger the click
+        # js_code = """
+        # document.getElementById('insert_card').click();
+        # """
+        # # Execute the JavaScript code
+        # result = tab.Runtime.evaluate(expression=js_code)
+        # print("click result",result)
+        # time.sleep(5)
+        # # JavaScript code to trigger the card check with simulated card data
+        # js_code = f"""
+        # window.chingupCard();
+        # """
+        # # Execute the JavaScript code
+        # result = tab.Runtime.evaluate(expression=js_code)
+        # print("JavaScript executed:", result)
         
         
         
