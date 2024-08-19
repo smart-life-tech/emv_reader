@@ -89,8 +89,8 @@ def chrome(card_data):
         print(f"An error occurred: {e}")
 
 # Vendor and Product ID for the AugustaS device
-VENDOR_ID = 0x058f
-PRODUCT_ID = 0x9540
+VENDOR_ID = 0x0acd
+PRODUCT_ID = 0x3810
 
 # Find the USB device
 dev = usb.core.find(idVendor=VENDOR_ID, idProduct=PRODUCT_ID)
