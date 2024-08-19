@@ -1,4 +1,5 @@
 import hid
+import time
 
 # Define the Vendor ID and Product ID for your device
 VID = 0x0acd  # Replace with your device's VID
@@ -38,6 +39,7 @@ def prepare_command(command_body):
 # Send command and read response
 def send_command(device, command):
     device.write(command)
+    time.sleep(1)  # Wait for the device to process the command
     response = device.read(64)  # Adjust the read size as necessary
     return response
 
@@ -88,7 +90,7 @@ def main():
         else:
             print("Invalid response: Insufficient data length")
     else:
-        print("No response received")
+        print("No response received or response is empty")
 
     # Close the device
     device.close()
