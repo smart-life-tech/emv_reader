@@ -7,11 +7,12 @@ PID = 0x3810  # Replace with your device's PID
 # Open the HID device
 def open_device():
     for d in hid.enumerate():
+        print(d)
         keys = list(d.keys())
         keys.sort()
-        for key in keys:
-            print("%s : %s" % (key, d[key]))
-        print()
+        # for key in keys:
+        #     print("%s : %s" % (key, d[key]))
+        # print()
     h = hid.device()
     h.open(VID, PID)
     h.set_nonblocking(1)
