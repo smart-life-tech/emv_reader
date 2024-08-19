@@ -128,6 +128,7 @@ try:
         try:
             # Read data from the IN endpoint
             data = ep_in.read(ep_in.wMaxPacketSize, timeout=5000)  # Adjust timeout and size if needed
+            print("reads")
             if data:
                 print("Data received:", data)
                 # Convert array to list
