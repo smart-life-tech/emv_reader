@@ -84,7 +84,7 @@ def chrome(card_data):
         
         # Close the tab connection
         #tab.stop()
-        time.sleep(8)
+        time.sleep(1)
     except Exception as e:
         print(f"An error occurred: {e}")
 
