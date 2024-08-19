@@ -68,7 +68,7 @@ def parse_firmware_version(response):
 def main():
     # Open the device
     device = open_device()
-
+    print(device)
     # Define the command body for getting firmware version
     command_body = [
         0x78,  # Command Prefix (Configuration commands)
