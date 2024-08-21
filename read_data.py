@@ -16,7 +16,7 @@ try:
         raise Exception("No readers available.")
 
     # Use the first available reader
-    reader = reader_list[1]
+    reader =  reader = "ACS ACR38U-CCID 00 00"#reader_list[0]  # Adjust index if needed reader_list[1]
     print(f"Using reader: {reader}")
 
     # Connect to the reader
