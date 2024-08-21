@@ -29,7 +29,7 @@ try:
         return response, sw1, sw2
 
     # Example APDU command to read binary data
-    read_binary_apdu = [0xFF, 0xB0, 0x00, 0x00, 0x10]  # Read 16 bytes from offset 0x00
+    read_binary_apdu = [0xFF, 0xB0, 0x00, 0x00, 0x19]  # Read 16 bytes from offset 0x00
     response, sw1, sw2 = send_apdu(connection, read_binary_apdu)
     print(f"Read Binary Response: {toHexString(response)}")
     print(f"Response (ASCII): {''.join([chr(byte) for byte in response if 32 <= byte <= 126])}")
