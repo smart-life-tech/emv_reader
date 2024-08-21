@@ -43,12 +43,14 @@ assert ep_in is not None, "Endpoint IN not found"
 # Perform operations
 try:
     # Write data to the card
-    write_command = bytes([0x01, 0xD0, 0x00, 0x04, 0x11, 0x22, 0x33, 0x44])  # Example write command
+    write_command = bytes([0xFF, 0xA4, 0x00, 0x00, 0x01, 0x06, 0x33, 0x44])  # Example write command
     print(f"Data sending..: {write_command}")
     ep_out.write(write_command)
     print(f"Data sent: {write_command}")
-
+    data_received = ep_in.read(ep_in.wMaxPacketSize, timeout=10000)  # Increase timeout to 10 seconds
+    print(f"Data received: {data_received}")
     # Read data from the card
+    print(f"Data reading..: {write_command}")
     read_command = bytes([0x01, 0xB0, 0x00, 0x04])  # Example read command
     ep_out.write(read_command)
     data_received = ep_in.read(ep_in.wMaxPacketSize, timeout=10000)  # Increase timeout to 10 seconds
