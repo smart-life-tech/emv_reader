@@ -15,10 +15,17 @@ try:
     if not reader_list:
         raise Exception("No readers available.")
 
-    # Use the first available reader
-    #reader = "ACS ACR38U-CCID 00 00"#reader_list[0]  # Adjust index if needed reader_list[1]
-    reader_list[1]="ACS ACR38U-CCID 00 00"
-    reader=reader_list[1]
+    # Ensure you select the correct reader from the list
+    reader_name = "ACS ACR38U-CCID 00 00"
+    reader = None
+    for r in reader_list:
+        if reader_name in r.name:
+            reader = r
+            break
+
+    if not reader:
+        raise Exception(f"Reader '{reader_name}' not found.")
+
     print(f"Using reader: {reader}")
 
     # Connect to the reader
