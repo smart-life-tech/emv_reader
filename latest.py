@@ -53,7 +53,7 @@ while True:
             raise Exception("No readers available.")
 
         # Use the first available reader
-        reader = reader_list[0]  # Adjust index if needed
+        reader = "ACS ACR38U-CCID 00 00"#reader_list[0]  # Adjust index if needed
         print(f"Using reader: {reader}")
 
         # Connect to the reader
@@ -61,7 +61,7 @@ while True:
         connection.connect()
 
         # Example APDU command to read binary data
-        read_binary_apdu = [0xFF, 0xB0, 0x00, 0x00, 0x19]  # Read 16 bytes from offset 0x00
+        read_binary_apdu = [0xFF, 0xB0, 0x00, 0x00, 0x14]  # Read 16 bytes from offset 0x00
         response, sw1, sw2 = send_apdu(connection, read_binary_apdu)
 
     except Exception as e:
