@@ -43,7 +43,7 @@ assert ep_in is not None, "Endpoint IN not found"
 # Perform operations
 try:
     # Write data to the card
-    write_command = bytes([0xFF, 0xA4, 0x00, 0x00, 0x01, 0x06, 0x33, 0x44])  # Example write command
+    write_command = ([0xFF, 0xA4, 0x00, 0x00, 0x01, 0x06, 0x33, 0x44])  # Example write command
     print(f"Data sending..: {write_command}")
     ep_out.write(write_command)
     print(f"Data sent: {write_command}")
