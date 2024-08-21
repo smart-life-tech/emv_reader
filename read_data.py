@@ -28,13 +28,8 @@ try:
         response, sw1, sw2 = connection.transmit(apdu)
         return response, sw1, sw2
 
-    # Send the select application APDU command
-    response, sw1, sw2 = send_apdu(connection, select_apdu)
-    print(f"APDU Response: {toHexString(response)}")
-    print(f"Status Word: {sw1:02X} {sw2:02X}")
-
     # Example APDU command to read binary data
-    read_binary_apdu = [0x00, 0xB0, 0x00, 0x00, 0x10]  # Read 16 bytes from offset 0x00
+    read_binary_apdu = [0xFF, 0xB0, 0x00, 0x00, 0x10]  # Read 16 bytes from offset 0x00
     response, sw1, sw2 = send_apdu(connection, read_binary_apdu)
     print(f"Read Binary Response: {toHexString(response)}")
     print(f"Status Word: {sw1:02X} {sw2:02X}")
