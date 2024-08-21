@@ -46,6 +46,7 @@ def chrome(card_data):
         print(f"An error occurred: {e}")
 while True:
     try:
+        time.sleep(5)
         # List available readers
         reader_list = readers()
         if not reader_list:
@@ -60,7 +61,7 @@ while True:
         connection.connect()
 
         # Example APDU command to read binary data
-        read_binary_apdu = [0xFF, 0xB0, 0x00, 0x00, 0x10]  # Read 16 bytes from offset 0x00
+        read_binary_apdu = [0xFF, 0xB0, 0x00, 0x00, 0x19]  # Read 16 bytes from offset 0x00
         response, sw1, sw2 = send_apdu(connection, read_binary_apdu)
 
     except Exception as e:
