@@ -1,0 +1,2 @@
+// File: card_commands.txt
+00 A4 04 00 07 A0 00 00 00 03 00 00 00
