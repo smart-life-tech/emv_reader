@@ -47,7 +47,7 @@ def chrome(card_data):
 while True:
     try:
         if done:
-            time.sleep(5)
+            time.sleep(3)
             # List available readers
             reader_list = readers()
             if not reader_list:
@@ -75,6 +75,7 @@ while True:
             response, sw1, sw2 = send_apdu(connection, read_binary_apdu)
             done=False
         else:
+            time.sleep(3)
             print("card already processed")
 
     except Exception as e:
