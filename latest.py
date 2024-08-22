@@ -17,7 +17,14 @@ def send_apdu(connection, apdu):
     chrome(response_ascii)
     
     return response, sw1, sw2
-
+def send_apdus(connection, apdu):
+    response, sw1, sw2 = connection.transmit(apdu)
+    print(f"APDU: {toHexString(apdu)}")
+    print(f"Response (Hex): {toHexString(response)}")
+    print(f"Response (ASCII): {''.join([chr(byte) for byte in response if 32 <= byte <= 126])}")
+    print(f"Status Word: {sw1:02X} {sw2:02X}")
+    
+    return response, sw1, sw2
 def chrome(card_data):
     print("Starting Chrome interaction")
     try:
@@ -69,7 +76,10 @@ while True:
             # Connect to the reader
             connection = reader.createConnection()
             connection.connect()
-
+            # Example APDU command to read binary data
+            read_binary_apdu = [0xFF, 0xA4, 0x00, 0x00, 0x01,0x06]  # Read 16 bytes from offset 0x00
+            response, sw1, sw2 = send_apdus(connection, read_binary_apdu)
+            time.sleep(1)
             # Example APDU command to read binary data
             read_binary_apdu = [0xFF, 0xB0, 0x00, 0x00, 0x14]  # Read 16 bytes from offset 0x00
             response, sw1, sw2 = send_apdu(connection, read_binary_apdu)
