@@ -1,6 +1,6 @@
 import usb.core
 import usb.util
-
+import time
 # Find the MSR90 device
 dev = usb.core.find(idVendor=0xc216, idProduct=0x0180)
 
@@ -20,14 +20,17 @@ cfg = dev.get_active_configuration()
 intf = cfg[(0, 0)]
 
 endpoint = intf[0]
+while True:
+    # Read data from the device
+    time.sleep(2)
+    print("reading data")
+    try:
+        while True:
+            data = dev.read(endpoint.bEndpointAddress, endpoint.wMaxPacketSize)
+            # Process the data as needed
+            print('Data read:', data)
 
-# Read data from the device
-try:
-    while True:
-        data = dev.read(endpoint.bEndpointAddress, endpoint.wMaxPacketSize)
-        # Process the data as needed
-        print('Data read:', data)
-
-except usb.core.USBError as e:
-    if e.args == ('Operation timed out',):
-        print("Timed out")
+    except usb.core.USBError as e:
+        print(e)
+        if e.args == ('Operation timed out',):
+            print("Timed out")
