@@ -9,12 +9,14 @@ def send_apdu(connection, apdu):
     print(f"Response (Hex): {toHexString(response)}")
     print(f"Response (ASCII): {''.join([chr(byte) for byte in response if 32 <= byte <= 126])}")
     print(f"Status Word: {sw1:02X} {sw2:02X}")
-    
+    # Filter to get only the digits from the first 16 bytes
+    response_digits = ''.join([chr(byte) for byte in response[:16] if chr(byte).isdigit()])
+    print(f"Response (Digits): {response_digits}")
     # Convert response to ASCII
     response_ascii = ''.join([chr(byte) for byte in response if 32 <= byte <= 126])
     
     # Trigger the chrome function with the card data
-    chrome(response_ascii)
+    chrome(response_digits)
     
     return response, sw1, sw2
 def send_apdus(connection, apdu):
