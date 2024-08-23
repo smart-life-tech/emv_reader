@@ -3,7 +3,7 @@ from smartcard.util import toHexString
 import pychrome
 import time
 done =True
-#7824109948240155
+#7824109948240159
 def send_apdu(connection, apdu):
     response, sw1, sw2 = connection.transmit(apdu)
     print(f"APDU: {toHexString(apdu)}")
