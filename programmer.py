@@ -17,7 +17,7 @@ def write_data_to_card(connection, card_id):
         time.sleep(1)
         
         # Convert card_id to bytes (split into two 8-byte chunks if needed)
-        id_bytes = [int(digit,16) for digit in card_id]
+        id_bytes = [ord(digit) for digit in card_id]
         print('id bytes',id_bytes)
         # Assuming the card can handle 8 bytes at a time, we will split the ID into two parts
         for i in range(0, len(id_bytes), 16):
