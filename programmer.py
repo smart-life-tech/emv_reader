@@ -21,7 +21,7 @@ def write_data_to_card(connection, card_id):
         print('id bytes',id_bytes)
         # Assuming the card can handle 8 bytes at a time, we will split the ID into two parts
         for i in range(0, len(id_bytes), 16):
-            chunk = id_bytes[i:i+8]
+            chunk = id_bytes
             write_command = [0xFF, 0xD0, 0x00, 0x00, len(chunk)] + chunk
             print(chunk)
             print(write_command)
@@ -60,11 +60,10 @@ def main():
             connection = reader.createConnection()
             connection.connect()
 
-            # Increment the card ID for each new card
-            card_id = str(int(card_id) + 1).zfill(16)
-
             # Write data to the card using the incremented card ID
             write_data_to_card(connection, card_id)
+            # Increment the card ID for each new card
+            card_id = str(int(card_id) + 1).zfill(16)
             print(card_id)
             
             # Prompt for the next card
