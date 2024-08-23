@@ -22,7 +22,7 @@ def write_data_to_card(connection, card_id):
         # Assuming the card can handle 8 bytes at a time, we will split the ID into two parts
         for i in range(0, len(id_bytes), 8):
             chunk = id_bytes[i:i+8]
-            write_command = [0xFF, 0xA4, 0x00, 0x00, len(chunk)] + chunk
+            write_command = [0xFF, 0xD0, 0x00, 0x00, len(chunk)] + chunk
             
             # Write the chunk to the card
             response, sw1, sw2 = send_apdus(connection, write_command)
