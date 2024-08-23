@@ -23,7 +23,8 @@ def write_data_to_card(connection, card_id):
         for i in range(0, len(id_bytes), 8):
             chunk = id_bytes[i:i+8]
             write_command = [0xFF, 0xD0, 0x00, 0x00, len(chunk)] + chunk
-            
+            print(chunk)
+            print(write_command)
             # Write the chunk to the card
             response, sw1, sw2 = send_apdus(connection, write_command)
             
