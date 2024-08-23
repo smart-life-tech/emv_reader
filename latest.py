@@ -84,7 +84,7 @@ while True:
             response, sw1, sw2 = send_apdus(connection, read_binary_apdu)
             time.sleep(1)
             # Example APDU command to read binary data
-            read_binary_apdu = [0xFF, 0xB0, 0x00, 0x00, 0x14]  # Read 16 bytes from offset 0x00
+            read_binary_apdu = [0xFF, 0xB0, 0x00, 0x00, 0x16]  # Read 16 bytes from offset 0x00
             response, sw1, sw2 = send_apdu(connection, read_binary_apdu)
             done=False
         else:
