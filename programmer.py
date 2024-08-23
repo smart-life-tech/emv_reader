@@ -22,7 +22,7 @@ def write_data_to_card(connection, card_id):
         # Assuming the card can handle 8 bytes at a time, we will split the ID into two parts
         for i in range(0, len(id_bytes), 16):
             chunk = id_bytes
-            write_command = [0xFF, 0xD0, 0x00, 0x00, ord(len(chunk))] + chunk
+            write_command = [0xFF, 0xD0, 0x00, 0x00, 0x16] + chunk
             print(chunk)
             print(write_command)
             # Write the chunk to the card
