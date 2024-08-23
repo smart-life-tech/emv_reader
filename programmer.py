@@ -64,6 +64,7 @@ def main():
 
             # Write data to the card using the incremented card ID
             write_data_to_card(connection, card_id)
+            print(card_id)
             
             # Prompt for the next card
             input("Remove the card and press Enter to continue, or Ctrl+C to exit.")
