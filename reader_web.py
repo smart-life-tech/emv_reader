@@ -4,7 +4,7 @@ import time
 import pychrome
 import subprocess
 # Define the command to start Chromium with the required options
-#i need to run this at every start  chromium-browser --remote-debugging-port=9222
+#i need to run this at every start  chromium-browser --kiosk chingup.com/rpi_pos --remote-debugging-port=9222
 chromium_command = [
     "chromium-browser",
     "--remote-debugging-port=9222",
