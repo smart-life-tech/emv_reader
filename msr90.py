@@ -20,7 +20,10 @@ dev.set_configuration()
 cfg = dev.get_active_configuration()
 intf = cfg[(0, 0)]
 endpoint = intf[0]
-expected_length = False
+
+# Initialize consecutive zero count
+consecutive_zeros = 0
+
 while True:
     # Read data from the device
     time.sleep(2)
@@ -32,9 +35,17 @@ while True:
             if data:
                 data_chunks.append(data)
                 # Check if the data is complete (e.g., based on expected length or specific end byte)
-                if  expected_length:  # Replace with actual condition
+                if any(data):  # If there is any non-zero data
+                    consecutive_zeros = 0  # Reset the zero count
+                else:
+                    consecutive_zeros += 1
+                    print(f"Zero data chunk received, count: {consecutive_zeros}")
+                    
+                if consecutive_zeros >= 3:
+                    print("Three consecutive zero-data chunks received. Stopping.")
                     break
             else:
+                print("No data")
                 break
 
         # Process the complete data
@@ -42,7 +53,6 @@ while True:
         print('Complete data read:', full_data)
 
     except usb.core.USBError as e:
-        expected_length=True
         if e.args == ('Operation timed out',):
             print("Timed out")
         else:
