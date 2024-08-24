@@ -20,7 +20,7 @@ dev.set_configuration()
 cfg = dev.get_active_configuration()
 intf = cfg[(0, 0)]
 endpoint = intf[0]
-expected_length = True
+expected_length = False
 while True:
     # Read data from the device
     time.sleep(2)
@@ -42,7 +42,7 @@ while True:
         print('Complete data read:', full_data)
 
     except usb.core.USBError as e:
-        expected_length=False
+        expected_length=True
         if e.args == ('Operation timed out',):
             print("Timed out")
         else:
