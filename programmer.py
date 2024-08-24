@@ -15,6 +15,10 @@ def write_data_to_card(connection, card_id):
         init_apdu = [0xFF, 0xA4, 0x00, 0x00, 0x01, 0x06]  
         send_apdus(connection, init_apdu)
         time.sleep(1)
+        # Initialize card (using an APDU command)
+        init_apdu = [0xFF, 0x20, 0x00, 0x00, 0x03, 0xFF,0xFF,0xFF]  
+        send_apdus(connection, init_apdu)
+        time.sleep(1)
         
         # Convert card_id to bytes (split into two 8-byte chunks if needed)
         id_bytes = [ord(digit) for digit in card_id]
