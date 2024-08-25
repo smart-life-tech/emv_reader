@@ -47,7 +47,7 @@ while True:
 
     except usb.core.USBError as e:
         # Process the complete data
-        full_data = b''.join(data_chunks)
+        full_data = ''.join(data_chunks)
         print('Complete data read:', full_data)
         print('Complete data read:', full_data)
         if e.args == ('Operation timed out',):
