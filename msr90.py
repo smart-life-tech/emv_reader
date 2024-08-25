@@ -34,7 +34,9 @@ while True:
             data = dev.read(endpoint.bEndpointAddress, endpoint.wMaxPacketSize)
             if data:
              # Check if the data is complete (e.g., based on expected length or specific end byte)
-                data_chunks.append(data)
+                ascii_data = data.tobytes().decode('ascii', errors='ignore')
+                data_chunks.append(ascii_data)
+                #data_chunks.append(data)
             else:
                 print("No data")
                 break
