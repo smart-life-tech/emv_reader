@@ -34,7 +34,7 @@ while True:
             data = dev.read(endpoint.bEndpointAddress, endpoint.wMaxPacketSize)
             if data:
                 # Print raw hex data for debugging
-                print("Raw data (hex):", data.hex())
+                print("Raw data (hex):", data)
 
                 # Convert the data to ASCII, ignoring non-printable characters
                 ascii_data = ''.join([chr(b) for b in data if 32 <= b <= 126])
