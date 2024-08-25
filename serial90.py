@@ -2,7 +2,7 @@ import serial
 
 # Replace with the correct serial port on your Raspberry Pi
 ser = serial.Serial(
-    port='/ttyAMA0',  # or '/dev/ttyACM0' depending on your device
+    port='/dev/ttyAMA0',  # or '/dev/ttyACM0' depending on your device
     baudrate=9600,        # Adjust if your reader uses a different baud rate
     timeout=1             # Timeout for reads
 )
