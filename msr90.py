@@ -1,7 +1,7 @@
 import usb.core
 import usb.util
 import time
-
+full_data =""
 # Find the MSR90 device
 dev = usb.core.find(idVendor=0xc216, idProduct=0x0180)
 
@@ -33,10 +33,11 @@ while True:
         while True:
             data = dev.read(endpoint.bEndpointAddress, endpoint.wMaxPacketSize)
             if data:
-                data_chunks.append(data)
+                
                 # Check if the data is complete (e.g., based on expected length or specific end byte)
                 if any(data):  # If there is any non-zero data
-                    consecutive_zeros = 0  # Reset the zero count
+                    print('consecutive_zeros = 0  # Reset the zero count')
+                    data_chunks.append(data)
                 else:
                     consecutive_zeros += 1
                     print(f"Zero data chunk received, count: {consecutive_zeros}")
@@ -53,6 +54,7 @@ while True:
         print('Complete data read:', full_data)
 
     except usb.core.USBError as e:
+        print('Complete data read:', full_data)
         if e.args == ('Operation timed out',):
             print("Timed out")
         else:
