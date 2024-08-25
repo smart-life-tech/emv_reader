@@ -33,18 +33,8 @@ while True:
         while True:
             data = dev.read(endpoint.bEndpointAddress, endpoint.wMaxPacketSize)
             if data:
-                
-                # Check if the data is complete (e.g., based on expected length or specific end byte)
-                if any(data):  # If there is any non-zero data
-                    print('consecutive_zeros = 0  # Reset the zero count')
-                    data_chunks.append(data)
-                else:
-                    consecutive_zeros += 1
-                    print(f"Zero data chunk received, count: {consecutive_zeros}")
-                    
-                if consecutive_zeros >= 3:
-                    print("Three consecutive zero-data chunks received. Stopping.")
-                    break
+             # Check if the data is complete (e.g., based on expected length or specific end byte)
+                data_chunks.append(data)
             else:
                 print("No data")
                 break
@@ -54,6 +44,9 @@ while True:
         print('Complete data read:', full_data)
 
     except usb.core.USBError as e:
+        # Process the complete data
+        full_data = b''.join(data_chunks)
+        print('Complete data read:', full_data)
         print('Complete data read:', full_data)
         if e.args == ('Operation timed out',):
             print("Timed out")
