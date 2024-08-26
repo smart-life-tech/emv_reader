@@ -1,60 +1,21 @@
-import time
-import sys
-import struct
-import select
+ 
 #sudo apt-get install evtest
 #sudo evtest
+#pip install pynput
+from pynput import keyboard
 
-# Replace with the correct event device
-device_path = '/dev/input/event0'
-device = open(device_path, 'rb')
-
-# Define the expected structure for the event header
-header_format = 'llHHI'
-header_size = struct.calcsize(header_format)
-
-def get_event_data(data):
-    """Decode and return the event data."""
+def on_press(key):
+    if key == keyboard.Key.esc:
+        return False  # stop listener
     try:
-        # Unpack the known part of the structure (16 bytes)
-        time_sec, time_usec, event_type, code, value = struct.unpack(header_format, data)
-        return event_type, code, value
-    except struct.error as e:
-        print(f"Unpacking error: {e}")
-        return None, None, None
+        k = key.char  # single-char keys
+    except:
+        k = key.name  # other keys
+    if k in ['1', '2', 'left', 'right']:  # keys of interest
+        # self.keys.append(k)  # store it in global-like variable
+        print('Key pressed: ' + k)
+        return False  # stop listener; remove this if want more keys
 
-print("Waiting for card swipe...")
-gotten = ''
-
-while True:
-    # Use select to check if data is available for reading
-    r, w, e = select.select([device], [], [], 0.1)  # 0.1-second timeout
-    
-    if device in r:
-        try:
-            # Read the fixed header part first
-            data = device.read(header_size)
-            if len(data) == header_size:
-                event_type, code, value = get_event_data(data)
-                if event_type is not None:
-                    # Check if it's a key press event (event_type 1)
-                    if event_type == 1:
-                        # Convert key code to ASCII character
-                        if 32 <= value <= 126:
-                            sys.stdout.write(chr(value))
-                            gotten += str(chr(value))
-                            print(gotten,'\n')
-                            sys.stdout.flush()
-                        elif value == 13:  # Enter key
-                            sys.stdout.write('\n')
-                            sys.stdout.flush()
-                            print("Enter key pressed")
-            else:
-                print("Unexpected data size. Partial read?")
-        except Exception as e:
-            print(f"Error: {e}")
-    else:
-        # No card swipe detected, print the collected data so far
-        print("No card swipe detected. Collected data:", gotten," done")
-    
-    time.sleep(3)
+listener = keyboard.Listener(on_press=on_press)
+listener.start()  # start to listen on a separate thread
+listener.join()  # remove if main thread is polling self.keys
