@@ -2,18 +2,24 @@ import time
 import sys
 import struct
 import select
-#sudo apt-get install evtest
-#sudo evtest
 
 # Replace with the correct event device
 device_path = '/dev/input/event8'
 device = open(device_path, 'rb')
 
+# Define the expected structure for the event header
+header_format = 'llHHI'
+header_size = struct.calcsize(header_format)
+
 def get_event_data(data):
     """Decode and return the event data."""
-    # Unpack the input event structure (24 bytes)
-    time_sec, time_usec, event_type, code, value = struct.unpack('llHHI', data)
-    return event_type, code, value
+    try:
+        # Unpack the known part of the structure (16 bytes)
+        time_sec, time_usec, event_type, code, value = struct.unpack(header_format, data)
+        return event_type, code, value
+    except struct.error as e:
+        print(f"Unpacking error: {e}")
+        return None, None, None
 
 print("Waiting for card swipe...")
 gotten = ''
@@ -24,21 +30,24 @@ while True:
     
     if device in r:
         try:
-            # Read event data (24 bytes at a time)
-            data = device.read(24)
-            if len(data) == 24:
+            # Read the fixed header part first
+            data = device.read(header_size)
+            if len(data) == header_size:
                 event_type, code, value = get_event_data(data)
-                # Check if it's a key press event (event_type 1)
-                if event_type == 1:
-                    # Convert key code to ASCII character
-                    if 32 <= value <= 126:
-                        sys.stdout.write(chr(value))
-                        gotten += chr(value)
-                        sys.stdout.flush()
-                    elif value == 13:  # Enter key
-                        sys.stdout.write('\n')
-                        sys.stdout.flush()
-                        print("Enter key pressed")
+                if event_type is not None:
+                    # Check if it's a key press event (event_type 1)
+                    if event_type == 1:
+                        # Convert key code to ASCII character
+                        if 32 <= value <= 126:
+                            sys.stdout.write(chr(value))
+                            gotten += chr(value)
+                            sys.stdout.flush()
+                        elif value == 13:  # Enter key
+                            sys.stdout.write('\n')
+                            sys.stdout.flush()
+                            print("Enter key pressed")
+            else:
+                print("Unexpected data size. Partial read?")
         except Exception as e:
             print(f"Error: {e}")
     else:
