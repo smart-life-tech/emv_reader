@@ -2,6 +2,8 @@ import time
 import sys
 import struct
 import select
+#sudo apt-get install evtest
+#sudo evtest
 
 # Replace with the correct event device
 device_path = '/dev/input/event8'
