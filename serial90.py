@@ -8,7 +8,8 @@ device = open(device_path, 'rb')
 
 def get_event_data(data):
     """Decode and return the event data."""
-    event_type, code, value = struct.unpack('IHHI', data)
+    # Unpack the input event structure (24 bytes)
+    time_sec, time_usec, event_type, code, value = struct.unpack('llHHI', data)
     return event_type, code, value
 
 print("Waiting for card swipe...")
