@@ -4,18 +4,35 @@
 #pip install pynput
 from pynput import keyboard
 
+# Initialize a string variable to store the card data
+gotten = ''
+
+# Define the callback function for key press events
 def on_press(key):
-    if key == keyboard.Key.esc:
-        return False  # stop listener
+    global gotten
     try:
         k = key.char  # single-char keys
-    except:
-        k = key.name  # other keys
-    if k in ['1', '2', 'left', 'right']:  # keys of interest
-        # self.keys.append(k)  # store it in global-like variable
-        print('Key pressed: ' + k)
-        return False  # stop listener; remove this if want more keys
+    except AttributeError:
+        k = key.name  # special keys (like 'esc', 'enter', etc.)
 
+    # Check if the key is a part of the card data
+    if k is not None:
+        gotten += k
+        print(f"Key pressed: {k}")
+    
+    # If 'enter' or another stop key is pressed, process the data
+    if k == 'enter':  # Handle the Enter key (or other termination condition)
+        print(f"Card data collected: {gotten}")
+        gotten = ''  # Reset the collected data after processing
+    
+    if k == 'esc':  # Stop the listener on ESC
+        return False  # stop listener
+
+# Start the listener
 listener = keyboard.Listener(on_press=on_press)
-listener.start()  # start to listen on a separate thread
-listener.join()  # remove if main thread is polling self.keys
+listener.start()  # Start to listen on a separate thread
+
+print("Waiting for card swipe...")
+
+# The main loop can continue to do other work, or just wait for keyboard input
+listener.join()  # Keep the program running to listen to the input
