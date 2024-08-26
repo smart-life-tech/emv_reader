@@ -1,4 +1,4 @@
-import os
+import time
 import sys
 import struct
 
@@ -13,21 +13,27 @@ def get_event_data(data):
     return event_type, code, value
 
 print("Waiting for card swipe...")
-
+gotten=''
 while True:
+    time.sleep(3)
     try:
         # Read event data (16 bytes at a time)
         data = device.read(16)
         if len(data) == 16:
+           
             event_type, code, value = get_event_data(data)
             # Check if it's a key press event (event_type 1)
             if event_type == 1:
                 # Convert key code to ASCII character
                 if 32 <= value <= 126:
                     sys.stdout.write(chr(value))
+                    gotten+=chr(value)
                     sys.stdout.flush()
                 elif value == 13:  # Enter key
                     sys.stdout.write('\n')
                     sys.stdout.flush()
+                    print("enterkey")
+        else:
+             print(gotten)
     except Exception as e:
         print(f"Error: {e}")
