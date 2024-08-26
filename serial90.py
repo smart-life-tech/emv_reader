@@ -16,6 +16,7 @@ print("Waiting for card swipe...")
 gotten=''
 while True:
     time.sleep(3)
+    print(gotten)
     try:
         # Read event data (16 bytes at a time)
         data = device.read(16)
