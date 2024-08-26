@@ -6,7 +6,7 @@ import select
 #sudo evtest
 
 # Replace with the correct event device
-device_path = '/dev/input/event8'
+device_path = '/dev/input/event0'
 device = open(device_path, 'rb')
 
 # Define the expected structure for the event header
