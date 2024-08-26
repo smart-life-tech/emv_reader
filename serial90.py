@@ -42,7 +42,7 @@ while True:
                         # Convert key code to ASCII character
                         if 32 <= value <= 126:
                             sys.stdout.write(chr(value))
-                            gotten += chr(value)
+                            gotten += str(chr(value))
                             sys.stdout.flush()
                         elif value == 13:  # Enter key
                             sys.stdout.write('\n')
@@ -54,6 +54,6 @@ while True:
             print(f"Error: {e}")
     else:
         # No card swipe detected, print the collected data so far
-        print("No card swipe detected. Collected data:", gotten)
+        print("No card swipe detected. Collected data:", gotten," done")
     
     time.sleep(3)
