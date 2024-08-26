@@ -43,6 +43,7 @@ while True:
                         if 32 <= value <= 126:
                             sys.stdout.write(chr(value))
                             gotten += str(chr(value))
+                            print(gotten,'\n')
                             sys.stdout.flush()
                         elif value == 13:  # Enter key
                             sys.stdout.write('\n')
