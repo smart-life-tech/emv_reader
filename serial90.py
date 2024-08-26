@@ -32,8 +32,11 @@ def on_press(key):
         return
 
     # Check if the key is a part of the card data
-    if k is not None and k not in ['space','enter','shift', 'shift_l', 'shift_r', 'ctrl', 'alt', 'alt_gr']:
-        gotten += k
+    if k is not None and k not in ['enter','shift', 'shift_l', 'shift_r', 'ctrl', 'alt', 'alt_gr']:
+        if k=='space':
+            gotten+=" "
+        else:
+            gotten += k
         #print(f"Key pressed: {k}")
     
     # If 'enter' is pressed, process the data
