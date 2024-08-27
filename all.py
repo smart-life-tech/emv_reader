@@ -150,6 +150,7 @@ def on_press(key):
 def start_keyboard_listener():
     listener = keyboard.Listener(on_press=on_press)
     listener.start()  # Start to listen on a separate thread
+    listener.join()
     print("Waiting for card swipe...")
 
 # Create and start threads for smartcard processing and keyboard listening
