@@ -141,7 +141,7 @@ def on_press(key):
     if k == 'enter':  # Handle the Enter key (or other termination condition)
         print(f"Card data collected: {gotten}")
         done = False  # Ready for smartcard processing
-        process_card()  # Process the card data
+        #process_card()  # Process the card data
         chrome(gotten)
         gotten = ''  # Reset the collected data after processing
         
