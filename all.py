@@ -15,7 +15,7 @@ def process_card():
     while True:
         try:
             if not done:
-                time.sleep(3)
+                time.sleep(2)
                 # List available readers
                 reader_list = readers()
                 if not reader_list:
@@ -50,8 +50,8 @@ def process_card():
                 done = True  # Mark as done after processing
                 print("Smartcard processing completed. You can now swipe the card.")
             else:
-                time.sleep(3)
-                print("Card already processed")
+                time.sleep(2)
+                #print("Card already processed")
 
         except Exception as e:
             print(f"An error occurred: {e}")
@@ -97,7 +97,7 @@ def chrome(card_data,type):
 
         # JavaScript code to trigger the card check with simulated card data
         js_code = f"""
-        window.emvProcessed("{card_data,type}");
+        window.emvProcessed("{card_data}", "{type}");
         """
         # Execute the JavaScript code
         result = tab.Runtime.evaluate(expression=js_code)
