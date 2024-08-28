@@ -14,7 +14,7 @@ def process_card():
     global done
     while True:
         try:
-            if not done:
+            if 1:
                 time.sleep(2)
                 # List available readers
                 reader_list = readers()
@@ -37,23 +37,17 @@ def process_card():
                 # Connect to the reader
                 connection = reader.createConnection()
                 connection.connect()
-
-                # Example APDU command to read binary data
-                read_binary_apdu = [0xFF, 0xA4, 0x00, 0x00, 0x01, 0x06]  # Read 16 bytes from offset 0x00
-                response, sw1, sw2 = send_apdus(connection, read_binary_apdu)
-                time.sleep(1)
-                
-                # Another example APDU command to read binary data
-                read_binary_apdu = [0xFF, 0xB0, 0x00, 0x00, 0x16]  # Read 16 bytes from offset 0x00
-                response, sw1, sw2 = send_apdu(connection, read_binary_apdu)
-                
-                
-                print("Smartcard processing completed. You can now swipe the card.")
-            else:
-                time.sleep(2)
-                done=False
-                #break
-                #print("Card already processed")
+                if not done:
+                    # Example APDU command to read binary data
+                    read_binary_apdu = [0xFF, 0xA4, 0x00, 0x00, 0x01, 0x06]  # Read 16 bytes from offset 0x00
+                    response, sw1, sw2 = send_apdus(connection, read_binary_apdu)
+                    time.sleep(1)
+                    
+                    # Another example APDU command to read binary data
+                    read_binary_apdu = [0xFF, 0xB0, 0x00, 0x00, 0x16]  # Read 16 bytes from offset 0x00
+                    response, sw1, sw2 = send_apdu(connection, read_binary_apdu)
+                    done = True
+                    print("Smartcard processing completed. You can now swipe the card.")
 
         except Exception as e:
             print(f"An error occurred: {e}")
