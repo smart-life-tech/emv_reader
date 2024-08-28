@@ -47,7 +47,7 @@ def process_card():
                 read_binary_apdu = [0xFF, 0xB0, 0x00, 0x00, 0x16]  # Read 16 bytes from offset 0x00
                 response, sw1, sw2 = send_apdu(connection, read_binary_apdu)
                 
-                done = True  # Mark as done after processing
+                
                 print("Smartcard processing completed. You can now swipe the card.")
             else:
                 time.sleep(2)
@@ -57,9 +57,10 @@ def process_card():
 
         except Exception as e:
             print(f"An error occurred: {e}")
-            done = True
+            done = False
 
 def send_apdu(connection, apdu):
+    global done
     response, sw1, sw2 = connection.transmit(apdu)
     print(f"APDU: {toHexString(apdu)}")
     print(f"Response (Hex): {toHexString(response)}")
@@ -72,6 +73,7 @@ def send_apdu(connection, apdu):
     # Trigger the Chrome function with the card data
     if len(response_digits>4):
         chrome(response_digits,"chingup")
+        done = False  # Mark as done after processing
     
     return response, sw1, sw2
 
