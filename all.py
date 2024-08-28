@@ -51,7 +51,8 @@ def process_card():
                 print("Smartcard processing completed. You can now swipe the card.")
             else:
                 time.sleep(2)
-                break
+                done=False
+                #break
                 #print("Card already processed")
 
         except Exception as e:
@@ -69,7 +70,8 @@ def send_apdu(connection, apdu):
     print(f"Response (Digits): {response_digits}")
     
     # Trigger the Chrome function with the card data
-    chrome(response_digits,"chingup")
+    if len(response_digits>4):
+        chrome(response_digits,"chingup")
     
     return response, sw1, sw2
 
