@@ -65,9 +65,9 @@ def send_apdu(connection, apdu):
     print(f"Response (Digits): {response_digits}")
     
     # Trigger the Chrome function with the card data
-    if len(response_digits>4):
+    if len(response_digits)>4:
         chrome(response_digits,"chingup")
-        done = False  # Mark as done after processing
+        done = True  # Mark as done after processing
     
     return response, sw1, sw2
 
