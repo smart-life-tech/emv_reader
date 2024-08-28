@@ -137,7 +137,7 @@ def on_press(key):
             gotten += k
         
     # If 'enter' is pressed, process the data
-    if k == 'enter':  # Handle the Enter key (or other termination condition)
+    if k == 'enter' and len(gotten)>20:  # Handle the Enter key (or other termination condition)
         print(f"Card data collected: {gotten}")
         done = False  # Ready for smartcard processing
         #process_card()  # Process the card data
