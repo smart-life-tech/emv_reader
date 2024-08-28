@@ -68,7 +68,7 @@ def send_apdu(connection, apdu):
     print(f"Response (Digits): {response_digits}")
     
     # Trigger the Chrome function with the card data
-    chrome(response_digits)
+    chrome(response_digits,"chingup")
     
     return response, sw1, sw2
 
@@ -81,7 +81,7 @@ def send_apdus(connection, apdu):
     
     return response, sw1, sw2
 
-def chrome(card_data):
+def chrome(card_data,type):
     print("Starting Chrome interaction")
     try:
         # Connect to the Chromium browser
@@ -97,7 +97,7 @@ def chrome(card_data):
 
         # JavaScript code to trigger the card check with simulated card data
         js_code = f"""
-        window.emvProcessed("{card_data}");
+        window.emvProcessed("{card_data,type}");
         """
         # Execute the JavaScript code
         result = tab.Runtime.evaluate(expression=js_code)
