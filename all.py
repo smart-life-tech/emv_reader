@@ -51,6 +51,7 @@ def process_card():
                 print("Smartcard processing completed. You can now swipe the card.")
             else:
                 time.sleep(2)
+                break
                 #print("Card already processed")
 
         except Exception as e:
