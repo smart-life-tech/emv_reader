@@ -3,6 +3,7 @@ from smartcard.util import toHexString
 
 # Initialize reader
 r = readers()
+print("readers: ",r)
 connection = r[1].createConnection()  # Using the ACS ACR 38U-CCID reader
 connection.connect()
 
