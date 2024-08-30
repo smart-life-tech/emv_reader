@@ -4,7 +4,7 @@ import time
 
 # Find the device
 dev = usb.core.find(idVendor=0x0801, idProduct=0x0005)
-
+print(dev)
 if dev is None:
     raise ValueError("Device not found")
 
@@ -20,7 +20,7 @@ usb.util.claim_interface(dev, 1)
 
 # Endpoint addresses for EMV reader
 endpoint_in = dev[0][(1, 0)][0]  # IN endpoint for interface 1
-
+print("endpoint_in : ", endpoint_in)
 try:
     while True:
         time.sleep(3)  # Adjust sleep time as needed
