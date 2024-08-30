@@ -6,13 +6,14 @@ dev = usb.core.find(idVendor=0x0801, idProduct=0x0005)
 
 if dev is None:
     raise ValueError("Device not found")
-
+print(dev)
 # Detach the device from the kernel driver
 if dev.is_kernel_driver_active(0):
+    print("kenel is active")
     dev.detach_kernel_driver(0)
 
 # Set the configuration
-#dev.set_configuration()
+dev.set_configuration()
 
 # Claim the interface
 cfg = dev.get_active_configuration()
