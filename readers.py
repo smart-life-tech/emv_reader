@@ -3,8 +3,8 @@ import usb.util
 import time
 #i need to run this at every start  chromium-browser --remote-debugging-port=9222
 # Vendor and Product ID for the AugustaS device
-VENDOR_ID = 0x058f
-PRODUCT_ID = 0x9540
+VENDOR_ID =  0x0801
+PRODUCT_ID = 0x0005
 
 # Find the USB device
 dev = usb.core.find(idVendor=VENDOR_ID, idProduct=PRODUCT_ID)
