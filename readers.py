@@ -1,8 +1,7 @@
 import usb.core
 import usb.util
 import time
-#i need to run this at every start  chromium-browser --remote-debugging-port=9222
-# Vendor and Product ID for the AugustaS device
+
 VENDOR_ID =  0x0801
 PRODUCT_ID = 0x0005
 
@@ -15,6 +14,9 @@ if dev is None:
 # Detach the kernel driver if it's attached
 if dev.is_kernel_driver_active(0):
     dev.detach_kernel_driver(0)
+
+# Reset the device to ensure it's in a clean state
+dev.reset()
 
 # Set the configuration
 dev.set_configuration()
@@ -54,5 +56,6 @@ try:
 finally:
     # Clean up
     usb.util.dispose_resources(dev)
+    # Re-attach kernel driver if it was originally attached
     if dev.is_kernel_driver_active(0):
         dev.attach_kernel_driver(0)
