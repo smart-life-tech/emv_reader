@@ -25,7 +25,7 @@ try:
     # Example control transfer that might be needed to initialize EMV
     # This is a placeholder, and the actual command needs to be determined from documentation
     init_command = [0x00, 0x00, 0x00, 0x00]  # This is just an example; adjust accordingly
-    dev.ctrl_transfer(0x21, 0x09, 0x0200, 1, init_command)  # Example of control transfer
+    dev.ctrl_transfer(0x21, 0x09, 0x0200, 1, [0x00])  # Example of control transfer
     
     while True:
         time.sleep(3)  # Adjust sleep time as needed
