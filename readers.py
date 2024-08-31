@@ -13,7 +13,7 @@ if dev.is_kernel_driver_active(1):
     dev.detach_kernel_driver(1)
 
 # Set the configuration
-dev.set_configuration()
+#dev.set_configuration()
 
 # Claim the interface that is likely to be for EMV (try Interface 1)
 usb.util.claim_interface(dev, 1)
