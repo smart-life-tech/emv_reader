@@ -1,18 +1,14 @@
-import hid
+import serial
 
-# Open the device
-h = hid.device()
-h.open(0x1136, 0x3004)
-
-# Set non-blocking mode
-h.set_nonblocking(True)
+# Open the serial port (adjust '/dev/ttyUSB0' and baudrate as needed)
+ser = serial.Serial('/dev/ttyUSB0', baudrate=9600, timeout=1)
 
 try:
     while True:
-        data = h.read(64)  # Read 64 bytes (change if necessary)
-        if data:
+        if ser.in_waiting > 0:
+            data = ser.read(ser.in_waiting)
             print("Data received:", data)
 except KeyboardInterrupt:
     print("Exiting...")
 finally:
-    h.close()
+    ser.close()
