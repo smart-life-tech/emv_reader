@@ -16,11 +16,11 @@ if dev.is_kernel_driver_active(1):
 #dev.set_configuration()
 
 # Claim the EMV interface (interface 1)
-usb.util.claim_interface(dev, 1)
+usb.util.claim_interface(dev, 0)
 
 # Endpoint for reading EMV data (Interrupt IN)
-endpoint_in = dev[0][(1, 0)][0]  # Interface 1 IN endpoint (0x81)
-
+endpoint_in = dev[0][(0, 0)][0]  # Interface 1 IN endpoint (0x81)
+print(endpoint_in)
 try:
     # Send initialization command to EMV reader using control transfer (if needed)
     # You might need to adjust the request, value, and index based on your device's specification
