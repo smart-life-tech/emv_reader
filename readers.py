@@ -4,7 +4,7 @@ import time
 
 # Find the device
 dev = usb.core.find(idVendor=0x0801, idProduct=0x0005)
-print(dev)
+
 if dev is None:
     raise ValueError("Device not found")
 
@@ -18,10 +18,15 @@ if dev.is_kernel_driver_active(1):
 # Claim the EMV interface (interface 1)
 usb.util.claim_interface(dev, 1)
 
-# Endpoint addresses for EMV reader
-endpoint_in = dev[0][(1, 0)][0]  # IN endpoint for interface 1
-print("endpoint_in : ", endpoint_in)
+# Endpoint for reading EMV data (Interrupt IN)
+endpoint_in = dev[0][(1, 0)][0]  # Interface 1 IN endpoint (0x81)
+
 try:
+    # Send initialization command to EMV reader using control transfer (if needed)
+    # You might need to adjust the request, value, and index based on your device's specification
+    init_command = [0x00, 0xA4, 0x04, 0x00]  # Example APDU command to select an application
+    dev.ctrl_transfer(0x21, 0x09, 0x0200, 1, init_command)  # Adjust request and values as necessary
+
     while True:
         time.sleep(3)  # Adjust sleep time as needed
         
@@ -40,5 +45,5 @@ except KeyboardInterrupt:
 finally:
     # Release the interface and reattach the kernel driver when done
     usb.util.release_interface(dev, 1)
-    if dev.is_kernel_driver_active(1) == False:
+    if not dev.is_kernel_driver_active(1):
         dev.attach_kernel_driver(1)
