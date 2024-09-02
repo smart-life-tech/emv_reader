@@ -12,3 +12,4 @@ except KeyboardInterrupt:
     print("Exiting...")
 finally:
     ser.close()
+
