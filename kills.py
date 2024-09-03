@@ -14,13 +14,13 @@ def monitor_processes():
         
         # Get the list of all running processes
         process_list = subprocess.getoutput('tasklist')#'ps -A'
-        print(process_list[1],process_list[2])
+        print(process_list)
         
         # Check if any unauthorized process is running
         # Check if any unauthorized process is running
         for unauthorized_process in unauthorized_processes:
             print(unauthorized_process)
-            if unauthorized_process in process_list:
+            if any(unauthorized_process in process for process in process_list):
                 self_destruct(f"Unauthorized process detected: {unauthorized_process}")
                 break
         
