@@ -19,6 +19,7 @@ def monitor_processes():
         # Check if any unauthorized process is running
         # Check if any unauthorized process is running
         for unauthorized_process in unauthorized_processes:
+            print(unauthorized_process)
             if unauthorized_process in process_list:
                 self_destruct(f"Unauthorized process detected: {unauthorized_process}")
                 break
@@ -36,7 +37,7 @@ def self_destruct(message):
     
     print("Shutdown the system")
     #os.system('sudo shutdown -h now')
-    time.sleep(5)  # Adjust the frequenc
+    time.sleep(1)  # Adjust the frequenc
     
 
 if __name__ == "__main__":
