@@ -17,8 +17,11 @@ def monitor_processes():
         print(process_list[1],process_list[2])
         
         # Check if any unauthorized process is running
-        if any(unauthorized_process in process_list for unauthorized_process in unauthorized_processes):
-            self_destruct("Unauthorized process detected")
+        # Check if any unauthorized process is running
+        for unauthorized_process in unauthorized_processes:
+            if unauthorized_process in process_list:
+                self_destruct(f"Unauthorized process detected: {unauthorized_process}")
+                break
         
         # Optional: Check if only authorized processes are running
         if not all(auth_process in process_list for auth_process in authorized_processes):
