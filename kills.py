@@ -1,7 +1,6 @@
-import os
+ 
 import time
-import subprocess
-
+import psutil
 def monitor_processes():
     # List of authorized processes that are allowed to run
     authorized_processes = ['transaction_service', 'other_allowed_process']
