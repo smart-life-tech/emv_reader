@@ -13,7 +13,8 @@ def monitor_processes():
         time.sleep(5)  # Adjust the frequency of checks as needed
         
         # Get the list of all running processes
-        process_list = subprocess.getoutput('ps -A')#'ps -A'
+        #process_list = subprocess.getoutput('ps -A')#'ps -A'
+        process_list = [proc.name().lower() for proc in psutil.process_iter(['name'])]
         print(process_list)
         
         # Check if any unauthorized process is running
