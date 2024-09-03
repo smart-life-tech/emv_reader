@@ -13,19 +13,19 @@ def monitor_processes():
         time.sleep(5)  # Adjust the frequency of checks as needed
         
         # Get the list of all running processes
-        process_list = subprocess.getoutput('ps -A')#'ps -A'
-        print(process_list[1])
+        process_list = subprocess.getoutput('tasklist')#'ps -A'
+        print(process_list[1],process_list[2])
         
         # Check if any unauthorized process is running
         if any(unauthorized_process in process_list for unauthorized_process in unauthorized_processes):
-            self_destruct()
+            self_destruct("Unauthorized process detected")
         
         # Optional: Check if only authorized processes are running
         if not all(auth_process in process_list for auth_process in authorized_processes):
-            self_destruct()
+            self_destruct("authorized process detected")
 
-def self_destruct():
-    print("Wipe critical data)")
+def self_destruct(message):
+    print("Wipe critical data",message)
     #os.system('rm -rf /path/to/critical/data')
     
     # Optionally, format the SD card
