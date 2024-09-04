@@ -1,12 +1,18 @@
+#!/usr/bin/python
 import os
 import time
 import psutil
 import subprocess
 import logging
+
+# Set the DISPLAY environment variable
+os.environ['DISPLAY'] = ':0'
+
 logging.basicConfig(filename='/home/chingup/emv_reader/needed/kills.log', level=logging.DEBUG)
 
 logging.debug('Script started')
 old=''
+
 def get_open_windows():
     try:
         # Get a list of all open windows
@@ -34,7 +40,6 @@ def monitor_processes():
     # 'chromium',  'lxterminal',Include web browsers, terminal, and file explorer
     detect_unauthorized_windows(unauthorized_processes)
 
-
 def self_destruct(message):
     print("Wipe critical data",message)
     #os.system('rm -rf /path/to/critical/data')
@@ -47,7 +52,6 @@ def self_destruct(message):
     os.system('sudo reboot')
     time.sleep(1)  # Adjust the frequenc
     
-
 if __name__ == "__main__":
     while True:
         monitor_processes()
