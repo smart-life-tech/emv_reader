@@ -5,7 +5,7 @@ import subprocess
 old=''
 def monitor_processes():    
     # List of unauthorized applications that should trigger the self-destruct
-    unauthorized_processes = ['firefox', 'pcmanfm']  # 'chromium',  'lxterminal',Include web browsers, terminal, and file explorer
+    unauthorized_processes = ['firefox', '0x01001dbf  0 raspberrypi chingup']  # 'chromium',  'lxterminal',Include web browsers, terminal, and file explorer
     
     while True:
         old = subprocess.check_output(['ps', '-A'], text=True).splitlines()
@@ -16,29 +16,11 @@ def monitor_processes():
         process_list = subprocess.check_output(['ps', '-A'], text=True).splitlines()
         window_list = subprocess.check_output(['wmctrl', '-l'], text=True).splitlines()
         print(window_list)
-        # Convert the lists to sets for comparison
-        old_set = set(old)
-        new_set = set(process_list)
-
-        # Find the differences
-        added_processes = new_set - old_set  # Processes in new_set but not in old_set
-        removed_processes = old_set - new_set  # Processes in old_set but not in new_set
-
-        # Print the differences
-        print("Added processes:")
-        for process in added_processes:
-            print(process)
-
-        print("\nRemoved processes:")
-        for process in removed_processes:
-            print(process)
-        #print(process_list)
         
-        # Check if any unauthorized process is running
         # Check if any unauthorized process is running
         for unauthorized_process in unauthorized_processes:
             print(unauthorized_process)
-            if any(unauthorized_process in process for process in process_list):
+            if any(unauthorized_process in process for process in window_list):
                 self_destruct(f"Unauthorized process detected: {unauthorized_process}")
                 break
 
