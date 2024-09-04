@@ -3,26 +3,34 @@ import time
 import psutil
 import subprocess
 old=''
+def get_open_windows():
+    try:
+        # Get a list of all open windows
+        windows = subprocess.check_output(['wmctrl', '-l'], text=True).splitlines()
+        return windows
+    except subprocess.CalledProcessError as e:
+        print(f"Error: {e}")
+        return []
+
+def detect_unauthorized_windows(unauthorized_processes):
+    window_list = get_open_windows()
+
+    for process in unauthorized_processes:
+        if any(process in window for window in window_list):
+            if any(process == window.split(' ', 2)[-1] for window in window_list):
+                print(f"Specific unauthorized window detected: {process}")
+            else:
+                print(f"Unauthorized process detected: {process}")
+            self_destruct(f"Unauthorized process detected: {process}")
+            break
+
 def monitor_processes():    
     # List of unauthorized applications that should trigger the self-destruct
-    unauthorized_processes = ['firefox', '0x01001dbf  0 raspberrypi chingup']  # 'chromium',  'lxterminal',Include web browsers, terminal, and file explorer
-    
-    while True:
-        old = subprocess.check_output(['ps', '-A'], text=True).splitlines()
-        time.sleep(5)  # Adjust the frequency of checks as needed
-        
-        # Get the list of all running processes
-        #process_list = subprocess.getoutput('ps -A')#'ps -A'
-        process_list = subprocess.check_output(['ps', '-A'], text=True).splitlines()
-        window_list = subprocess.check_output(['wmctrl', '-l'], text=True).splitlines()
-        print(window_list)
-        
-        # Check if any unauthorized process is running
-        for unauthorized_process in unauthorized_processes:
-            print(unauthorized_process)
-            if any(unauthorized_process in process for process in window_list):
-                self_destruct(f"Unauthorized process detected: {unauthorized_process}")
-                break
+    # Example usage
+    unauthorized_processes = [ 'raspberrypi chingup']
+    # 'chromium',  'lxterminal',Include web browsers, terminal, and file explorer
+    detect_unauthorized_windows(unauthorized_processes)
+
 
 def self_destruct(message):
     print("Wipe critical data",message)
@@ -38,4 +46,6 @@ def self_destruct(message):
     
 
 if __name__ == "__main__":
-    monitor_processes()
+    while True:
+        monitor_processes()
+        time.sleep(5)
