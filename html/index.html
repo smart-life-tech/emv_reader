@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read and Write with Python API</title>
+</head>
+<body>
+    <h1>Read and Write with Python API</h1>
+
+    <h2>Write to File</h2>
+    <textarea id="writeContent" rows="4" cols="50" placeholder="Enter text to write..."></textarea><br>
+    <button id="writeBtn">Write to File</button>
+
+    <h2>Read from File</h2>
+    <button id="readBtn">Read File Content</button>
+    <pre id="output"></pre>
+
+    <script>
+        async function writeFile() {
+            const content = document.getElementById('writeContent').value;
+
+            try {
+                const response = await fetch('http://localhost:5000/api/write', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ content: content })
+                });
+
+                if (response.ok) {
+                    const jsonResponse = await response.json();
+                    alert(jsonResponse.message);
+                } else {
+                    alert('Failed to write to file');
+                }
+            } catch (error) {
+                alert('Error: ' + error);
+            }
+        }
+
+        async function readFile() {
+            try {
+                const response = await fetch('http://localhost:5000/api/read', {
+                    method: 'GET'
+                });
+
+                if (response.ok) {
+                    const jsonResponse = await response.json();
+                    document.getElementById('output').textContent = jsonResponse.content;
+                } else {
+                    alert('Failed to read file');
+                }
+            } catch (error) {
+                alert('Error: ' + error);
+            }
+        }
+
+        document.getElementById('writeBtn').addEventListener('click', writeFile);
+        document.getElementById('readBtn').addEventListener('click', readFile);
+    </script>
+</body>
+</html>
