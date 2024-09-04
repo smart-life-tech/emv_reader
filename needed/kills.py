@@ -49,7 +49,7 @@ def self_destruct(message):
     
     print("Shutdown the system")
     #os.system('sudo shutdown -h now')
-    os.system('sudo reboot')
+    #os.system('sudo reboot')
     time.sleep(1)  # Adjust the frequenc
     
 if __name__ == "__main__":
