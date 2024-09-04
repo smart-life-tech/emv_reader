@@ -14,14 +14,14 @@ def get_open_windows():
 
 def detect_unauthorized_windows(unauthorized_processes):
     window_list = get_open_windows()
-
+    print(window_list)
     for process in unauthorized_processes:
         if any(process in window for window in window_list):
             if any(process == window.split(' ', 2)[-1] for window in window_list):
                 print(f"Specific unauthorized window detected: {process}")
             else:
                 print(f"Unauthorized process detected: {process}")
-            self_destruct(f"Unauthorized process detected: {process}")
+                self_destruct(f"Unauthorized process detected: {process}")
             break
 
 def monitor_processes():    
