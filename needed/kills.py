@@ -14,6 +14,8 @@ def monitor_processes():
         # Get the list of all running processes
         #process_list = subprocess.getoutput('ps -A')#'ps -A'
         process_list = subprocess.check_output(['ps', '-A'], text=True).splitlines()
+        window_list = subprocess.check_output(['wmctrl', '-l'], text=True).splitlines()
+        print(window_list)
         # Convert the lists to sets for comparison
         old_set = set(old)
         new_set = set(process_list)
