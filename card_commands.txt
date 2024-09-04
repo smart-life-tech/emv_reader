@@ -2,3 +2,11 @@
 FF B0 00 00 10
 00 A4 04 00 07 A0 00 00 00 03 00 00 00
 FF D0 00 00 67 41 31 42 32 43 33 44 34 00 30 67 75 CC 80 41 31 42 32 43 33 44 34 00 30 67 75 CC 80
+
+sudo nano /etc/xdg/lxsession/LXDE-pi/autostart
+@lxpanel --profile LXDE-pi
+@pcmanfm --desktop --profile LXDE-pi
+@xscreensaver -no-splash
+@chromium-browser --kiosk chingup.com/rpi_pos --remote-debugging-port=9222
+@sh -c 'sudo PYTHONPATH=$PYTHONPATH:/home/chingup/.local/lib/python3.9/site-packages python3 /home/chingup/latest.py'
+@sh -c 'sudo PYTHONPATH=$PYTHONPATH:/home/chingup/.local/lib/python3.9/site-packages python3 /home/chingup/needed/kills.py'
