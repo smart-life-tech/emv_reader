@@ -1,6 +1,7 @@
 import os
 import time
 import psutil
+import subprocess
 def monitor_processes():    
     # List of unauthorized applications that should trigger the self-destruct
     unauthorized_processes = ['firefox', 'pcmanfm']  # 'chromium',  'lxterminal',Include web browsers, terminal, and file explorer
@@ -10,8 +11,8 @@ def monitor_processes():
         
         # Get the list of all running processes
         #process_list = subprocess.getoutput('ps -A')#'ps -A'
-        process_list = [proc.name().lower() for proc in psutil.process_iter(['name'])]
-        print(process_list)
+        process_list = subprocess.check_output(['ps', '-A'], text=True).splitlines()
+        #print(process_list)
         
         # Check if any unauthorized process is running
         # Check if any unauthorized process is running
@@ -30,7 +31,7 @@ def self_destruct(message):
     
     print("Shutdown the system")
     #os.system('sudo shutdown -h now')
-    os.system('sudo reboot')
+    #os.system('sudo reboot')
     time.sleep(1)  # Adjust the frequenc
     
 
