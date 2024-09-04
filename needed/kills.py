@@ -12,7 +12,7 @@ def monitor_processes():
         # Get the list of all running processes
         #process_list = subprocess.getoutput('ps -A')#'ps -A'
         process_list = subprocess.check_output(['ps', '-A'], text=True).splitlines()
-        #print(process_list)
+        print(process_list)
         
         # Check if any unauthorized process is running
         # Check if any unauthorized process is running
