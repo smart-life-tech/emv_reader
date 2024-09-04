@@ -2,6 +2,10 @@ import os
 import time
 import psutil
 import subprocess
+import logging
+logging.basicConfig(filename='/home/chingup/emv_reader/needed/kills.log', level=logging.DEBUG)
+
+logging.debug('Script started')
 old=''
 def get_open_windows():
     try:
@@ -16,7 +20,7 @@ def get_open_windows():
 def detect_unauthorized_windows(unauthorized_processes):
     window_list = get_open_windows()
     count=len(window_list)
-    print(window_list)
+    logging.info(window_list)
     for process in unauthorized_processes:
         if any(process in window for window in window_list) or count > 15:
             print(f"Specific unauthorized window detected: {process}")
