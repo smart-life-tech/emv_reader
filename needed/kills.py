@@ -30,7 +30,7 @@ def monitor_processes():
         print("\nRemoved processes:")
         for process in removed_processes:
             print(process)
-        print(process_list)
+        #print(process_list)
         
         # Check if any unauthorized process is running
         # Check if any unauthorized process is running
