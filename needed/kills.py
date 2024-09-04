@@ -18,10 +18,9 @@ def detect_unauthorized_windows(unauthorized_processes):
     print(window_list)
     for process in unauthorized_processes:
         if any(process in window for window in window_list):
-            if any(process == window for window in window_list):
-                print(f"Specific unauthorized window detected: {process}")
-                self_destruct(f"Unauthorized process detected: {process}")
-                break
+            print(f"Specific unauthorized window detected: {process}")
+            self_destruct(f"Unauthorized process detected: {process}")
+            break
 
 def monitor_processes():    
     # List of unauthorized applications that should trigger the self-destruct
