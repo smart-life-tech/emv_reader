@@ -1,10 +1,7 @@
  
 import time
 import psutil
-def monitor_processes():
-    # List of authorized processes that are allowed to run
-    authorized_processes = ['transaction_service', 'other_allowed_process']
-    
+def monitor_processes():    
     # List of unauthorized applications that should trigger the self-destruct
     unauthorized_processes = ['chromium', 'firefox', 'lxterminal', 'pcmanfm']  # Include web browsers, terminal, and file explorer
     
@@ -23,10 +20,6 @@ def monitor_processes():
             if any(unauthorized_process in process for process in process_list):
                 self_destruct(f"Unauthorized process detected: {unauthorized_process}")
                 break
-        
-        # Optional: Check if only authorized processes are running
-        if not all(auth_process in process_list for auth_process in authorized_processes):
-            self_destruct("authorized process detected")
 
 def self_destruct(message):
     print("Wipe critical data",message)
