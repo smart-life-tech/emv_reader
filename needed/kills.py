@@ -7,7 +7,8 @@ def get_open_windows():
     try:
         # Get a list of all open windows
         windows = subprocess.check_output(['wmctrl', '-l'], text=True).splitlines()
-        return windows
+        filtered_windows = [window for window in windows if  'raspberrypi chingup@raspberrypi' not in window]
+        return filtered_windows
     except subprocess.CalledProcessError as e:
         print(f"Error: {e}")
         return []
