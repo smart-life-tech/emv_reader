@@ -1,8 +1,5 @@
 #echo -e "pos_id: 1\nbrn: add5008577937ea6a3227b496eda41f92fb8630db42639efb89197cefb4e77a5617b766ddc1ab5da" > ~/.hidden_dir/secret_file.txt
 #sudo PYTHONPATH=$PYTHONPATH:/home/chingup/.local/lib/python3.9/site-packages python3 brn.py
-
-
-
 import threading
 import time
 from pynput import keyboard
@@ -174,10 +171,10 @@ def on_press(key):
 
 # Create and start threads for smartcard processing and keyboard listening
 smartcard_thread = threading.Thread(target=process_card)
-keyboard_thread = threading.Thread(target=start_keyboard_listener)
+#keyboard_thread = threading.Thread(target=start_keyboard_listener)
 
 smartcard_thread.start()
-keyboard_thread.start()
+#keyboard_thread.start()
 
 smartcard_thread.join()
-keyboard_thread.join()
+#keyboard_thread.join()
