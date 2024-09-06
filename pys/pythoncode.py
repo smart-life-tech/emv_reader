@@ -5,7 +5,7 @@ import os
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 # File path for read/write operations
-file_path = 'data.txt'
+file_path = 'pys\data.txt'
 
 @app.route('/api/read', methods=['GET'])
 def read_file():
