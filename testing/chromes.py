@@ -31,7 +31,7 @@ try:
 
     # JavaScript code to trigger the card check with simulated card data
     js_code = f"""
-    window.emvProcessed("{'card_data'}", "{'type'}", "{'pos_id'}", "{'brn'}");
+    window.emvProcessed("{'card_data'}", "{'type'}", "{pos_id}", "{brn}");
     """
     # Execute the JavaScript code
     result = tab.Runtime.evaluate(expression=js_code)
