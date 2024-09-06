@@ -26,20 +26,20 @@ def write_file():
     else:
         return jsonify({"status": "error", "message": "No content to write"}), 400
 
-@app.route('/api/reboot', methods=['POST'])
+@app.route('/api/reboot', methods=['POST', 'OPTIONS'])
 def reboot():
     if 1:
         print("rebooted")
-        #os.system('sudo reboot')
+        os.system('sudo reboot')
         return jsonify({"status": "success", "content": "rebooted"}), 200
     else:
         return jsonify({"status": "error", "message": "File not found"}), 404
 
-@app.route('/api/shutdown', methods=['POST'])
+@app.route('/api/shutdown', methods=['POST', 'OPTIONS'])
 def shutdown():
     if 1:
         print("shutdown")
-        #os.system('sudo shutdown -h now')
+        os.system('sudo shutdown -h now')
         
         return jsonify({"status": "success", "content": "shutdown"}), 200
     else:

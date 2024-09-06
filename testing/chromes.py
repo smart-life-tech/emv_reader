@@ -29,7 +29,8 @@ try:
     print(brn)
     print(pos_id)
 
-    # JavaScript code to trigger the card check with simulated card data sudo systemctl stop brn.service
+    # JavaScript code to trigger the card check with simulated card data sudo systemctl stop brn.service sudo systemctl stop brn.service sudo journalctl -u brn.service -f
+
     js_code = f"""
     window.emvProcessed("{'card_data'}", "{'type'}", "{pos_id}", "{brn}");
     """
