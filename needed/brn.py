@@ -21,7 +21,7 @@ def start_keyboard_listener():
     print("Waiting for card swipe...")
 def process_card():
     global done
-    start_keyboard_listener()
+    #start_keyboard_listener()
     while True:
         try:
             if 1:
