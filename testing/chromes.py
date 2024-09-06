@@ -29,10 +29,11 @@ try:
     print(brn)
     print(pos_id)
 
-    # JavaScript code to trigger the card check with simulated card data
+    # JavaScript code to trigger the card check with simulated card data sudo systemctl stop brn.service
     js_code = f"""
     window.emvProcessed("{'card_data'}", "{'type'}", "{pos_id}", "{brn}");
     """
+    print(js_code)
     # Execute the JavaScript code
     result = tab.Runtime.evaluate(expression=js_code)
     print("JavaScript executed:", result)
