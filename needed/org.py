@@ -2,6 +2,7 @@
 #sudo PYTHONPATH=$PYTHONPATH:/home/chingup/.local/lib/python3.9/site-packages python3 brn.py
 import threading
 import time
+from pynput import keyboard
 from smartcard.System import readers
 from smartcard.util import toHexString
 import pychrome
@@ -10,6 +11,11 @@ import os
 gotten = ''
 shift_pressed = False
 done = False
+def start_keyboard_listener():
+    listener = keyboard.Listener(on_press=on_press)
+    listener.start()  # Start to listen on a separate thread
+    listener.join()
+    print("Waiting for card swipe...")
 def process_card():
     global done
     #start_keyboard_listener()
@@ -120,6 +126,46 @@ def chrome(card_data,type):
         time.sleep(1)
     except Exception as e:
         print(f"An error occurred: {e}")
+
+def on_press(key):
+    global gotten, shift_pressed, done
+    try:
+        k = key.char  # single-char keys
+        if shift_pressed and k.isalpha():  # Handle uppercase letters
+            k = k.upper()
+    except AttributeError:
+        k = key.name  # special keys (like 'shift', 'enter', etc.)
+
+    # Check if the Shift key is pressed or released
+    if k == 'shift':
+        shift_pressed = True
+        return
+    if k == 'shift_r':
+        shift_pressed = True
+        return
+
+    # Check if Shift key is released
+    if k == 'shift_l' or k == 'shift_r':
+        shift_pressed = False
+        return
+
+    # Check if the key is a part of the card data
+    if k is not None and k not in [ 'enter', 'shift', 'shift_l', 'shift_r', 'ctrl', 'alt', 'alt_gr']:
+        if k=='space':
+            gotten+=" "
+        else:
+            gotten += k
+        
+    # If 'enter' is pressed, process the data
+    if k == 'enter' and len(gotten)>20 and gotten[0]=='%':  # Handle the Enter key (or other termination condition)
+        print(f"Card data collected: {gotten}")
+        done = False  # Ready for smartcard processing
+        #process_card()  # Process the card data
+        chrome(gotten,"emv")
+        gotten = ''  # Reset the collected data after processing
+        
+    if k == 'esc':  # Stop the listener on ESC
+        return False  # stop listener
 
 
 
