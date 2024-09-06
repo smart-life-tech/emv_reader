@@ -14,9 +14,14 @@ import os
 gotten = ''
 shift_pressed = False
 done = False
-
+def start_keyboard_listener():
+    listener = keyboard.Listener(on_press=on_press)
+    listener.start()  # Start to listen on a separate thread
+    listener.join()
+    print("Waiting for card swipe...")
 def process_card():
     global done
+    start_keyboard_listener()
     while True:
         try:
             if 1:
@@ -165,11 +170,7 @@ def on_press(key):
     if k == 'esc':  # Stop the listener on ESC
         return False  # stop listener
 
-def start_keyboard_listener():
-    listener = keyboard.Listener(on_press=on_press)
-    listener.start()  # Start to listen on a separate thread
-    listener.join()
-    print("Waiting for card swipe...")
+
 
 # Create and start threads for smartcard processing and keyboard listening
 smartcard_thread = threading.Thread(target=process_card)
