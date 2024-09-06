@@ -7,7 +7,7 @@ CORS(app)  # Enable CORS for all routes
 # File path for read/write operations
 file_path = 'pys\data.txt'
 
-@app.route('/api/read', methods=['GET'])
+@app.route('/api/read', methods=['GET', 'OPTIONS'])
 def read_file():
     if os.path.exists(file_path):
         with open(file_path, 'r') as file:
@@ -16,7 +16,7 @@ def read_file():
     else:
         return jsonify({"status": "error", "message": "File not found"}), 404
 
-@app.route('/api/write', methods=['POST'])
+@app.route('/api/write', methods=['POST', 'OPTIONS'])
 def write_file():
     data = request.json.get('content')
     if data:
