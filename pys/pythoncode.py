@@ -16,7 +16,7 @@ def read_file():
     else:
         return jsonify({"status": "error", "message": "File not found"}), 404
 
-@app.route('/api/write', methods=['POST', 'OPTIONS'])
+@app.route('/api/write', methods=['POST'])
 def write_file():
     data = request.json.get('content')
     if data:
