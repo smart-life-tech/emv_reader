@@ -66,6 +66,7 @@ def read_input_events(device_path):
 
                     # Stop capturing when '?' is detected
                     if captured_data.endswith('?'):
+                        global count
                         count=count+1
                         if count==2:
                             print("\nCaptured Data: ", captured_data)
