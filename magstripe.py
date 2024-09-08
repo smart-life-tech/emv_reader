@@ -69,7 +69,7 @@ def read_input_events(device_path):
                         global count
                         count=count+1
                         print(count)
-                        if count==2:
+                        if count==4:
                             print("\nCaptured Data: ", captured_data)
                             captured_data = ""  # Reset the data for the next swipe
                             count=0
