@@ -68,6 +68,7 @@ def read_input_events(device_path):
                     if captured_data.endswith('?'):
                         global count
                         count=count+1
+                        print(count)
                         if count==2:
                             print("\nCaptured Data: ", captured_data)
                             captured_data = ""  # Reset the data for the next swipe
