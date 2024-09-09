@@ -50,7 +50,7 @@ def shutdown():
 @app.route('/api/get_brn',methods=['GET', 'OPTIONS'])
 def get_brn():
     if os.path.exists(secret_file_path):
-        with open(file_path, 'r') as file:
+        with open(secret_file_path, 'r') as file:
             content = file.read()
         secret_lines = content.strip().splitlines()
         pos_id = secret_lines[0].split(': ')[1]
@@ -61,7 +61,7 @@ def get_brn():
 @app.route('/api/get_pos_id',methods=['GET', 'OPTIONS'])
 def get_pos_id():
     if os.path.exists(secret_file_path):
-        with open(file_path, 'r') as file:
+        with open(secret_file_path, 'r') as file:
             content = file.read()
         secret_lines = content.strip().splitlines()
         pos_id = secret_lines[0].split(': ')[1]
