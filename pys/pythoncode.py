@@ -6,6 +6,8 @@ app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 # File path for read/write operations
 file_path = '/home/chingup/emv_reader/pys/data.txt'
+ # Define the path to the secret file
+secret_file_path = os.path.expanduser("~/.hidden_dir/secret_file.txt")
 
 @app.route('/api/read', methods=['GET', 'OPTIONS'])
 def read_file():
@@ -44,6 +46,30 @@ def shutdown():
         return jsonify({"status": "success", "content": "shutdown"}), 200
     else:
         return jsonify({"status": "error", "message": "File not found"}), 404   
-     
+
+@app.route('/api/get_brn',methods=['GET', 'OPTIONS'])
+def get_brn():
+    if os.path.exists(secret_file_path):
+        with open(file_path, 'r') as file:
+            content = file.read()
+        secret_lines = content.strip().splitlines()
+        pos_id = secret_lines[0].split(': ')[1]
+        brn = secret_lines[1].split(': ')[1]
+        return jsonify({"status": "success", "content": brn}), 200
+    else:
+        return jsonify({"status": "error", "message": "File not found"}), 404
+@app.route('/api/get_pos_id',methods=['GET', 'OPTIONS'])
+def get_pos_id():
+    if os.path.exists(secret_file_path):
+        with open(file_path, 'r') as file:
+            content = file.read()
+        secret_lines = content.strip().splitlines()
+        pos_id = secret_lines[0].split(': ')[1]
+        brn = secret_lines[1].split(': ')[1]
+        return jsonify({"status": "success", "content": pos_id}), 200
+    else:
+        return jsonify({"status": "error", "message": "File not found"}), 404
+
+        
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
