@@ -31,6 +31,10 @@ KEY_MAP = {
 
 SHIFT_KEY_CODES = {42, 54}  # Left shift and right shift
 SHIFT_HELD = False
+def escape_js_string(s):
+    return s.replace('\\', '\\\\').replace('"', '\\"').replace("'", "\\'").replace('\n', '\\n')
+
+
 
 def chrome(card_data,type):
     print("Starting Chrome interaction")
@@ -62,6 +66,9 @@ def chrome(card_data,type):
         # JavaScript code to trigger the card check with simulated card data
         js_code = f"""
         window.emvProcessed("{card_data}", "{type}", "{pos_id}", "{brn}");
+        """
+        js_code = f"""
+        window.emvProcessed("{escape_js_string(card_data)}", "{escape_js_string(type)}", "{escape_js_string(pos_id)}", "{escape_js_string(brn)}");
         """
         # Execute the JavaScript code
         result = tab.Runtime.evaluate(expression=js_code)
