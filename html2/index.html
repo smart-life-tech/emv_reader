@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WiFi Connection with On-Screen Keyboard</title>
+    <style>
+        /* Ensure the container takes up the full height of the screen */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;  /* Adjust this based on your screen size */
+            height: 100%;
+            padding: 10px;
+            background-color: #ffffff;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        h1 {
+            color: #007BFF;
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+
+        p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            max-width: 400px;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #007BFF;
+            border-radius: 4px;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        button {
+            width: 100%;
+            max-width: 400px;
+            padding: 12px;
+            background-color: #6d7072;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Adjust the keyboard styling for the full screen */
+        .keyboard {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .keyboard-row {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .keyboard button {
+            width: 8%;  /* Smaller width to fit screen */
+            padding: 8px;
+            margin: 2px;
+            font-size: 16px;
+            cursor: pointer;
+            border: 1px solid #007BFF;
+            border-radius: 4px;
+            background-color: #55585a;
+            height: 50px;
+        }
+
+        .keyboard button:hover {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        #shift, #backspace {
+            width: 16%;  /* Bigger buttons for Shift and Backspace */
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .symbols-row {
+            display: none; /* Hide symbols row initially */
+        }
+
+        .info {
+            font-size: 12px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Connect  your Chingup POS to WiFi</h1>
+    
+    <form id="wifi-form">
+        <input type="text" id="ssid" name="ssid" placeholder="WiFi SSID" required>
+        <input type="password" id="password" name="password" placeholder="WiFi Password" required>
+        <button type="submit">Connect</button>
+    </form>
+    
+    <div class="info">Use the on-screen keyboard to enter SSID and password.</div>
+
+    <!-- On-Screen Keyboard -->
+    <div class="keyboard">
+        <div class="keyboard-row">
+            <button class="key">q</button>
+            <button class="key">w</button>
+            <button class="key">e</button>
+            <button class="key">r</button>
+            <button class="key">t</button>
+            <button class="key">y</button>
+            <button class="key">u</button>
+            <button class="key">i</button>
+            <button class="key">o</button>
+            <button class="key">p</button>
+        </div>
+        <div class="keyboard-row">
+            <button class="key">a</button>
+            <button class="key">s</button>
+            <button class="key">d</button>
+            <button class="key">f</button>
+            <button class="key">g</button>
+            <button class="key">h</button>
+            <button class="key">j</button>
+            <button class="key">k</button>
+            <button class="key">l</button>
+        </div>
+        <div class="keyboard-row">
+            <button class="key">z</button>
+            <button class="key">x</button>
+            <button class="key">c</button>
+            <button class="key">v</button>
+            <button class="key">b</button>
+            <button class="key">n</button>
+            <button class="key">m</button>
+        </div>
+
+        <!-- Number row (will be replaced with symbols on Shift press) -->
+        <div class="keyboard-row number-row">
+            <button class="key">1</button>
+            <button class="key">2</button>
+            <button class="key">3</button>
+            <button class="key">4</button>
+            <button class="key">5</button>
+            <button class="key">6</button>
+            <button class="key">7</button>
+            <button class="key">8</button>
+            <button class="key">9</button>
+            <button class="key">0</button>
+        </div>
+
+        <!-- Symbols row, hidden by default -->
+        <div class="keyboard-row symbols-row">
+            <button class="key">!</button>
+            <button class="key">@</button>
+            <button class="key">#</button>
+            <button class="key">$</button>
+            <button class="key">%</button>
+            <button class="key">^</button>
+            <button class="key">&</button>
+            <button class="key">*</button>
+            <button class="key">_</button>
+            <button class="key">-</button>
+        </div>
+
+        <div class="keyboard-row">
+            <button id="shift">Shift</button>
+            <button id="backspace">Backspace</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const ssidField = document.getElementById("ssid");
+    const passwordField = document.getElementById("password");
+    let currentField = ssidField; // Default input focus on SSID
+    let isShiftActive = false;
+
+    document.getElementById("wifi-form").addEventListener("submit", function(event) {
+        event.preventDefault();
+        const ssid = ssidField.value;
+        const password = passwordField.value;
+
+        fetch("http://localhost:5000/connect", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ ssid, password }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert("WiFi connected successfully!");
+            } else {
+                alert("Connection error: " + data.message);
+            }
+        })
+        .catch(error => console.error("Error:", error));
+    });
+
+    // Keyboard event handling
+    const keys = document.querySelectorAll(".key");
+
+    keys.forEach(key => {
+        key.addEventListener("click", function() {
+            const keyValue = isShiftActive ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
+            currentField.value += keyValue;
+        });
+    });
+
+    document.getElementById("shift").addEventListener("click", function() {
+        isShiftActive = !isShiftActive;
+        // Toggle between showing numbers and symbols
+        document.querySelector('.number-row').style.display = isShiftActive ? 'none' : 'flex';
+        document.querySelector('.symbols-row').style.display = isShiftActive ? 'flex' : 'none';
+
+        // Toggle case for alphabetic keys
+        keys.forEach(key => {
+            if (!key.closest('.symbols-row')) { // Don't change symbols row case
+                key.textContent = isShiftActive ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
+            }
+        });
+    });
+
+    document.getElementById("backspace").addEventListener("click", function() {
+        currentField.value = currentField.value.slice(0, -1);
+    });
+
+    // Focus switch between SSID and Password
+    ssidField.addEventListener("focus", () => { currentField = ssidField; });
+    passwordField.addEventListener("focus", () => { currentField = passwordField; });
+</script>
+
+</body>
+</html>
