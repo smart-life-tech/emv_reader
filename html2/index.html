@@ -227,7 +227,7 @@
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
-                alert("WiFi connected successfully!");
+                alert("WiFi updated successfully!, rebooting...");
             } else {
                 alert("Connection error: " + data.message);
             }
