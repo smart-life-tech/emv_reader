@@ -79,14 +79,17 @@ input:-webkit-autofill {
             color: white;
         }
 
-        #shift, #backspace {
-            width: 20%;  /* Bigger buttons for Shift and Backspace */
+        #shift, #backspace,#reboot,#shutdown {
+            width: 30%;  /* Bigger buttons for Shift and Backspace */
             font-size: 30px;
             font-weight: bold;
         }
 		
 		#backspace {
 			width: 28%;
+		}
+		#shutdown{
+			width: 58%;
 		}
 
         .symbols-row {
@@ -184,6 +187,8 @@ input:-webkit-autofill {
 
 				<div class="keyboard-row">
 					<button id="shift">Shift</button>
+					<button id="reboot">Reboot</button>
+					<button id="shutdown">Shutdown</button>
 					<button id="backspace">Backspace</button>
 				</div>
 			</div>
@@ -257,6 +262,43 @@ input:-webkit-autofill {
 			event.preventDefault();
 			currentField.value = currentField.value.slice(0, -1);
 		});
+		document.getElementById("reboot").addEventListener("click", function(event) {
+			event.preventDefault();
+			fetch("http://localhost:5000/api/reboot", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			})
+			.then(response => response.json())
+			.then(data => {
+				if (data.status === 'success') {
+					alert("rebooted successfully!");
+				} else {
+					alert("Connection error: " + data.message);
+				}
+			})
+			.catch(error => console.error("Error:", error));
+		});
+		document.getElementById("shutdown").addEventListener("click", function(event) {
+			event.preventDefault();
+			fetch("http://localhost:5000/api/shutdown", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			})
+			.then(response => response.json())
+			.then(data => {
+				if (data.status === 'success') {
+					alert("shutdown successfully!");
+				} else {
+					alert("Connection error: " + data.message);
+				}
+			})
+			.catch(error => console.error("Error:", error));
+		});
 	});
+	
 </script>
 </html>

@@ -32,7 +32,7 @@ def write_file():
 def reboot():
     if 1:
         print("rebooted")
-        os.system('sudo reboot')
+        #os.system('sudo reboot')
         return jsonify({"status": "success", "content": "rebooted"}), 200
     else:
         return jsonify({"status": "error", "message": "File not found"}), 404
