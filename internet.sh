@@ -1,4 +1,4 @@
-#sudo nano /home/pi/kiosk-check-internet.sh
+#sudo nano /home/chingup/emv_reader/internet.sh
 #!/bin/bash
 
 # Check for internet connection
@@ -9,21 +9,21 @@ if [ $? -eq 0 ]; then
     chromium-browser --remote-debugging-port=9222 --kiosk --noerrdialogs --disable-infobars  https://chingup.com/rpi_pos/
 else
     # No internet connection, boot into the offline page
-    chromium-browser --kiosk --noerrdialogs --disable-infobars --incognito /home/pi/emv_reader/html2/index.html
+    chromium-browser --kiosk --noerrdialogs --disable-infobars --incognito /home/chingup/emv_reader/html2/index.html
 fi
 # Make the script executable:
 # bash
 # Copy code
-# sudo chmod +x /home/pi/kiosk-check-internet.sh
+# sudo chmod +x  internet.sh
 # 2. Modify the autostart file to run the script at boot
 # Edit the autostart file:
 # bash
-# Copy code
+# Copy code /home/chingup/emv_reader/internet.sh
 # sudo nano /etc/xdg/lxsession/LXDE-pi/autostart
 # Add the following line to run your script on boot:
 # bash
 # Copy code
-# @/home/pi/kiosk-check-internet.sh
+# @/home/chingup/emv_reader/internet.sh
 # 3. Reboot and test
 # Reboot your Raspberry Pi:
 
