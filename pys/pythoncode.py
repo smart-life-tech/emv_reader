@@ -71,9 +71,9 @@ def get_pos_id():
         return jsonify({"status": "error", "message": "File not found"}), 404
 
 # Path to the wpa_supplicant config file
-#WPA_SUPPLICANT_CONF = "/etc/wpa_supplicant/wpa_supplicant.conf"
+WPA_SUPPLICANT_CONF = "/etc/wpa_supplicant/wpa_supplicant.conf"
 # Function to update wpa_supplicant.conf with new network info
-WPA_SUPPLICANT_CONF = "pys/wpa_supplicant.conf"
+#WPA_SUPPLICANT_CONF = "pys/wpa_supplicant.conf"
 # Route to handle WiFi connection data
 @app.route('/connect', methods=['POST'])
 def connect_to_wifi():
@@ -95,7 +95,7 @@ def connect_to_wifi():
         # os.system("sudo systemctl restart wpa_supplicant.service")
         # subprocess.run(['sudo', 'wpa_cli', '-i', 'wlan0', 'reconfigure'])
         # reboot the system
-        #os.system('sudo reboot')
+        os.system('sudo reboot')
 
         return jsonify({"status": "success", "message": "WiFi connection updated!"}), 200
 
