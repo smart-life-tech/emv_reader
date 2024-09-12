@@ -1,16 +1,16 @@
 #sudo nano /home/chingup/emv_reader/internet.sh
 #!/bin/bash
 sleep 10
-# Check for internet connection
-wget -q --spider http://google.com
+ping -c 1 google.com > /home/chingup/internet_check.log 2>&1
 
 if [ $? -eq 0 ]; then
-    # Internet is available, boot into the online page
-    chromium-browser --remote-debugging-port=9222 --kiosk --noerrdialogs --disable-infobars  https://chingup.com/rpi_pos/
+    echo "Internet is available" >> /home/chingup/internet_check.log
+    chromium-browser --remote-debugging-port=9222 --kiosk --noerrdialogs --disable-infobars https://chingup.com/rpi_pos/
 else
-    # No internet connection, boot into the offline page
+    echo "No internet connection" >> /home/chingup/internet_check.log
     chromium-browser --kiosk --noerrdialogs --disable-infobars --incognito /home/chingup/emv_reader/html2/index.html
 fi
+
 # Make the script executable:
 # bash
 # Copy code
