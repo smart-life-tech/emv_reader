@@ -4,7 +4,7 @@
 sleep 10
 
 # Check if internet is available by pinging google.com (no https://)
-ping -c 1 google.com > /home/chingup/internet_check.log 2>&1
+wget -q --spider http://google.com 
 
 if [ $? -eq 0 ]; then
     echo "Internet is available" >> /home/chingup/internet_check.log
