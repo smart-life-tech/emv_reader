@@ -1,7 +1,7 @@
 #sudo nano /home/chingup/emv_reader/internet.sh
 #!/bin/bash
-sleep 10
-ping -c 1 google.com > /home/chingup/internet_check.log 2>&1
+sleep 5
+ping -c 1  https://google.com > /home/chingup/internet_check.log 2>&1
 
 if [ $? -eq 0 ]; then
     echo "Internet is available" >> /home/chingup/internet_check.log

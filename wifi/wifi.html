@@ -122,7 +122,7 @@
 			<form id="wifi-form">
 				<input type="text" id="ssid" name="ssid" placeholder="WiFi SSID" required>
 				<input type="password" id="password" name="password" placeholder="WiFi Password" required>
-				<button type="submit">Connect</button>
+				<button type="submit">Update wifi details</button>
 			<div class="info">Use the on-screen keyboard to enter SSID and password.</div>
 
 			<!-- On-Screen Keyboard -->
@@ -186,6 +186,8 @@
 					<button class="key">*</button>
 					<button class="key">_</button>
 					<button class="key">-</button>
+					<button class="key">+</button>
+					<button class="key">=</button>
 				</div>
 
 				<div class="keyboard-row">
@@ -222,7 +224,7 @@
 			const ssid = ssidField.value;
 			const password = passwordField.value;
 
-			fetch("http://localhost:5000/connect", {
+			fetch("http://localhost:5000/update", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -232,7 +234,7 @@
 			.then(response => response.json())
 			.then(data => {
 				if (data.status === 'success') {
-					alert("WiFi connected successfully!");
+					alert("WiFi updated successfully!");
 				} else {
 					alert("Connection error: " + data.message);
 				}
