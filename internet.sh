@@ -1,6 +1,6 @@
 #sudo nano /home/chingup/emv_reader/internet.sh
 #!/bin/bash
-
+sleep 10
 # Check for internet connection
 wget -q --spider http://google.com
 
