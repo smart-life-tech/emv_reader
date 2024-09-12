@@ -1,15 +1,21 @@
 #sudo nano /home/chingup/emv_reader/internet.sh
 #!/bin/bash
-sleep 5
-ping -c 1  https://google.com > /home/chingup/internet_check.log 2>&1
+# Wait 10 seconds to ensure network is ready
+sleep 10
+
+# Check if internet is available by pinging google.com (no https://)
+ping -c 1 google.com > /home/chingup/internet_check.log 2>&1
 
 if [ $? -eq 0 ]; then
     echo "Internet is available" >> /home/chingup/internet_check.log
+    # Open the online page
     chromium-browser --remote-debugging-port=9222 --kiosk --noerrdialogs --disable-infobars https://chingup.com/rpi_pos/
 else
     echo "No internet connection" >> /home/chingup/internet_check.log
+    # Open the offline page
     chromium-browser --kiosk --noerrdialogs --disable-infobars --incognito /home/chingup/emv_reader/html2/index.html
 fi
+
 
 # Make the script executable:
 # bash
