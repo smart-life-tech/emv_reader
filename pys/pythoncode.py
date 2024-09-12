@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
 import subprocess
+import time
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 # File path for read/write operations
@@ -88,12 +89,15 @@ def connect_to_wifi():
 
         # Update wpa_supplicant.conf with new network info
         update_wpa_supplicant(ssid, password)
-
+        time.sleep(2)
         # Restart networking services
-        # os.system("sudo systemctl restart networking.service")
+        os.system("sudo systemctl restart networking.service")
+        time.sleep(1)
         # os.system("sudo systemctl restart dhcpcd.service")
-        # os.system("sudo systemctl restart wpa_supplicant.service")
-        # subprocess.run(['sudo', 'wpa_cli', '-i', 'wlan0', 'reconfigure'])
+        os.system("sudo systemctl restart wpa_supplicant.service")
+        time.sleep(1)
+        subprocess.run(['sudo', 'wpa_cli', '-i', 'wlan0', 'reconfigure'])
+        time.sleep(1)
         # reboot the system
         os.system('sudo reboot')
 
