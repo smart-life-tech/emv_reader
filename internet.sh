@@ -1,6 +1,6 @@
 #sudo nano /home/chingup/emv_reader/internet.sh
 #!/bin/bash
-sleep 5
+#sleep 5
 ping -c 1 google.com > /home/chingup/internet_check.log 2>&1
 
 if [ $? -eq 0 ]; then
