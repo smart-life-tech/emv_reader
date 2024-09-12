@@ -97,7 +97,7 @@ def connect_to_wifi():
         # reboot the system
         os.system('sudo reboot')
 
-        return jsonify({"status": "success", "message": "WiFi connection updated!"}), 200
+        return jsonify({"status": "success", "message": "WiFi connection updated!, restarting"}), 200
 
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
