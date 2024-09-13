@@ -10,7 +10,7 @@
 #journalctl -u readwrite.service -f
 
 #wait 
-sleep 2
+#sleep 2
 
 # Check if internet is available by pinging google.com (no https://)
 wget -q --spider http://google.com 
