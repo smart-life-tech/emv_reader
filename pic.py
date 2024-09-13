@@ -1,6 +1,6 @@
 import pygame
 import sys
-
+import time # Import the time module
 # Initialize Pygame
 pygame.init()
 
@@ -35,6 +35,7 @@ while running:
     
     # Update the display
     pygame.display.flip()
+    time.sleep(5)
     running=False
     break
 
