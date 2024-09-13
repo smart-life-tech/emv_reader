@@ -6,9 +6,11 @@
 #omxplayer --no-keys -o local /path/to/your/video.mp4
 # Wait for video to finish (if needed)
 #sudo cp /home/chingup/Downloads/main_logo_trans_network-500px.png /usr/share/plymouth/themes/my-splash/
+#sudo systemctl restart readwrite.service
+#journalctl -u readwrite.service -f
 
 #wait 
-sleep 5
+sleep 2
 
 # Check if internet is available by pinging google.com (no https://)
 wget -q --spider http://google.com 
