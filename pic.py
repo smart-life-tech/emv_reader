@@ -34,7 +34,7 @@ while running:
     pygame.display.flip()
 
     # Display the image for 5 seconds
-    time.sleep(5)
+    time.sleep(10)
     running = False
 
 # Quit Pygame
