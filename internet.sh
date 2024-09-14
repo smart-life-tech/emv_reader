@@ -25,10 +25,12 @@ sleep 5
 if [ $? -eq 0 ]; then
     echo "Internet is available" >> /home/chingup/internet_check.log
     # Open the online page
+    pkill chromium-browser
     chromium-browser --remote-debugging-port=9222 --kiosk --noerrdialogs --disable-infobars https://chingup.com/rpi_pos/
 else
     echo "No internet connection" >> /home/chingup/internet_check.log
     # Open the offline page
+    pkill chromium-browser
     chromium-browser --kiosk --noerrdialogs --disable-infobars --incognito /home/chingup/emv_reader/html2/index.html
 fi
 
