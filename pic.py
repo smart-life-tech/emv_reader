@@ -5,9 +5,9 @@ import time # Import the time module
 pygame.init()
 
 # Set window dimensions
-screen_width = 800
-screen_height = 600
-screen = pygame.display.set_mode((screen_width, screen_height))
+screen_width = 0
+screen_height = 0
+screen = pygame.display.set_mode((screen_width, screen_height),pygame.FULLSCREEN)
 
 # Load image
 image = pygame.image.load("/home/chingup/Downloads/logo.jpg")
