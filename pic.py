@@ -1,20 +1,21 @@
 import pygame
 import sys
-import time # Import the time module
+import time
+
 # Initialize Pygame
 pygame.init()
 
-# Set window dimensions
-screen_width = 0
-screen_height = 0
-screen = pygame.display.set_mode((screen_width, screen_height),pygame.FULLSCREEN)
+# Set the display to full screen
+screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+
+# Get the screen dimensions
+screen_width, screen_height = screen.get_size()
 
 # Load image
 image = pygame.image.load("/home/chingup/Downloads/logo.jpg")
 
-# Get image dimensions
-image_width = image.get_width()
-image_height = image.get_height()
+# Scale the image to fit the full screen
+image = pygame.transform.scale(image, (screen_width, screen_height))
 
 # Main loop
 running = True
@@ -22,22 +23,19 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-    
+
     # Fill the screen with black
     screen.fill((0, 0, 0))
-    
-    # Calculate position to center the image
-    image_x = (screen_width - image_width) / 2
-    image_y = (screen_height - image_height) / 2
-    
-    # Draw the image on the screen
-    screen.blit(image, (image_x, image_y))
-    
+
+    # Draw the stretched image on the screen
+    screen.blit(image, (0, 0))
+
     # Update the display
     pygame.display.flip()
+
+    # Display the image for 5 seconds
     time.sleep(5)
-    running=False
-    break
+    running = False
 
 # Quit Pygame
 pygame.quit()
