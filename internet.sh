@@ -15,7 +15,7 @@
 
 #python /home/chingup/emv_reader/pic.py
 #!/bin/bash
-chromium-browser --start-fullscreen /home/chingup/emv_reader/start.html
+chromium-browser --start-fullscreen /home/chingup/emv_reader/start.html &
  
 # Check if internet is available by pinging google.com (no https://)
 wget -q --spider http://google.com 
