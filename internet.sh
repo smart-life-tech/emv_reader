@@ -13,7 +13,7 @@
 #sleep 1
 
 
-python /home/chingup/emv_reader/pic.py &
+python /home/chingup/emv_reader/pic.py 
 # Check if internet is available by pinging google.com (no https://)
 wget -q --spider http://google.com 
 #sleep 5
