@@ -35,7 +35,7 @@ while running:
 
     # Display the image for 5 seconds
     time.sleep(10)
-    #running = False
+    running = False
     break
 
 # Quit Pygame
