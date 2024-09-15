@@ -12,6 +12,7 @@
 #wait 
 #sleep 1
 
+truncate -s 0 /home/chingup/emv_reader/pic.txt
 
 python /home/chingup/emv_reader/pic.py &
 #!/bin/bash
@@ -24,6 +25,7 @@ sleep 5
 # If the exit status is 0, internet is available
 if [ $? -eq 0 ]; then
     echo "Internet is available" >> /home/chingup/internet_check.log
+    echo "done" >> /home/chingup/emv_reader/pic.txt
     # Open the online page
     #pkill chromium-browser
     chromium-browser --remote-debugging-port=9222 --kiosk --noerrdialogs --disable-infobars https://chingup.com/rpi_pos/
@@ -31,9 +33,10 @@ else
     echo "No internet connection" >> /home/chingup/internet_check.log
     # Open the offline page
     #pkill chromium-browser
+    echo "done" >> /home/chingup/emv_reader/pic.txt
     chromium-browser --kiosk --start-fullscreen --noerrdialogs --disable-infobars --incognito /home/chingup/emv_reader/html2/index.html
 fi
-
+echo "done" >> /home/chingup/emv_reader/pic.txt
 
 # Make the script executable:
 # bash
