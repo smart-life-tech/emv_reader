@@ -34,7 +34,7 @@ while running:
     pygame.display.flip()
 
     # Display the image for 5 seconds
-    time.sleep(20)
+    time.sleep(2)
     file_path = '/home/chingup/emv_reader/pic.txt'
     file_size = os.path.getsize(file_path)
     if file_size>0:
