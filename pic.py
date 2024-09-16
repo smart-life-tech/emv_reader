@@ -15,7 +15,7 @@ screen_width, screen_height = screen.get_size()
 image = pygame.image.load("/home/chingup/Downloads/logo.jpg")
 
 # Scale the image to fit the full screen
-image = pygame.transform.scale(image, (700, 700))
+image = pygame.transform.scale(image, (screen_width, screen_height))
 
 # Main loop
 running = True
@@ -34,7 +34,7 @@ while running:
     pygame.display.flip()
 
     # Display the image for 5 seconds
-    time.sleep(10)
+    time.sleep(20)
     file_path = '/home/chingup/emv_reader/pic.txt'
     file_size = os.path.getsize(file_path)
     if file_size>0:
