@@ -1,4 +1,5 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify,render_template
+
 from flask_cors import CORS
 import os
 import subprocess
@@ -9,7 +10,12 @@ CORS(app)  # Enable CORS for all routes
 file_path = '/home/chingup/emv_reader/pys/data.txt'
  # Define the path to the secret file
 secret_file_path = os.path.expanduser("~/.hidden_dir/secret_file.txt")
-
+@app.route('/offline')
+def home():
+    return render_template('index.html')
+@app.route('/settings')
+def settings():
+    return render_template('checkint.html')
 @app.route('/api/read', methods=['GET', 'OPTIONS'])
 def read_file():
     if os.path.exists(file_path):
