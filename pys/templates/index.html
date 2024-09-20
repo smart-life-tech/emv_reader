@@ -9,7 +9,7 @@
         body {
             margin: 0;
             padding: 0;
-            background-image: url('bg.jpeg');
+            background-image: url('/static/bg.jpeg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -19,17 +19,53 @@
             align-items: center;
         }
 
+        button {
+            font-size: 1.0em;
+            /* Increase font size */
+            padding: 70px 40px;
+            /* Increase padding */
+            width: 250px;
+            /* Set a larger width */
+            height: 200px;
+            /* Set a larger height */
+            border-radius: 20px;
+            /* Optional: make the corners rounded */
+            background-color: #007BFF;
+            /* Optional: change the background color */
+            color: white;
+            /* Optional: change the text color */
+            border: none;
+            /* Optional: remove the border */
+            cursor: pointer;
+            /* Optional: change the cursor to pointer */
+            transition: transform 0.3s;
+            /* Optional: add a transition effect */
+            text-align: center;
+            /* Ensure text is centered */
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            /* Optional: slightly enlarge the button on hover */
+        }
+
+        /* Add margin to space the buttons */
+        #checkConnectionBtn {
+            margin-right: 20px;
+        }
+
         .offline-message {
             background-color: rgba(0, 0, 0, 0.7);
             color: white;
-            padding: 20px;
-            border-radius: 10px;
+            padding: 40px;
+            /* Increase padding */
+            border-radius: 40px;
             font-family: Arial, sans-serif;
             text-align: center;
-            z-index: 10;
+            z-index: 60;
+            font-size: 2em;
+            /* Increase font size */
         }
-
-     
     </style>
 </head>
 
@@ -43,15 +79,29 @@
 
     <script>
         function checkConnection() {
-            if (!navigator.onLine) {
-                // Show the message if there is no internet connection
-                document.getElementById('offlineMessage').classList.remove('hidden');
-            } else {
-                // Hide the message if there is internet
-                document.getElementById('offlineMessage').classList.add('hidden');
-                // Redirect to the website when internet is restored
-                window.location.href = "https://chingup.com/rpi_pos/";
+            let attempts = 0;
+            const maxAttempts = 10;
+            const interval = 1000; // 1 second
+
+            function pingServer() {
+                fetch('https://www.google.com', { mode: 'no-cors' })
+                    .then(() => {
+                        attempts++;
+                        if (attempts >= maxAttempts) {
+                            // Internet is available, load the page
+                            window.location.href = "https://chingup.com/rpi_pos/";
+                        } else {
+                            // Continue pinging
+                            setTimeout(pingServer, interval);
+                        }
+                    })
+                    .catch(() => {
+                        // No internet, show the offline message
+                        document.getElementById('offlineMessage').classList.remove('hidden');
+                    });
             }
+
+            pingServer();
         }
 
         document.getElementById('checkConnectionBtn').addEventListener('click', function () {
@@ -61,12 +111,13 @@
                 alert('Internet connection restored!');
                 window.location.reload();
             } else {
+                window.location.href = "http://localhost:5000/offline";
                 alert('Still no internet connection.');
             }
         });
         document.getElementById('wifi').addEventListener('click', function () {
             //window.location.href="/home/chingup/emv_reader/html2/index.html";
-            window.location.href = "http://localhost/settings";
+            window.location.href = "http://localhost:5000/settings";
         });
 
         // Run the function on page load

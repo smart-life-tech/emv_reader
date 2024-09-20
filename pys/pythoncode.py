@@ -4,7 +4,7 @@ from flask_cors import CORS
 import os
 import subprocess
 import time
-app = Flask(__name__)
+app = Flask(__name__,static_folder='static')
 CORS(app)  # Enable CORS for all routes
 # File path for read/write operations
 file_path = '/home/chingup/emv_reader/pys/data.txt'
