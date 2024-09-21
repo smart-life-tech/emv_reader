@@ -120,7 +120,7 @@ def read_input_events(device_path):
                         if count==4:
                             print("\nCaptured Data: ", captured_data)
                             time.sleep(1)
-                            chrome(captured_data,"swipe")
+                            chrome(captured_data,"emv")
                             captured_data = ""  # Reset the data for the next swipe
                             count=0
 
