@@ -110,7 +110,7 @@ def chrome(card_data,type):
 
         # JavaScript code to trigger the card check with simulated card data
         js_code = f"""
-        window.emvProcessed("{card_data}", "{type}", "{pos_id}", "{brn}");
+        window.cardProcessed("{card_data}", "{type}", "{pos_id}", "{brn}");
         """
         # Execute the JavaScript code
         

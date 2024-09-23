@@ -88,8 +88,9 @@
                     .then(() => {
                         attempts++;
                         if (attempts >= maxAttempts) {
-                            // Internet is available, load the page
-                            window.location.href = "https://chingup.com/rpi_pos/";
+                            // Internet is available, show the main content
+                            document.getElementById('loadingScreen').classList.add('hidden');
+                            document.getElementById('mainContent').classList.remove('hidden');
                         } else {
                             // Continue pinging
                             setTimeout(pingServer, interval);
@@ -97,6 +98,7 @@
                     })
                     .catch(() => {
                         // No internet, show the offline message
+                        document.getElementById('loadingScreen').classList.add('hidden');
                         document.getElementById('offlineMessage').classList.remove('hidden');
                     });
             }
