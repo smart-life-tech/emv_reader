@@ -1,4 +1,20 @@
-const checkInterval = 5000; // Interval to check connectivity in milliseconds
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connectivity Check</title>
+</head>
+
+<body>
+    <div id="status">Checking...</div>
+    <div id="loadingScreen">Loading...</div>
+    <div id="mainContent" class="hidden">Main Content</div>
+    <div id="offlineMessage" class="hidden">You are offline</div>
+
+    <script>
+        const checkInterval = 5000; // Interval to check connectivity in milliseconds
         const testUrl = 'https://www.google.com/'; // URL to test connectivity
         let isChecking = false; // Flag to manage ongoing fetch requests
         let timeoutHandle = null; // Handle for the timeout
@@ -73,3 +89,8 @@ const checkInterval = 5000; // Interval to check connectivity in milliseconds
 
         // Initial check on page load
         window.onload = checkNetworkStatus;
+
+    </script>
+</body>
+
+</html>
