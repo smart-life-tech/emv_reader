@@ -33,7 +33,9 @@ def read_battery_data():
 
     try:
         if ser.in_waiting > 0:
+            
             line = ser.readline().decode('utf-8').strip()
+            print("read data",line)
             if line:
                 print(f"Battery data: {line}")
                 return line
