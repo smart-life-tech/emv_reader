@@ -3,7 +3,7 @@ import time
 import RPi.GPIO as GPIO
 
 # UART Setup (modify as per your battery module documentation)
-uart_port = '/dev/ttyS0'  # This should match the UART port for your battery
+uart_port = '/dev/ttyAMA0'  # This should match the UART port for your battery
 baud_rate = 9600
 ser = serial.Serial(uart_port, baud_rate, timeout=1)
 
