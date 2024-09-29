@@ -3,7 +3,7 @@ import time
 import RPi.GPIO as GPIO
 import os
 # UART Setup (modify as per your battery module documentation)
-uart_port = '/dev/ttyAMA0'  # This should match the UART port for your battery
+uart_port = '/dev/serial0'  # This should match the UART port for your battery
 baud_rate = 9600
 ser = serial.Serial(uart_port, baud_rate, timeout=1)
 
@@ -58,6 +58,7 @@ try:
             print(f"Battery: {battery_data}")
 
         temp_celsius = read_temperature()  # Reading temperature
+        print("temp read",temp_celsius)
         if temp_celsius:
             control_fan(temp_celsius)  # Controlling the fan
 
