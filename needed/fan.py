@@ -4,7 +4,7 @@ import RPi.GPIO as GPIO
 import os
 
 # UART Setup (modify as per your battery module documentation)
-uart_port = '/dev/ttyUSB0'  # This should match the UART port for your battery
+uart_port = '/dev/serial0'  # This should match the UART port for your battery
 baud_rate = 9600
 
 # Serial object, initialized to None
@@ -18,7 +18,8 @@ except serial.SerialException as e:
     print(f"Could not open serial port {uart_port}: {e}")
 except FileNotFoundError as e:
     print(f"Serial port {uart_port} not found: {e}")
-
+except Exception as e:
+    print(f"General error: {e}")
 # GPIO Setup for fan
 FAN_PIN = 18
 GPIO.setmode(GPIO.BCM)
