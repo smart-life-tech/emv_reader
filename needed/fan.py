@@ -21,7 +21,7 @@ except FileNotFoundError as e:
 except Exception as e:
     print(f"General error: {e}")
 # GPIO Setup for fan
-FAN_PIN = 18
+FAN_PIN = 23
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(FAN_PIN, GPIO.OUT)
 
