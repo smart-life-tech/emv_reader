@@ -127,9 +127,9 @@ def control_fan(temp_celsius):
 # Main loop
 try:
     while True:
-        battery_data = read_battery_data()  # Reading battery data
-        if battery_data:
-            print(f"Battery: {battery_data}")
+        # battery_data = read_battery_data()  # Reading battery data
+        # if battery_data:
+        #     print(f"Battery: {battery_data}")
 
         temp_celsius = read_temperature()  # Reading temperature
         print("temp read", temp_celsius)
