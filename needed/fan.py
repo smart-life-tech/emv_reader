@@ -1,7 +1,7 @@
 import serial
 import time
 import RPi.GPIO as GPIO
-
+import os
 # UART Setup (modify as per your battery module documentation)
 uart_port = '/dev/ttyAMA0'  # This should match the UART port for your battery
 baud_rate = 9600
@@ -29,12 +29,13 @@ def read_battery_data():
 # Function to read temperature data
 def read_temperature():
     try:
-        # Simulate reading temperature from a sensor, replace this with actual sensor reading
-        temp_celsius = 82  # Replace with actual sensor reading logic
-        print(f"Temperature: {temp_celsius}°C")
+        # Read CPU temperature
+        temp = os.popen("vcgencmd measure_temp").readline()
+        # Extract temperature value
+        temp_celsius = float(temp.replace("temp=", "").replace("'C\n", ""))
         return temp_celsius
     except Exception as e:
-        print(f"Error reading temperature: {e}")
+        print(f"Error reading CPU temperature: {e}")
         return None
 
 # Function to control fan based on temperature
