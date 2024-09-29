@@ -65,7 +65,7 @@ class UPS2:
 def read_battery_data():
     i=1
     print("This is UPS v2 class file")
-    test = UPS2("/dev/ttyAMA0")
+    test = UPS2("/dev/ttyS0")
     version,vin,batcap,vout = test.decode_uart()
     print("--------------------------------")
     print("       UPS Version:"+version)
