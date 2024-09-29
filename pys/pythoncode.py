@@ -8,8 +8,28 @@ app = Flask(__name__,static_folder='static')
 CORS(app)  # Enable CORS for all routes
 # File path for read/write operations
 file_path = '/home/chingup/emv_reader/pys/data.txt'
+#file_path='pys/data.txt'
  # Define the path to the secret file
 secret_file_path = os.path.expanduser("~/.hidden_dir/secret_file.txt")
+
+battery_data = {
+    'battery_level': 85,  # Example battery level
+    'charging_status': 'charging'  # Example charging status
+}
+
+@app.route('/battery', methods=['POST'])
+def battery_status():
+    data = request.get_json()
+    battery_data['battery_level'] = data.get('battery_level')
+    battery_data['charging_status'] = data.get('charging_status')
+    print(f"Battery Level: {battery_data['battery_level']}, Charging Status: {battery_data['charging_status']}")
+    return jsonify({"message": "Data received"}), 200
+
+@app.route('/battery', methods=['GET'])
+def get_battery_status():
+    return jsonify(battery_data), 200
+
+
 @app.route('/offline')
 def home():
     return render_template('index.html')
