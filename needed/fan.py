@@ -115,7 +115,7 @@ def read_temperature():
 # Function to control fan based on temperature
 def control_fan(temp_celsius):
     try:
-        if temp_celsius >= 82:
+        if temp_celsius >= 2:
             GPIO.output(FAN_PIN, GPIO.HIGH)  # Turn on the fan
             print("Fan turned ON")
         else:
