@@ -31,12 +31,13 @@ class UPS2:
         #if self.count !=0:
         self.recv = self.ser.read(nums)
         sleep(1)
+        print(self.recv)
         return self.recv
         
     
     def decode_uart(self):
-        self.uart_string = self.get_data(100)
-        print(self.uart_string)
+        self.uart_string = self.get_data(1)
+        print("received :",self.uart_string)
         self.data = self.uart_string.decode('ascii','ignore')
         print(self.data)
         self.pattern = r'\$ (.*?) \$'
@@ -61,8 +62,9 @@ class UPS2:
 # Function to read battery data over UART
 def read_battery_data():
     i=1
-    print("This is UPS v2 class file")
+    print("This is UPS v3 class file")
     test = UPS2("/dev/ttyS0")
+    print("Treading done")
     version,vin,batcap,vout = test.decode_uart()
     print("--------------------------------")
     print("       UPS Version:"+version)
