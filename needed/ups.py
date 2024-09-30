@@ -27,7 +27,7 @@ class UPS2:
         
     def get_data(self,nums):
         #while True:
-        self.count = self.ser.inWaiting()
+        #self.count = self.ser.inWaiting()
         #if self.count !=0:
         self.recv = self.ser.read()
         sleep(1)
@@ -64,7 +64,7 @@ def read_battery_data():
     i=1
     print("This is UPS v3 class file")
     test = UPS2("/dev/ttyS0")
-    print("Treading done")
+    print("reading done")
     version,vin,batcap,vout = test.decode_uart()
     print("--------------------------------")
     print("       UPS Version:"+version)
