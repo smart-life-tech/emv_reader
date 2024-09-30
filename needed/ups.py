@@ -23,7 +23,8 @@ except Exception as e:
 
 class UPS2:
     def __init__(self,port):
-        self.ser  = serial.Serial(port,9600,inter_byte_timeout=1)        
+        self.ser  = serial.Serial(port,9600,inter_byte_timeout=1)   
+        self.ser.timeout=1     
         
     def get_data(self,nums):
         #while True:
