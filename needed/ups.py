@@ -27,13 +27,14 @@ class UPS2:
         self.ser.timeout=10     
         
     def get_data(self,nums):
-        #while True:
-        self.count = self.ser.inWaiting()
-        if self.count !=0:
-            self.recv = self.ser.read(nums)
-            print(self.recv)
-            sleep(1)
-        return self.recv
+        while True:
+            self.count = self.ser.inWaiting()
+            if self.count !=0:
+                self.recv = self.ser.read(nums)
+                print(self.recv)
+                sleep(1)
+                return self.recv
+                
         
     
     def decode_uart(self):
