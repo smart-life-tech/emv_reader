@@ -29,14 +29,14 @@ class UPS2:
         #while True:
         self.count = self.ser.inWaiting()
         #if self.count !=0:
-        self.recv = self.ser.read(nums)
+        self.recv = self.ser.read()
         sleep(1)
         print(self.recv)
         return self.recv
         
     
     def decode_uart(self):
-        self.uart_string = self.get_data(1)
+        self.uart_string = self.get_data(100)
         print("received :",self.uart_string)
         self.data = self.uart_string.decode('ascii','ignore')
         print(self.data)
