@@ -1,6 +1,7 @@
 import serial
 import time
 import re
+from time import sleep
 # UART Setup (modify as per your battery module documentation)
 uart_port = '/dev/serial1'  # This should match the UART port for your battery
 baud_rate = 9600
@@ -25,12 +26,13 @@ class UPS2:
         self.ser  = serial.Serial(port,9600)        
         
     def get_data(self,nums):
-        while True:
-            self.count = self.ser.inWaiting()
-            
-            if self.count !=0:
-                self.recv = self.ser.read(nums)
-                return self.recv
+        #while True:
+        self.count = self.ser.inWaiting()
+        #if self.count !=0:
+        self.recv = self.ser.read(nums)
+        sleep(1)
+        return self.recv
+        
     
     def decode_uart(self):
         self.uart_string = self.get_data(100)
