@@ -24,7 +24,7 @@ except Exception as e:
 class UPS2:
     def __init__(self,port):
         self.ser  = serial.Serial(port,9600)   
-        self.ser.timeout=1     
+        self.ser.timeout=10     
         
     def get_data(self,nums):
         #while True:
