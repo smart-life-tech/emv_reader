@@ -18,7 +18,7 @@
         let isChecking = false; // Flag to manage ongoing fetch requests
         let timeoutHandle = null; // Handle for the timeout
         let checkAttempts = 0; // Counter for the number of checks
-        const maxAttempts = 10; // Maximum number of attempts
+        const maxAttempts = 2; // Maximum number of attempts
 
         // Function to perform a fetch request to test connectivity
         function checkInternetConnectivity() {
@@ -35,7 +35,7 @@
                 // Update status to offline if fetch is not completed in 2 seconds
                 handleOffline();
                 isChecking = false;
-            }, 1000);
+            }, 100);
 
             // Perform the fetch request
             fetch(testUrl, { method: 'HEAD', mode: 'no-cors' })
@@ -61,9 +61,16 @@
         // Function to handle offline status
         function handleOffline() {
             console.log('Offline');
-            const statusElement = document.getElementById('status');
-            statusElement.innerText = 'Offline';
-            statusElement.style.color = 'red';
+           // const statusElement = document.getElementById('status');
+            // statusElement.innerText = `Battery Level: ${batteryLevel}, Charging Status: ${chargingStatus}`;
+            // statusElement.style.position = 'absolute';
+            // statusElement.style.top = '20px';
+            // statusElement.style.right = '20px';
+            // statusElement.style.fontSize = '20px';
+            // statusElement.style.fontWeight = 'bold';
+           // statusElement.style.color = 'lightgreen';
+            //statusElement.style.whiteSpace = 'nowrap'; // This ensures the text stays on a single line
+
         }
 
         // Function to call the offline endpoint
@@ -90,7 +97,14 @@
         function updateBatteryStatus(batteryLevel, chargingStatus) {
             const statusElement = document.getElementById('status');
             statusElement.innerText = `Battery Level: ${batteryLevel}, Charging Status: ${chargingStatus}`;
-            statusElement.style.color = 'lightgreen';
+            statusElement.style.position = 'absolute';
+            statusElement.style.top = '20px';
+            statusElement.style.right = '20px';
+            statusElement.style.fontSize = '20px';
+            statusElement.style.fontWeight = 'bold';
+            statusElement.style.color = 'white';
+            statusElement.style.whiteSpace = 'nowrap'; // This ensures the text stays on a single line
+
         }
 
         // Function to fetch battery data from the Flask server

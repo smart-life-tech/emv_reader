@@ -46,9 +46,9 @@ function checkInternetConnectivity() {
 // Function to handle offline status
 function handleOffline() {
     console.log('Offline');
-    const statusElement = document.getElementById('status');
-    statusElement.innerText = 'Offline';
-    statusElement.style.color = 'red';
+    //const statusElement = document.getElementById('status');
+    //statusElement.innerText = 'Offline';
+    //statusElement.style.color = 'red';
 }
 
 // Function to call the offline endpoint
@@ -75,7 +75,14 @@ window.onload = checkNetworkStatus;
 function updateBatteryStatus(batteryLevel, chargingStatus) {
     const statusElement = document.getElementById('status');
     statusElement.innerText = `Battery Level: ${batteryLevel}, Charging Status: ${chargingStatus}`;
-    statusElement.style.color = 'lightgreen';
+    statusElement.style.position = 'absolute';
+    statusElement.style.top = '20px';
+    statusElement.style.right = '20px';
+    statusElement.style.fontSize = '20px';
+    statusElement.style.fontWeight = 'bold';
+    statusElement.style.color = 'white';
+    statusElement.style.whiteSpace = 'nowrap'; // This ensures the text stays on a single line
+
 }
 
 // Function to fetch battery data from the Flask server
