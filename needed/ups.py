@@ -23,15 +23,16 @@ except Exception as e:
 
 class UPS2:
     def __init__(self,port):
-        self.ser  = serial.Serial(port,9600)        
+        self.ser  = serial.Serial(port,9600,inter_byte_timeout=1)        
         
     def get_data(self,nums):
         #while True:
         #self.count = self.ser.inWaiting()
         #if self.count !=0:
         self.recv = self.ser.read()
+        print('self.recv')
         sleep(1)
-        print(self.recv)
+        
         return self.recv
         
     
