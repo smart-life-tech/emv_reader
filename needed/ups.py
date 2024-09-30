@@ -87,20 +87,6 @@ def read_battery_data():
         print("Serial port is not available, skipping battery read.")
         return None
 
-    try:
-        if ser.in_waiting > 0:
-            
-            line = ser.readline().decode('utf-8').strip()
-            print("read data",line)
-            if line:
-                print(f"Battery data: {line}")
-                return line
-    except serial.SerialException as e:
-        print(f"Error reading battery data: {e}")
-    except Exception as e:
-        print(f"General error: {e}")
-    return None
- 
 try:
     while True:
         battery_data = read_battery_data()  # Reading battery data
