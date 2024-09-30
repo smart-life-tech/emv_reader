@@ -28,12 +28,11 @@ class UPS2:
         
     def get_data(self,nums):
         #while True:
-        #self.count = self.ser.inWaiting()
-        #if self.count !=0:
-        self.recv = self.ser.read()
-        print(self.recv)
-        sleep(1)
-        
+        self.count = self.ser.inWaiting()
+        if self.count !=0:
+            self.recv = self.ser.read(nums)
+            print(self.recv)
+            sleep(1)
         return self.recv
         
     
