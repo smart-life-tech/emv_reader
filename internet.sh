@@ -28,6 +28,7 @@ if [ $? -eq 0 ]; then
     
     # Open the online page
     #pkill chromium-browser
+    sleep 5
     chromium-browser --remote-debugging-port=9222 --kiosk --noerrdialogs --disable-infobars https://chingup.com/rpi_pos/
     echo "done" >> /home/chingup/emv_reader/pic.txt
 else

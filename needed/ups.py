@@ -2,6 +2,7 @@ import serial
 import time
 import re
 from time import sleep
+import requests
 # UART Setup (modify as per your battery module documentation)
 uart_port = '/dev/serial1'  # This should match the UART port for your battery
 baud_rate = 9600
@@ -82,7 +83,17 @@ def read_battery_data():
     print("UPS Output Voltage: "+vout+" mV")
     print("\n")
        
-   
+     # Post data to Flask endpoint
+    url = 'http://localhost:5000/battery'  # Update with your Flask server URL
+    payload = {
+        'battery_level': batcap,
+        'charging_status': 'connected' if vin != "NG" else ' '
+    }
+    try:
+        response = requests.post(url, json=payload)
+        print(f"Data posted to {url}, response: {response.status_code}")
+    except requests.exceptions.RequestException as e:
+        print(f"Failed to post data: {e}")
     if ser is None:
         print("Serial port is not available, skipping battery read.")
         return None
