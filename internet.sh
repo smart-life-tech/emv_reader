@@ -20,7 +20,7 @@ python /home/chingup/emv_reader/pic.py &
  
 # Check if internet is available by pinging google.com (no https://)
 wget -q --spider http://google.com 
-sleep 3
+sleep 8
 # Check the exit status of the ping command
 # If the exit status is 0, internet is available
 if [ $? -eq 0 ]; then
@@ -28,7 +28,7 @@ if [ $? -eq 0 ]; then
     
     # Open the online page
     #pkill chromium-browser
-    sleep 5
+    #sleep 5
     chromium-browser --remote-debugging-port=9222 --kiosk --noerrdialogs --disable-infobars https://chingup.com/rpi_pos/
     echo "done" >> /home/chingup/emv_reader/pic.txt
 else
