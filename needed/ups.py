@@ -3,24 +3,9 @@ import time
 import re
 from time import sleep
 import requests
-# UART Setup (modify as per your battery module documentation)
-uart_port = '/dev/serial1'  # This should match the UART port for your battery
-baud_rate = 9600
-
-# Serial object, initialized to None
-ser = None
-
-# Try to open the serial port
-try:
-    ser = serial.Serial(uart_port, baud_rate, timeout=1)
-    print(f"Successfully opened serial port {uart_port}")
-except serial.SerialException as e:
-    print(f"Could not open serial port {uart_port}: {e}")
-except FileNotFoundError as e:
-    print(f"Serial port {uart_port} not found: {e}")
-except Exception as e:
-    print(f"General error: {e}")
- 
+import os,sys
+# Redirect standard output to null
+#sys.stdout = open(os.devnull, 'w')
 
 class UPS2:
     def __init__(self,port):
@@ -94,9 +79,7 @@ def read_battery_data():
         print(f"Data posted to {url}, response: {response.status_code}")
     except requests.exceptions.RequestException as e:
         print(f"Failed to post data: {e}")
-    if ser is None:
-        print("Serial port is not available, skipping battery read.")
-        return None
+    
 
 try:
     while True:
@@ -109,6 +92,4 @@ except KeyboardInterrupt:
     print("Program interrupted by user")
 
 finally:
-    if ser is not None:
-        ser.close()
     print("Cleanup complete")

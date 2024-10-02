@@ -1,10 +1,12 @@
 #!/usr/bin/python
-import os
+
 import time
 import psutil
 import subprocess
 import logging
-
+import os,sys
+# Redirect standard output to null
+sys.stdout = open(os.devnull, 'w')
 # Set the DISPLAY environment variable
 os.environ['DISPLAY'] = ':0'
 

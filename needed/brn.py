@@ -5,7 +5,9 @@ import time
 from smartcard.System import readers
 from smartcard.util import toHexString
 import pychrome
-import os
+import os,sys
+# Redirect standard output to null
+sys.stdout = open(os.devnull, 'w')
 # Initialize a string variable to store the card data
 gotten = ''
 shift_pressed = False
