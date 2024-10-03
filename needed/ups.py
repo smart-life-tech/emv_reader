@@ -6,7 +6,9 @@ import requests
 import os,sys
 # Redirect standard output to null
 #sys.stdout = open(os.devnull, 'w')
-
+payload = {
+        
+    }
 class UPS2:
     def __init__(self,port):
         self.ser  = serial.Serial(port,9600)   
@@ -60,20 +62,26 @@ def read_battery_data():
     version,vin,batcap,vout = test.decode_uart()
     print("-%s-" %i)
        
+       
     if vin == "NG":
         print("USB input adapter : NOT connected!")
+        payload = {
+        'Battery': batcap,
+        'Status': 'dis-connected'
+    }
     else:
         print("USB input adapter : connected!")
+        payload = {
+        'Battery': batcap,
+        'Status': 'connected' 
+    }
     print("Battery Capacity: "+batcap+"%")
     print("UPS Output Voltage: "+vout+" mV")
     print("\n")
        
      # Post data to Flask endpoint
     url = 'http://localhost:5000/battery'  # Update with your Flask server URL
-    payload = {
-        'Battery': batcap,
-        'Status': 'connected' if vin != "NG" else 'dis-connected'
-    }
+    
     try:
         response = requests.post(url, json=payload)
         print(f"Data posted to {url}, response: {response.status_code}")
