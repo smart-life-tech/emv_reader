@@ -71,8 +71,8 @@ def read_battery_data():
      # Post data to Flask endpoint
     url = 'http://localhost:5000/battery'  # Update with your Flask server URL
     payload = {
-        'battery_level': batcap,
-        'charging_status': 'connected' if vin != "NG" else 'dis-connected'
+        'Battery': batcap,
+        'Status': 'connected' if vin != "NG" else 'dis-connected'
     }
     try:
         response = requests.post(url, json=payload)

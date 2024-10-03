@@ -13,16 +13,16 @@ file_path = '/home/chingup/emv_reader/pys/data.txt'
 secret_file_path = os.path.expanduser("~/.hidden_dir/secret_file.txt")
 
 battery_data = {
-    'battery_level': 85,  # Example battery level
-    'charging_status': 'charging'  # Example charging status
+    'Battery: ': 85,  # Example battery level
+    'Status: ': 'charging'  # Example charging status
 }
 
 @app.route('/battery', methods=['POST'])
 def battery_status():
     data = request.get_json()
-    battery_data['battery_level'] = data.get('battery_level')
-    battery_data['charging_status'] = data.get('charging_status')
-    print(f"Battery Level: {battery_data['battery_level']}, Charging Status: {battery_data['charging_status']}")
+    battery_data['Battery'] = data.get('Battery')
+    battery_data['Status'] = data.get('Status')
+    print(f"Battery Level: {battery_data['Battery']}, Charging Status: {battery_data['Status']}")
     return jsonify({"message": "Data received"}), 200
 
 @app.route('/battery', methods=['GET'])

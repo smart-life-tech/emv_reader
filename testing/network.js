@@ -74,13 +74,13 @@ window.onload = checkNetworkStatus;
 // Function to update battery status
 function updateBatteryStatus(batteryLevel, chargingStatus) {
     const statusElement = document.getElementById('status');
-    statusElement.innerText = `Battery Level: ${batteryLevel}, Charging Status: ${chargingStatus}`;
+    statusElement.innerText = `Battery ${batteryLevel}%   Status ${chargingStatus}`;
     statusElement.style.position = 'absolute';
     statusElement.style.top = '20px';
     statusElement.style.right = '20px';
-    statusElement.style.fontSize = '20px';
+    statusElement.style.fontSize = '30px';
     statusElement.style.fontWeight = 'bold';
-    statusElement.style.color = 'white';
+    statusElement.style.color = 'black';
     statusElement.style.whiteSpace = 'nowrap'; // This ensures the text stays on a single line
 
 }
