@@ -95,6 +95,7 @@
 
         // Function to update battery status
         function updateBatteryStatus(batteryLevel, chargingStatus) {
+            console.log(chargingStatus,batteryLevel);
             const statusElement = document.getElementById('status');
             statusElement.innerText = `Battery: ${batteryLevel}%, Status: ${chargingStatus}`;
             statusElement.style.position = 'absolute';
@@ -112,7 +113,7 @@
             fetch('http://localhost:5000/battery')
                 .then(response => response.json())
                 .then(data => {
-                    updateBatteryStatus(data.battery_level, data.charging_status);
+                    updateBatteryStatus(data.Battery, data.Status);
                 })
                 .catch(error => console.error('Error fetching battery status', error));
         }

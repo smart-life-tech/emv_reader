@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trigger POST Request</title>
+</head>
+<body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const batcap = '80';  // Replace with actual battery capacity
+            const vin = 'your_vin';  // Replace with actual VIN
+            const status = vin === "NG" ? 'connected' : 'dis-connected';
+
+            const payload = {
+                Battery: batcap,
+                Status: status
+            };
+
+            fetch('http://localhost:5000/battery', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>

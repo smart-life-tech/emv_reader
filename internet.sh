@@ -8,7 +8,7 @@
 #sudo cp /home/chingup/Downloads/main_logo_trans_network-500px.png /usr/share/plymouth/themes/my-splash/
 #sudo systemctl restart readwrite.service
 #journalctl -u readwrite.service -f
-
+# chromium-browser --remote-debugging-port=9222  https://chingup.com/rpi_pos/
 #wait 
 #sleep 1
 

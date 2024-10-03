@@ -63,6 +63,7 @@ function callOfflineEndpoint() {
 // Function to check network status
 function checkNetworkStatus() {
     checkInternetConnectivity();
+    fetchBatteryData(); // Fetch battery data on successful connectivity check
 }
 
 // Periodically check network status
@@ -90,7 +91,8 @@ function fetchBatteryData() {
     fetch('http://localhost:5000/battery')
         .then(response => response.json())
         .then(data => {
-            updateBatteryStatus(data.battery_level, data.charging_status);
+            updateBatteryStatus(data.Battery, data.Status);
+            console.log(data.Battery,data.Status);
         })
         .catch(error => console.error('Error fetching battery status', error));
 }
