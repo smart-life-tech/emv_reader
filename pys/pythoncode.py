@@ -33,6 +33,11 @@ def get_battery_status():
 @app.route('/offline')
 def home():
     return render_template('index.html')
+
+@app.route('/activate')
+def activate():
+    return render_template('activate.html')
+
 @app.route('/settings')
 def settings():
     return render_template('checkint.html')
