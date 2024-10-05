@@ -11,7 +11,7 @@ file_path = '/home/chingup/emv_reader/pys/data.txt'
 #file_path='pys/data.txt'
  # Define the path to the secret file
 secret_file_path = os.path.expanduser("~/.hidden_dir/secret_file.txt")
-
+#secret_file_path = os.path.expanduser("C:/Users/USER/Documents/raspberrypi/emv_reader/testing/data.txt")
 battery_data = {
     'Battery: ': 85,  # Example battery level
     'Status: ': 'charging'  # Example charging status
