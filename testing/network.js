@@ -75,7 +75,13 @@ window.onload = checkNetworkStatus;
 // Function to update battery status
 function updateBatteryStatus(batteryLevel, chargingStatus) {
     const statusElement = document.getElementById('status');
-    statusElement.innerText = `Battery ${batteryLevel}%   Status ${chargingStatus}`;
+      // Get the current time
+      const now = new Date();
+      const hours = now.getHours().toString().padStart(2, '0');
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      const seconds = now.getSeconds().toString().padStart(2, '0');
+      const currentTime = `${hours}:${minutes}:${seconds}`;
+    statusElement.innerText = `Battery ${batteryLevel}%   Status ${chargingStatus} Time: ${currentTime}`;
     statusElement.style.position = 'absolute';
     statusElement.style.top = '20px';
     statusElement.style.right = '20px';
