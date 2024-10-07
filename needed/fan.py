@@ -3,7 +3,7 @@ import time
 import RPi.GPIO as GPIO
 import os,sys
 # Redirect standard output to null
-sys.stdout = open(os.devnull, 'w')
+#sys.stdout = open(os.devnull, 'w')
 # GPIO Setup for fan
 FAN_PIN = 23
 GPIO.setmode(GPIO.BCM)
