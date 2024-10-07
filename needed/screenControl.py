@@ -14,8 +14,10 @@ def turn_on_screen():
     os.system('xset dpms force on')
 
 def testOnOff():
+    print("turning off screen")
     os.system('xset dpms force off')
     time.sleep(5)
+    print("turing on screen")
     os.system('xset dpms force on')
     time.sleep(4)
 # Monitor for inactivity
