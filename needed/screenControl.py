@@ -3,7 +3,7 @@ import time
 from evdev import InputDevice, categorize, ecodes
 
 # Path to the input device (you may need to adjust this)
-device_path = '/dev/input/event0'
+device_path = '/dev/input/event3'
 
 # Function to turn off the screen
 def turn_off_screen():
