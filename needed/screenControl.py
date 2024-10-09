@@ -7,11 +7,15 @@ device_path = '/dev/input/event0'
 
 # Function to turn off the screen
 def turn_off_screen():
-    os.system('xset dpms force off')
+    os.system('xrandr --output HDMI-1 --off')
 
 # Function to turn on the screen
 def turn_on_screen():
-    os.system('xset dpms force on')
+    time.sleep(5)
+    print("turing on screen")
+    os.system('xrandr --output HDMI-1 --mode 1920x1080')
+    time.sleep(4)
+    os.system('xrandr --output HDMI-1 --mode 1920x1080')
 
 def testOnOff():
     print("turning off screen")
@@ -29,11 +33,13 @@ def monitor_inactivity():
     for event in device.read_loop():
         if event.type == ecodes.EV_KEY or event.type == ecodes.EV_ABS:
             last_activity_time = time.time()
-            turn_on_screen()
+            print("preesed")
+            #turn_on_screen()
 
         if time.time() - last_activity_time > 300:  # 5 minutes
-            turn_off_screen()
+            #turn_off_screen()
+            print("turning off screen")
 
 if __name__ == "__main__":
-    #monitor_inactivity()
-    testOnOff()
+    monitor_inactivity()
+    #testOnOff()
