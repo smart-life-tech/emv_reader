@@ -17,10 +17,10 @@ def turn_off_screen():
 
 # Function to turn on the screen
 def turn_on_screen():
-    time.sleep(5)
+    time.sleep(10)
     print("turing on screen")
     os.system('xrandr --output HDMI-1 --mode 1920x1080')
-    time.sleep(4)
+    time.sleep(40)
     os.system('xrandr --output HDMI-1 --mode 1920x1080')
 
 def testOnOff():
@@ -42,11 +42,12 @@ def monitor_inactivity(shared_data):
         for event in device.read_loop():
             if event.type == ecodes.EV_ABS and event.code in [ecodes.ABS_MT_POSITION_X, ecodes.ABS_MT_POSITION_Y]:
                 last_activity_time = time.time()
+                status=False
+                shared_data['status'] = False
                 shared_data['last_activity_time'] = time.time()
                 print("pressed")
                 turn_on_screen()
-                status=False
-                shared_data['status'] = False
+                
                 break
 
             if time.time() - last_activity_time > 30 and status == False:  # 0.5 minutes
