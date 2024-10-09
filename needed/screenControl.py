@@ -47,6 +47,7 @@ def monitor_inactivity():
         print("time now: ", time.time())
         print("last activity time: ", last_activity_time)
         print("status: ",time.time() - last_activity_time)
+        time.sleep(1)  # Add a short delay to prevent CPU hogging
 
 if __name__ == "__main__":
     while True:
