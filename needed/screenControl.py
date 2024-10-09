@@ -40,9 +40,9 @@ def monitor_inactivity():
             print("pressed")
             turn_on_screen()
 
-        if time.time() - last_activity_time > 30:  # 5 minutes
-            turn_off_screen()
-            print("turning off screen")
+    if time.time() - last_activity_time > 30:  # 5 minutes
+        turn_off_screen()
+        print("turning off screen")
 
 if __name__ == "__main__":
     monitor_inactivity()
