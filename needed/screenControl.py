@@ -1,7 +1,7 @@
 import os
 import time
 from evdev import InputDevice, categorize, ecodes
-
+status=False
 # Path to the input device (you may need to adjust this)
 device_path = '/dev/input/event3'
 
@@ -24,7 +24,7 @@ def testOnOff():
     time.sleep(5)
     print("turing on screen")
     os.system('xrandr --output HDMI-1 --mode 1920x1080')
-    time.sleep(4)
+    time.sleep(20)
     os.system('xrandr --output HDMI-1 --mode 1920x1080')
 
 # Monitor for inactivity
@@ -33,18 +33,17 @@ def monitor_inactivity():
     device = InputDevice(device_path)
     print("device types: ", device)
     for event in device.read_loop():
-        # print("event types: ", event.type)
-        # print("event codes: ", event.code)
-        # print("event values: ", event.value)
         if event.type == ecodes.EV_ABS and event.code in [ecodes.ABS_MT_POSITION_X, ecodes.ABS_MT_POSITION_Y]:
             last_activity_time = time.time()
             print("pressed")
             turn_on_screen()
+            status=False
             break
 
-        if time.time() - last_activity_time > 30:  # 5 minutes
+        if time.time() - last_activity_time > 30 and status == False:  # 0.5 minutes
             turn_off_screen()
             print("turning off screen")
+            status = True
 
 if __name__ == "__main__":
     while True:
