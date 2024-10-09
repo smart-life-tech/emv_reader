@@ -34,6 +34,7 @@ def testOnOff():
 
 # Monitor for inactivity
 def monitor_inactivity(shared_data):
+    global status
     while True:
         last_activity_time = time.time()
         device = InputDevice(device_path)
