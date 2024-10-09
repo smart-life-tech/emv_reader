@@ -26,19 +26,24 @@ def testOnOff():
     time.sleep(4)
     os.system('xrandr --output HDMI-1 --mode 1920x1080')
 # Monitor for inactivity
+'xrandr --output HDMI-1 --mode 1920x1080')
+
+# Monitor for inactivity
 def monitor_inactivity():
     last_activity_time = time.time()
     device = InputDevice(device_path)
-    print("device types: ",device)
+    print("device types: ", device)
     for event in device.read_loop():
-        print( "event types: ",event.type)
+        print("event types: ", event.type)
+        print("event codes: ", event.code)
+        print("event values: ", event.value)
         if event.type == ecodes.EV_KEY or event.type == ecodes.EV_ABS:
             last_activity_time = time.time()
-            print("preesed")
-            #turn_on_screen()
+            print("pressed")
+            turn_on_screen()
 
         if time.time() - last_activity_time > 30:  # 5 minutes
-            #turn_off_screen()
+            turn_off_screen()
             print("turning off screen")
 
 if __name__ == "__main__":
