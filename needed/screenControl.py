@@ -44,6 +44,9 @@ def monitor_inactivity():
             turn_off_screen()
             print("turning off screen")
             status = True
+        print("time now: ", time.time())
+        print("last activity time: ", last_activity_time)
+        print("status: ",time.time() - last_activity_time)
 
 if __name__ == "__main__":
     while True:
