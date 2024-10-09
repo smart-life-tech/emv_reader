@@ -7,7 +7,8 @@ device_path = '/dev/input/event3'
 
 # Function to turn off the screen
 def turn_off_screen():
-    os.system('xrandr --output HDMI-1 --off')
+    #os.system('xrandr --output HDMI-1 --off')
+    print("turning off screen")
 
 # Function to turn on the screen
 def turn_on_screen():
