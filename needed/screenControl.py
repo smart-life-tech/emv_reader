@@ -32,19 +32,20 @@ def monitor_inactivity():
     device = InputDevice(device_path)
     print("device types: ", device)
     for event in device.read_loop():
-        print("event types: ", event.type)
-        print("event codes: ", event.code)
-        print("event values: ", event.value)
+        # print("event types: ", event.type)
+        # print("event codes: ", event.code)
+        # print("event values: ", event.value)
         if event.type == ecodes.EV_ABS and event.code in [ecodes.ABS_MT_POSITION_X, ecodes.ABS_MT_POSITION_Y]:
             last_activity_time = time.time()
             print("pressed")
             turn_on_screen()
             break
 
-    if time.time() - last_activity_time > 30:  # 5 minutes
-        turn_off_screen()
-        print("turning off screen")
+        if time.time() - last_activity_time > 30:  # 5 minutes
+            turn_off_screen()
+            print("turning off screen")
 
 if __name__ == "__main__":
-    monitor_inactivity()
-    #testOnOff()
+    while True:
+        monitor_inactivity()
+        #testOnOff()
