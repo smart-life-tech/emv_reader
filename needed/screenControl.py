@@ -31,12 +31,13 @@ def monitor_inactivity():
     device = InputDevice(device_path)
 
     for event in device.read_loop():
+        print( event.type)
         if event.type == ecodes.EV_KEY or event.type == ecodes.EV_ABS:
             last_activity_time = time.time()
             print("preesed")
             #turn_on_screen()
 
-        if time.time() - last_activity_time > 300:  # 5 minutes
+        if time.time() - last_activity_time > 30:  # 5 minutes
             #turn_off_screen()
             print("turning off screen")
 
