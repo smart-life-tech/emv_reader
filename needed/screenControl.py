@@ -18,9 +18,9 @@ def testOnOff():
     os.system('xrandr --output HDMI-1 --off')
     time.sleep(5)
     print("turing on screen")
-    os.system('xrandr --output HDMI-1 --mode 1600x1080 --auto')
+    os.system('xrandr --output HDMI-1 --mode 1920x1080')
     time.sleep(4)
-    os.system('xrandr --output HDMI-1 --mode 1600x1080 --auto')
+    os.system('xrandr --output HDMI-1 --mode 1920x1080')
 # Monitor for inactivity
 def monitor_inactivity():
     last_activity_time = time.time()
