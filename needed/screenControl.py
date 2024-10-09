@@ -35,7 +35,7 @@ def monitor_inactivity():
         print("event types: ", event.type)
         print("event codes: ", event.code)
         print("event values: ", event.value)
-        if event.type == ecodes.EV_ABS:
+        if event.type == ecodes.EV_ABS and event.code in [ecodes.ABS_MT_POSITION_X, ecodes.ABS_MT_POSITION_Y]:
             last_activity_time = time.time()
             print("pressed")
             turn_on_screen()
