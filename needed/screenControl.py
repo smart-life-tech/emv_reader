@@ -29,9 +29,9 @@ def testOnOff():
 def monitor_inactivity():
     last_activity_time = time.time()
     device = InputDevice(device_path)
-
+    print("device types: ",device)
     for event in device.read_loop():
-        print( event.type)
+        print( "event types: ",event.type)
         if event.type == ecodes.EV_KEY or event.type == ecodes.EV_ABS:
             last_activity_time = time.time()
             print("preesed")
