@@ -39,6 +39,7 @@ def monitor_inactivity():
             last_activity_time = time.time()
             print("pressed")
             turn_on_screen()
+            break
 
     if time.time() - last_activity_time > 30:  # 5 minutes
         turn_off_screen()
