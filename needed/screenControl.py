@@ -1,6 +1,11 @@
 import os
 import time
 from evdev import InputDevice, categorize, ecodes
+import threading
+shared_data = {
+    'last_activity_time': time.time(),
+    'status': False
+}
 status=False
 # Path to the input device (you may need to adjust this)
 device_path = '/dev/input/event3'
@@ -28,28 +33,46 @@ def testOnOff():
     os.system('xrandr --output HDMI-1 --mode 1920x1080')
 
 # Monitor for inactivity
-def monitor_inactivity():
-    last_activity_time = time.time()
-    device = InputDevice(device_path)
-    print("device types: ", device)
-    for event in device.read_loop():
-        if event.type == ecodes.EV_ABS and event.code in [ecodes.ABS_MT_POSITION_X, ecodes.ABS_MT_POSITION_Y]:
-            last_activity_time = time.time()
-            print("pressed")
-            turn_on_screen()
-            status=False
-            break
-
-        if time.time() - last_activity_time > 30 and status == False:  # 0.5 minutes
-            turn_off_screen()
-            print("turning off screen")
-            status = True
-        print("time now: ", time.time())
-        print("last activity time: ", last_activity_time)
-        print("status: ",time.time() - last_activity_time)
-        time.sleep(1)  # Add a short delay to prevent CPU hogging
-
-if __name__ == "__main__":
+def monitor_inactivity(shared_data):
     while True:
-        monitor_inactivity()
-        #testOnOff()
+        last_activity_time = time.time()
+        device = InputDevice(device_path)
+        print("device types: ", device)
+        for event in device.read_loop():
+            if event.type == ecodes.EV_ABS and event.code in [ecodes.ABS_MT_POSITION_X, ecodes.ABS_MT_POSITION_Y]:
+                last_activity_time = time.time()
+                shared_data['last_activity_time'] = time.time()
+                print("pressed")
+                turn_on_screen()
+                status=False
+                shared_data['status'] = False
+                break
+
+            if time.time() - last_activity_time > 30 and status == False:  # 0.5 minutes
+                turn_off_screen()
+                print("turning off screen")
+                status = True
+                shared_data['status'] = True
+                
+            print("time now: ", time.time())
+            print("last activity time: ", last_activity_time)
+            print("status: ",time.time() - last_activity_time)
+            time.sleep(1)  # Add a short delay to prevent CPU hogging
+def perform_other_tasks(shared_data):
+    while True:
+        if time.time() - shared_data['last_activity_time'] > 30 and not shared_data['status']:  # 0.5 minutes
+            turn_off_screen()
+            print("Turning off screen")
+            shared_data['status'] = True
+
+        print("Time now:", time.time())
+        print("Last activity time:", shared_data['last_activity_time'])
+        print("Status:", shared_data['status'])
+        time.sleep(1)  # Add a short delay to prevent CPU hogging
+        
+if __name__ == "__main__":
+    # Run monitor_inactivity in a separate thread
+    monitor_thread = threading.Thread(target=monitor_inactivity, args=(shared_data,))
+    monitor_thread.start()
+    perform_other_tasks(shared_data)
+    #testOnOff()
