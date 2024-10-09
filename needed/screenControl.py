@@ -15,11 +15,12 @@ def turn_on_screen():
 
 def testOnOff():
     print("turning off screen")
-    os.system('xset dpms force off')
+    os.system('xrandr --output HDMI-1 --off')
     time.sleep(5)
     print("turing on screen")
-    os.system('xset dpms force on')
+    os.system('xrandr --output HDMI-1 --mode 1600x900 --auto')
     time.sleep(4)
+    os.system('xrandr --output HDMI-1 --mode 1600x900 --auto')
 # Monitor for inactivity
 def monitor_inactivity():
     last_activity_time = time.time()
