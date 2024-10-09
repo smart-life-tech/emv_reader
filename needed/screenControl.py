@@ -25,8 +25,6 @@ def testOnOff():
     os.system('xrandr --output HDMI-1 --mode 1920x1080')
     time.sleep(4)
     os.system('xrandr --output HDMI-1 --mode 1920x1080')
-# Monitor for inactivity
-'xrandr --output HDMI-1 --mode 1920x1080')
 
 # Monitor for inactivity
 def monitor_inactivity():
