@@ -50,7 +50,7 @@ def monitor_inactivity(shared_data):
                 
                 break
 
-            if time.time() - last_activity_time > 30 and status == False:  # 0.5 minutes
+            if time.time() - last_activity_time > 120 and status == False:  # 0.5 minutes
                 turn_off_screen()
                 print("turning off screen")
                 status = True
