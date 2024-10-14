@@ -8,7 +8,7 @@ shared_data = {
 }
 status=False
 # Path to the input device (you may need to adjust this)
-device_path = '/dev/input/event3'
+device_path = '/dev/input/event0'
 
 # Function to turn off the screen
 def turn_off_screen():
@@ -47,7 +47,6 @@ def monitor_inactivity(shared_data):
                 shared_data['last_activity_time'] = time.time()
                 print("pressed")
                 turn_on_screen()
-                
                 break
 
             if time.time() - last_activity_time > 30 and status == False:  # 0.5 minutes
@@ -67,9 +66,10 @@ def perform_other_tasks(shared_data):
             print("Turning off screen")
             shared_data['status'] = True
 
-        print("Time now:", time.time())
-        print("Last activity time:", shared_data['last_activity_time'])
-        print("Status:", shared_data['status'])
+        if not shared_data['status']:
+            print("The screen has been turned on")
+        else:
+            print("The screen is off")
         time.sleep(1)  # Add a short delay to prevent CPU hogging
         
 if __name__ == "__main__":
