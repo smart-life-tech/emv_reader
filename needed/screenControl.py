@@ -35,10 +35,10 @@ def turn_off_screen():
 
 # Function to turn on the screen
 def turn_on_screen():
-    time.sleep(1)
+    #time.sleep(1)
     print("turing on screen")
     os.system('xrandr --output HDMI-1 --mode 1920x1080')
-    #time.sleep(40)
+    time.sleep(1)
     #os.system('xrandr --output HDMI-1 --mode 1920x1080')
 
 def testOnOff():
@@ -84,10 +84,10 @@ def monitor_inactivity(shared_data):
                 shared_data['status'] = True
                 isScreenOn=True
                 
-            print("time now: ", time.time())
-            print("last activity time: ", last_activity_time)
-            print("status: ",time.time() - last_activity_time)
-            time.sleep(1)  # Add a short delay to prevent CPU hogging
+            #print("time now: ", time.time())
+            #print("last activity time: ", last_activity_time)
+            #print("status: ",time.time() - last_activity_time)
+            time.sleep(0.1)  # Add a short delay to prevent CPU hogging
 def perform_other_tasks(shared_data):
     while True:
         if time.time() - shared_data['last_activity_time'] > 30 and not shared_data['status']:  # 0.5 minutes
@@ -99,7 +99,7 @@ def perform_other_tasks(shared_data):
             print("The screen has been turned on")
         else:
             print("The screen is off")
-        time.sleep(1)  # Add a short delay to prevent CPU hogging
+        time.sleep(0.1)  # Add a short delay to prevent CPU hogging
         
 if __name__ == "__main__":
     # Run monitor_inactivity in a separate thread
