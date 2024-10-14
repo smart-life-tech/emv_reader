@@ -12,7 +12,7 @@ device_path = '/dev/input/event3'
 
 # Function to turn off the screen
 def turn_off_screen():
-    #os.system('xrandr --output HDMI-1 --off')
+    os.system('xrandr --output HDMI-1 --off')
     print("turning off screen")
 
 # Function to turn on the screen
@@ -50,7 +50,7 @@ def monitor_inactivity(shared_data):
                 
                 break
 
-            if time.time() - last_activity_time > 300 and status == False:  # 0.5 minutes
+            if time.time() - last_activity_time > 30 and status == False:  # 0.5 minutes
                 turn_off_screen()
                 print("turning off screen")
                 status = True
