@@ -17,11 +17,11 @@ def turn_off_screen():
 
 # Function to turn on the screen
 def turn_on_screen():
-    time.sleep(10)
+    time.sleep(1)
     print("turing on screen")
     os.system('xrandr --output HDMI-1 --mode 1920x1080')
-    time.sleep(40)
-    os.system('xrandr --output HDMI-1 --mode 1920x1080')
+    #time.sleep(40)
+    #os.system('xrandr --output HDMI-1 --mode 1920x1080')
 
 def testOnOff():
     print("turning off screen")
