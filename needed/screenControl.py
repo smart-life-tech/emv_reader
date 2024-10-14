@@ -87,7 +87,7 @@ def monitor_inactivity(shared_data):
             #print("time now: ", time.time())
             #print("last activity time: ", last_activity_time)
             #print("status: ",time.time() - last_activity_time)
-            time.sleep(0.1)  # Add a short delay to prevent CPU hogging
+            #time.sleep(0.1)  # Add a short delay to prevent CPU hogging
 def perform_other_tasks(shared_data):
     while True:
         if time.time() - shared_data['last_activity_time'] > 30 and not shared_data['status']:  # 0.5 minutes
