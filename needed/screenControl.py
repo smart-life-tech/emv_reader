@@ -2,6 +2,7 @@ import os
 import time
 from evdev import InputDevice, categorize, ecodes
 import threading
+isScreenOn=True
 shared_data = {
     'last_activity_time': time.time(),
     'status': False
@@ -46,7 +47,9 @@ def monitor_inactivity(shared_data):
                 shared_data['status'] = False
                 shared_data['last_activity_time'] = time.time()
                 print("pressed")
-                turn_on_screen()
+                if isScreenOn:
+                    turn_on_screen()
+                    isScreenOn=False
                 break
 
             if time.time() - last_activity_time > 30 and status == False:  # 0.5 minutes
@@ -54,6 +57,7 @@ def monitor_inactivity(shared_data):
                 print("turning off screen")
                 status = True
                 shared_data['status'] = True
+                isScreenOn=True
                 
             print("time now: ", time.time())
             print("last activity time: ", last_activity_time)
