@@ -10,7 +10,7 @@ shared_data = {
 status=False
 
 # Path to the input device (you may need to adjust this)
-device_path = '/dev/input/event0'
+device_path = '/dev/input/event2'
 device = InputDevice(device_path)
 # Function to turn off the screen
 def turn_off_screen():
