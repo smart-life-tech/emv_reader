@@ -8,9 +8,10 @@ shared_data = {
     'status': False
 }
 status=False
+
 # Path to the input device (you may need to adjust this)
 device_path = '/dev/input/event0'
-
+device = InputDevice(device_path)
 # Function to turn off the screen
 def turn_off_screen():
     os.system('xrandr --output HDMI-1 --off')
@@ -38,7 +39,6 @@ def monitor_inactivity(shared_data):
     global status
     while True:
         last_activity_time = time.time()
-        device = InputDevice(device_path)
         print("device types: ", device)
         for event in device.read_loop():
             if event.type == ecodes.EV_ABS and event.code in [ecodes.ABS_MT_POSITION_X, ecodes.ABS_MT_POSITION_Y]:
