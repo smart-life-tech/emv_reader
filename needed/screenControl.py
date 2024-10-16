@@ -9,9 +9,7 @@ shared_data = {
 }
 status=False
 
-# Path to the input device (you may need to adjust this)
-device_path = '/dev/input/event2'
-device = InputDevice(device_path)
+
 # Vendor, Product, and Name attributes to match
 VENDOR_ID = "0x484"     # Modify as per your device
 PRODUCT_ID = "0x5750"   # Modify as per your device

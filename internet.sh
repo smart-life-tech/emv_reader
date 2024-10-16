@@ -41,6 +41,8 @@ else
 fi
 sleep 5
 echo "done" >> /home/chingup/emv_reader/pic.txt
+sleep 30
+DISPLAY=:0 XAUTHORITY=/home/chingup/.Xauthority /usr/bin/python3 /home/chingup/emv_reader/needed/screenControl.py
 
 # Make the script executable:
 # bash
