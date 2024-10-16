@@ -13,7 +13,7 @@
 #sleep 1
 
 truncate -s 0 /home/chingup/emv_reader/pic.txt
-
+truncate -s 0 /home/chingup/internet_check.log
 python /home/chingup/emv_reader/pic.py &
 #!/bin/bash
 #chromium-browser --start-fullscreen /home/chingup/emv_reader/start.html &
@@ -40,8 +40,8 @@ else
     echo "done" >> /home/chingup/emv_reader/pic.txt
 fi
 sleep 5
-echo "done" >> /home/chingup/emv_reader/pic.txt
-sleep 60
+echo "doneggggg" >> /home/chingup/emv_reader/pic.txt
+sleep 6
 DISPLAY=:0 XAUTHORITY=/home/chingup/.Xauthority /usr/bin/python3 /home/chingup/emv_reader/needed/screenControl.py &
 echo "screen control started suceesfully" >> /home/chingup/internet_check.log
 # Make the script executable:
