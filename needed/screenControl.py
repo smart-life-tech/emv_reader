@@ -58,7 +58,7 @@ def monitor_inactivity(shared_data):
         return
     
     device = InputDevice(input_device_path)
-    print("device types: ", device_path)
+    print("device types: ", input_device_path)
     
     while True:
         last_activity_time = time.time()
