@@ -2,6 +2,7 @@ import os
 import time
 from evdev import InputDevice, categorize, ecodes, list_devices
 import threading
+time.sleep(60)
 isScreenOn=True
 shared_data = {
     'last_activity_time': time.time(),
@@ -76,7 +77,7 @@ def monitor_inactivity(shared_data):
                     isScreenOn=False
                 break
 
-            if time.time() - last_activity_time > 30 and status == False:  # 0.5 minutes
+            if time.time() - last_activity_time > 60 and status == False:  # 0.5 minutes
                 turn_off_screen()
                 print("turning off screen")
                 status = True
@@ -89,7 +90,7 @@ def monitor_inactivity(shared_data):
             #time.sleep(0.1)  # Add a short delay to prevent CPU hogging
 def perform_other_tasks(shared_data):
     while True:
-        if time.time() - shared_data['last_activity_time'] > 30 and not shared_data['status']:  # 0.5 minutes
+        if time.time() - shared_data['last_activity_time'] > 60 and not shared_data['status']:  # 0.5 minutes
             turn_off_screen()
             print("Turning off screen")
             shared_data['status'] = True
