@@ -27,6 +27,11 @@ def find_input_device():
             print(f"Device found: {device.path}")
             return device.path
     return None
+
+input_device_path = find_input_device()
+if not input_device_path:
+    print("Input device not found")
+device = InputDevice(input_device_path)
 def turn_off_screen():
     os.system('xrandr --output HDMI-1 --off')
     print("turning off screen")
@@ -51,13 +56,9 @@ def testOnOff():
 # Monitor for inactivity
 def monitor_inactivity(shared_data):
     global status
-    global status
-    input_device_path = find_input_device()
-    if not input_device_path:
-        print("Input device not found")
-        return
+    global device
+    global input_device_path
     
-    device = InputDevice(input_device_path)
     print("device types: ", input_device_path)
     
     while True:

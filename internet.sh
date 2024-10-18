@@ -63,3 +63,15 @@ echo "screen control started suceesfully" >> /home/chingup/internet_check.log
 # bash
 # Copy code
 # sudo reboot
+#@sh -c 'sudo PYTHONPATH=$PYTHONPATH:/home/chingup/.local/lib/python3.9/site-packages python3 /home/chingup/needed/kills.py'
+# @lxpanel --profile LXDE-pi
+# @pcmanfm --desktop --profile LXDE-pi
+# @xscreensaver -no-splash
+# #@chromium-browser --kiosk --remote-debugging-port=9222 http://chingup.com/rpi_pos
+# #@sh -c 'sleep 10 && chromium-browser --kiosk --remote-debugging-port=9222 http://chingup.com/rpi_pos'
+# #@chromium-browser --kiosk chingup.com/rpi_pos --remote-debugging-port=9222
+# #@sh -c 'sudo PYTHONPATH=$PYTHONPATH:/home/chingup/.local/lib/python3.9/site-packages python3 /home/chingup/latest.py'
+# #@sh -c 'sudo PYTHONPATH=$PYTHONPATH:/home/chingup/.local/lib/python3.9/site-packages python3 /home/chingup/needed/kills.py'
+# @/home/chingup/emv_reader/internet.sh
+# @sh -c 'sudo DISPLAY=:0 XAUTHORITY=/home/chingup/.Xauthority python3 /home/chingup/emv_reader/needed/screenControl.py'
+# @sh -c 'sudo DISPLAY=:0 XAUTHORITY=/home/chingup/.Xauthority python /home/chingup/emv_reader/needed/screenControl.py >> /home/chingup/screenControl.log 2>&1'
