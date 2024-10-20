@@ -12,7 +12,7 @@ status=False
 
 
 # Vendor, Product, and Name attributes to match
-VENDOR_ID = "0x484"     # Modify as per your device
+VENDOR_ID = "0x484"     # Modify as per your device git stash
 PRODUCT_ID = "0x5750"   # Modify as per your device
 DEVICE_NAME = "QDTECH̐MPI700 MPI7002"  # Modify as per your device
 
