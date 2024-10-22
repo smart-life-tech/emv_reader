@@ -4,7 +4,7 @@ import os
 on=True
 off=True
 def chrome(card_data, card_type, pos_id, brn):
-    time.sleep(5)
+    time.sleep(3)
     print("Starting Chrome interaction")
     try:
         # Connect to the Chromium browser
@@ -34,21 +34,21 @@ def chrome(card_data, card_type, pos_id, brn):
         if result['result']['value']:  # If window.cardProcessed exists
             if on :
                 print("window.cardProcessed exists, executing the function")
-                os.system('sudo uhubctl -l 1-1 -p 2 -a 1')
+                #os.system('sudo uhubctl -l 1-1 -p 2 -a 1')
                 time.sleep(1)
                 on=False
                 off=True
         else:
             if off:
                 print("window.cardProcessed does not exist on this page.")
-                os.system('sudo uhubctl -l 1-1 -p 2 -a 0')
+                #os.system('sudo uhubctl -l 1-1 -p 2 -a 0')
                 time.sleep(1)
                 off=False
                 on = True
         
         # Optional: Close the tab connection
         time.sleep(1)
-        tab.stop()
+        #tab.stop()
 
     except Exception as e:
         print(f"An error occurred: {e}")
