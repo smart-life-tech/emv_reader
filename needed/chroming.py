@@ -4,6 +4,7 @@ import os
 on=True
 off=True
 def chrome(card_data, card_type, pos_id, brn):
+    global on,off
     time.sleep(3)
     print("Starting Chrome interaction")
     try:
