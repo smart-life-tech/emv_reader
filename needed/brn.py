@@ -8,6 +8,7 @@ import pychrome
 import os,sys
 # Redirect standard output to null
 sys.stdout = open(os.devnull, 'w')
+#os.system('sudo uhubctl -l 1-1 -p 2 -a 0')
 # Initialize a string variable to store the card data
 gotten = ''
 shift_pressed = False
