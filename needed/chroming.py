@@ -4,6 +4,7 @@ import os
 on=True
 off=True
 def chrome(card_data, card_type, pos_id, brn):
+    time.sleep(5)
     print("Starting Chrome interaction")
     try:
         # Connect to the Chromium browser
