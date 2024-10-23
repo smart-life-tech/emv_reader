@@ -47,7 +47,7 @@ def turn_on_screen():
     time.sleep(1)
     os.system('xrandr --output HDMI-1 --mode 1920x1080')
     #time.sleep(1)
-    os.system('sudo uhubctl -l 1-1 -p 2 -a 1')
+    #os.system('sudo uhubctl -l 1-1 -p 2 -a 1')
 
 def testOnOff():
     print("turning off screen")
