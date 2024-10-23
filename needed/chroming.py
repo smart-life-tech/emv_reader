@@ -6,7 +6,7 @@ off=True
 def chrome(card_data, card_type, pos_id, brn):
     global on,off
     time.sleep(3)
-    print("Starting Chrome interaction")
+    #print("Starting Chrome interaction")
     try:
         # Connect to the Chromium browser
         browser = pychrome.Browser(url="http://127.0.0.1:9222")
