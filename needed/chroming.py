@@ -34,18 +34,20 @@ def chrome(card_data, card_type, pos_id, brn):
         
         if result['result']['value']:  # If window.cardProcessed exists
             if on :
-                print("window.cardProcessed exists, executing the function")
-                #os.system('sudo uhubctl -l 1-1 -p 2 -a 1')
+                print("window.cardProcessed exists, executing the functioncturing readers on")
+                os.system('sudo uhubctl -l 1-1 -p 2 -a 1')
                 time.sleep(1)
                 on=False
                 off=True
+                print("done executing the function on, now off")
         else:
             if off:
                 print("window.cardProcessed does not exist on this page.")
-                #os.system('sudo uhubctl -l 1-1 -p 2 -a 0')
+                os.system('sudo uhubctl -l 1-1 -p 2 -a 0')
                 time.sleep(1)
                 off=False
                 on = True
+                print("done executing the function off, now on")
         
         # Optional: Close the tab connection
         time.sleep(1)
