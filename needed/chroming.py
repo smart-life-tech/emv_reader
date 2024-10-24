@@ -57,5 +57,6 @@ def chrome(card_data, card_type, pos_id, brn):
         print(f"An error occurred: {e}")
 
 if __name__ == '__main__':
+    time.sleep(50)
     while True:
         chrome("card_data", "card_type", "pos_id", "brn")
