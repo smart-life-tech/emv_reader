@@ -37,12 +37,16 @@ def chrome(card_data, card_type, pos_id, brn):
                 print("window.cardProcessed exists, executing the functioncturing readers on")
                 os.system('sudo uhubctl -l 1-1 -p 2 -a 1')
                 time.sleep(1)
+                os.system('sudo uhubctl -l 1-1 -p 2 -a 1')
+                time.sleep(1)
                 on=False
                 off=True
                 print("done executing the function on, now off")
         else:
             if off:
                 print("window.cardProcessed does not exist on this page.")
+                os.system('sudo uhubctl -l 1-1 -p 2 -a 0')
+                time.sleep(1)
                 os.system('sudo uhubctl -l 1-1 -p 2 -a 0')
                 time.sleep(1)
                 off=False
@@ -57,6 +61,6 @@ def chrome(card_data, card_type, pos_id, brn):
         print(f"An error occurred: {e}")
 
 if __name__ == '__main__':
-    time.sleep(50)
+    time.sleep(50 )
     while True:
         chrome("card_data", "card_type", "pos_id", "brn")
